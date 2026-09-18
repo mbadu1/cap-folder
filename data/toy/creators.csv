@@ -1,0 +1,7 @@
+platform,creator_id,handle_or_slug,display_name,stratum,topic_family,native_categories_tags,panel_weight,url,scrape_meta
+substack,substack:slowboring,slowboring,Slow Boring,elite,Politics and current affairs,,1,https://www.slowboring.com,toy_v1
+substack,substack:lennysnewsletter,lennysnewsletter,Lenny's Newsletter,elite,"Business, finance and economics",,1,https://lennysnewsletter.com,toy_v1
+substack,substack:astralcodexten,astralcodexten,Astral Codex Ten,elite,"Society, history and ideas",,1,https://astralcodexten.substack.com,toy_v1
+medium,medium:zulie,zulie,Zulie Rane,elite,"Health, family and personal life",,1,https://medium.com/feed/@zulie,toy_v1
+medium,medium:tomaspueyo,tomaspueyo,Tomas Pueyo,elite,"Technology, science, education and environment",,1,https://medium.com/feed/@tomaspueyo,toy_v1
+medium,medium:uxdesigncc,uxdesigncc,UX Collective (publication feed toy),elite,"Arts, culture, media and design",,1,https://medium.com/feed/user-experience-design-1,toy_v1
