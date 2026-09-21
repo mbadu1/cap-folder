@@ -49,6 +49,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--end-date", default="2026-09-17")
     parser.add_argument("--max-frame-size", type=int, default=20000)
     parser.add_argument("--collection-size", type=int, default=4000)
+    parser.add_argument(
+        "--max-new-publications",
+        type=int,
+        default=0,
+        help=(
+            "Maximum uncached publications to process in this invocation; "
+            "zero processes the entire remaining frame."
+        ),
+    )
     parser.add_argument("--max-workers", type=int, default=1)
     parser.add_argument("--delay-seconds", type=float, default=2.0)
     parser.add_argument("--max-rate-limit-events", type=int, default=3)
@@ -261,6 +270,13 @@ def main() -> int:
         (row["publication_url"], row["publication_url"])
         for row in selected_frame
     ]
+    if args.max_new_publications < 0:
+        raise ValueError("max new publications cannot be negative")
+    if args.max_new_publications:
+        completed_keys = checkpoint.keys(HISTORY_STAGE)
+        cached_items = [item for item in items if item[0] in completed_keys]
+        pending_items = [item for item in items if item[0] not in completed_keys]
+        items = cached_items + pending_items[: args.max_new_publications]
     run_cached_stage(
         checkpoint,
         HISTORY_STAGE,
@@ -277,6 +293,7 @@ def main() -> int:
     ]
     successful = [row for row in rows if row["ok"]]
     failed = [row for row in rows if not row["ok"]]
+    complete_frame = len(rows) == args.collection_size
     post_count = sum(
         len((row["payload"] or {}).get("posts") or [])
         for row in successful
@@ -294,6 +311,8 @@ def main() -> int:
         "collection_size": args.collection_size,
         "successful_publications": len(successful),
         "failed_publications": len(failed),
+        "checkpointed_publications": len(rows),
+        "complete_frame": complete_frame,
         "retained_posts": post_count,
         "request_count_this_run": collector.request_count,
         "http_status_counts_this_run": dict(
@@ -319,6 +338,8 @@ def main() -> int:
     )
     checkpoint.close()
     print(json.dumps(status, indent=2, sort_keys=True), flush=True)
+    if not complete_frame:
+        return 4
     return 0 if not failed else 2
 
 
