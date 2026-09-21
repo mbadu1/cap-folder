@@ -23,6 +23,22 @@ from collect_substack_history import HISTORY_STAGE  # noqa: E402
 MONTH_STAGE = "publication_posts_api_v2"
 
 
+def partition_status(
+    selected_creators: int,
+    target_creators: int,
+    topic_floor_shortfall: int,
+    text_bounds_valid: bool,
+    frame_complete: bool,
+) -> str:
+    if (
+        selected_creators == target_creators
+        and topic_floor_shortfall == 0
+        and text_bounds_valid
+    ):
+        return "target_achieved"
+    return "frame_expansion_required" if frame_complete else "pilot_incomplete"
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--month", required=True)
@@ -184,6 +200,12 @@ def validate_partition(args: argparse.Namespace) -> dict[str, Any]:
     creator_ids = [row["creator_id"] for row in creators]
     meta_ids = [row["post_id"] for row in meta]
     text_ids = [row["post_id"] for row in texts]
+    selected_text_assignments = sum(
+        int(row["selected_text_count"]) for row in creators
+    )
+    creator_text_bounds_valid = all(
+        1 <= int(row["selected_text_count"]) <= 3 for row in creators
+    )
     checks = {
         "creator_ids_unique": len(creator_ids) == len(set(creator_ids)),
         "creator_ids_numeric": all(value.isdigit() for value in creator_ids),
@@ -193,8 +215,9 @@ def validate_partition(args: argparse.Namespace) -> dict[str, Any]:
         "month_dates_valid": all(
             row["published_at"].startswith(args.month) for row in meta
         ),
-        "creator_text_cap_valid": all(
-            int(row["selected_text_count"]) <= 3 for row in creators
+        "creator_text_bounds_valid": creator_text_bounds_valid,
+        "selected_text_assignment_bounds_valid": (
+            len(creators) <= selected_text_assignments <= 3 * len(creators)
         ),
         "coverage_has_eight_topics": len(coverage) == 8,
         "manifest_creator_count_matches": (
@@ -205,6 +228,10 @@ def validate_partition(args: argparse.Namespace) -> dict[str, Any]:
         ),
         "manifest_text_count_matches": (
             int(manifest["counts"]["selected_texts"]) == len(texts)
+        ),
+        "manifest_text_assignment_count_matches": (
+            int(manifest["counts"]["selected_text_assignments"])
+            == selected_text_assignments
         ),
     }
     for name, metadata in manifest.get("files", {}).items():
@@ -222,9 +249,14 @@ def validate_partition(args: argparse.Namespace) -> dict[str, Any]:
     total_floor_shortfall = sum(
         int(row["topic_floor_shortfall"]) for row in coverage
     )
-    ready_to_publish = (
-        selected == args.target_creators and total_floor_shortfall == 0
-    ) or args.frame_size == args.max_frame_size
+    status = partition_status(
+        selected,
+        args.target_creators,
+        total_floor_shortfall,
+        creator_text_bounds_valid,
+        args.frame_size >= args.max_frame_size,
+    )
+    ready_to_publish = status == "target_achieved" and all(checks.values())
     report = {
         "month": args.month,
         "frame_size": args.frame_size,
@@ -233,7 +265,11 @@ def validate_partition(args: argparse.Namespace) -> dict[str, Any]:
         "selected_creators": selected,
         "metadata_posts": len(meta),
         "selected_texts": len(texts),
+        "selected_text_assignments": selected_text_assignments,
+        "selected_text_assignment_minimum": selected,
+        "selected_text_assignment_maximum": selected * 3,
         "topic_floor_shortfall": total_floor_shortfall,
+        "frame_status": status,
         "ready_to_publish": ready_to_publish,
         "checks": checks,
     }

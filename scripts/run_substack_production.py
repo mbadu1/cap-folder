@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Run the full Substack history collection and publish monthly partitions."""
+"""Audit a complete Substack history frame and optionally publish months.
+
+Monthly build/publish is opt-in and remains blocked unless the creator-level
+coverage audit confirms all monthly targets and topic floors.
+"""
 
 from __future__ import annotations
 
@@ -28,6 +32,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--delay-seconds", type=float, default=2.0)
     parser.add_argument("--cooldown-seconds", type=int, default=1800)
     parser.add_argument("--error-retry-attempts", type=int, default=3)
+    parser.add_argument(
+        "--publish-months",
+        action="store_true",
+        help="Build, commit, and push months after the creator coverage gate passes.",
+    )
+    parser.add_argument("--retry-errors", action="store_true")
     parser.add_argument("--remote", default="origin")
     parser.add_argument("--branch")
     parser.add_argument(
@@ -57,6 +67,11 @@ def parse_args() -> argparse.Namespace:
         "--lookup-dir",
         type=Path,
         default=Path("data/monthly_full/lookup"),
+    )
+    parser.add_argument(
+        "--audit-output-dir",
+        type=Path,
+        default=Path("data/monthly_full/frame_audit"),
     )
     return parser.parse_args()
 
@@ -117,6 +132,8 @@ def collect_history(args: argparse.Namespace) -> None:
             "--cache-root",
             str(args.history_cache_root),
         ]
+        if not args.retry_errors:
+            command.append("--keep-errors")
         code = run(command)
         total, successful, failed = history_counts(args.history_cache_root)
         print(
@@ -138,6 +155,14 @@ def collect_history(args: argparse.Namespace) -> None:
             )
             time.sleep(args.cooldown_seconds)
             continue
+        if not args.retry_errors:
+            if failed:
+                print(
+                    f"Keeping {failed} recorded publication errors for audit; "
+                    "use --retry-errors for an explicit retry pass",
+                    flush=True,
+                )
+            return
         if failed == 0 and code == 0:
             return
         completed_error_attempts += 1
@@ -216,6 +241,62 @@ def main() -> int:
     args = parse_args()
     months = month_range(args.start_month, args.end_month)
     collect_history(args)
+    audit_command = [
+        sys.executable,
+        str(SCRIPT_DIR / "audit_substack_creator_frame.py"),
+        "--start-month",
+        args.start_month,
+        "--end-month",
+        args.end_month,
+        "--frame-size",
+        str(args.frame_size),
+        "--target-creators",
+        str(args.target_creators),
+        "--topic-floor",
+        str(args.topic_floor),
+        "--frame-file",
+        str(args.frame_file),
+        "--history-cache-root",
+        str(args.history_cache_root),
+        "--output-dir",
+        str(args.audit_output_dir),
+    ]
+    run(audit_command, check=True)
+    audit_manifest = json.loads(
+        (args.audit_output_dir / "manifest.json").read_text(encoding="utf-8")
+    )
+    if not audit_manifest.get("ready_for_final_month_build"):
+        print(
+            json.dumps(
+                {
+                    "status": "frame_expansion_required",
+                    "monthly_build_started": False,
+                    "monthly_publish_started": False,
+                    "coverage_manifest": str(
+                        args.audit_output_dir / "manifest.json"
+                    ),
+                },
+                indent=2,
+                sort_keys=True,
+            ),
+            flush=True,
+        )
+        return 3
+    if not args.publish_months:
+        print(
+            json.dumps(
+                {
+                    "status": "creator_frame_ready_for_month_build",
+                    "monthly_build_started": False,
+                    "monthly_publish_started": False,
+                    "next_action": "rerun with --publish-months after review",
+                },
+                indent=2,
+                sort_keys=True,
+            ),
+            flush=True,
+        )
+        return 0
     state_path = args.history_cache_root / "production_state.json"
     completed_months: list[str] = []
     if state_path.is_file():

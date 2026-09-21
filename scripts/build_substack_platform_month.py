@@ -218,6 +218,19 @@ def count_words(value: str) -> int:
     return len(re.findall(r"\b[\w’'-]+\b", value, flags=re.UNICODE))
 
 
+def declared_english_or_unknown(post: dict[str, Any]) -> bool:
+    language = str(post.get("language") or "").strip().lower()
+    return not language or language == "english" or language.startswith("en")
+
+
+def primary_text_eligible(post: dict[str, Any]) -> bool:
+    return (
+        bool(post.get("full_text"))
+        and int(post.get("retained_word_count") or 0) >= 200
+        and declared_english_or_unknown(post)
+    )
+
+
 def parse_preloads(page_bytes: bytes) -> dict[str, Any]:
     page = page_bytes.decode("utf-8", errors="replace")
     match = PRELOAD_RE.search(page)
@@ -1079,13 +1092,25 @@ def build(args: argparse.Namespace) -> Path:
             creator_topic_posts[creator_id][topic] += 1
 
     eligible_creators = []
+    active_provisional_individuals = 0
+    excluded_unverified_creator_ids = 0
     excluded_organizations = 0
     for creator_id in sorted(creator_posts):
+        if not creator_id.isdigit():
+            excluded_unverified_creator_ids += 1
+            continue
         name = creator_names[creator_id].most_common(1)[0][0]
         handle = creator_handles[creator_id].most_common(1)[0][0]
         type_value = creator_type(name)
         if type_value != "individual_provisional":
             excluded_organizations += 1
+            continue
+        active_provisional_individuals += 1
+        if not any(
+            primary_text_eligible(post_by_id[post_id])
+            for post_id in creator_posts[creator_id]
+            if post_id in post_by_id
+        ):
             continue
         topic_counts = creator_topic_posts[creator_id]
         topic = sorted(
@@ -1140,7 +1165,7 @@ def build(args: argparse.Namespace) -> Path:
         candidates = []
         for post_id in creator_posts[creator_id]:
             post = post_by_id[post_id]
-            if post["full_text"] and post["retained_word_count"] >= 200:
+            if primary_text_eligible(post):
                 candidates.append(post)
         candidates.sort(
             key=lambda post: sha256_text(
@@ -1250,7 +1275,7 @@ def build(args: argparse.Namespace) -> Path:
         posts.sort(key=lambda row: (row["published_at"], row["post_id"]))
         full_candidates = [
             post for post in posts
-            if post["full_text"] and post["retained_word_count"] >= 200
+            if primary_text_eligible(post)
         ]
         selected_posts = [
             post_by_id[post_id]
@@ -1494,11 +1519,17 @@ def build(args: argparse.Namespace) -> Path:
         "counts": {
             "active_publications_with_verified_posts": len(active_publications),
             "verified_month_posts": len(verified_posts),
+            "active_provisional_individual_creators": active_provisional_individuals,
             "eligible_individual_creators": len(eligible_creators),
             "excluded_provisional_organizations": excluded_organizations,
+            "excluded_unverified_creator_ids": excluded_unverified_creator_ids,
             "selected_creators": len(selected_ids),
             "metadata_posts": len(meta_rows),
             "selected_texts": len(text_rows),
+            "selected_text_assignments": sum(
+                len(post_ids)
+                for post_ids in selected_post_ids_by_creator.values()
+            ),
             "scrape_errors": len(error_rows),
         },
         "limitations": [
@@ -1537,7 +1568,8 @@ and numeric byline IDs.
 
 - Publications with verified {args.month} posts: {len(active_publications):,}
 - Date-verified {args.month} posts: {len(verified_posts):,}
-- Eligible provisional individual creators: {len(eligible_creators):,}
+- Active provisional individual creators: {active_provisional_individuals:,}
+- Primary-text-eligible provisional individual creators: {len(eligible_creators):,}
 - Selected creators: {len(selected_ids):,} of target {args.target_creators:,}
 - Metadata posts for selected creators: {len(meta_rows):,}
 - Selected public/full-text posts: {len(text_rows):,}
