@@ -1,0 +1,57 @@
+platform,creator_id,handle_or_slug,display_name,stratum,topic_family,native_categories_tags,panel_weight,url,scrape_meta
+substack,substack:slowboring,slowboring,Slow Boring,elite,Politics and current affairs,,1,https://www.slowboring.com,pilot_v1
+substack,substack:heathercoxrichardson,heathercoxrichardson,Letters from an American,elite,Politics and current affairs,,1,https://heathercoxrichardson.substack.com,pilot_v1
+substack,substack:thebulwark,thebulwark,The Bulwark,elite,Politics and current affairs,,1,https://www.thebulwark.com,pilot_v1
+substack,substack:astralcodexten,astralcodexten,Astral Codex Ten,elite,"Society, history and ideas",,1,https://astralcodexten.substack.com,pilot_v1
+substack,substack:derekthompson,derekthompson,The Abundance Agenda,elite,"Society, history and ideas",,1,https://www.derekthompson.org,pilot_v1
+substack,substack:intrinsicperspective,theintrinsicperspective,The Intrinsic Perspective,elite,"Society, history and ideas",,1,https://www.theintrinsicperspective.com,pilot_v1
+substack,substack:lennysnewsletter,lennysnewsletter,Lenny's Newsletter,elite,"Business, finance and economics",,1,https://lennysnewsletter.com,pilot_v1
+substack,substack:notboring,notboring,Not Boring,elite,"Business, finance and economics",,1,https://www.notboring.co,pilot_v1
+substack,substack:noahpinion,noahpinion,Noahpinion,elite,"Business, finance and economics",,1,https://www.noahpinion.blog,pilot_v1
+substack,substack:importai,importai,Import AI,elite,"Technology, science, education and environment",,1,https://importai.substack.com,pilot_v1
+substack,substack:oneusefulthing,oneusefulthing,One Useful Thing,elite,"Technology, science, education and environment",,1,https://www.oneusefulthing.org,pilot_v1
+substack,substack:constructionphysics,constructionphysics,Construction Physics,elite,"Technology, science, education and environment",,1,https://www.construction-physics.com,pilot_v1
+substack,substack:countercraft,countercraft,Counter Craft,elite,Literature and creative writing,,1,https://countercraft.substack.com,pilot_v1
+substack,substack:annfriedman,annfriedman,Ann Friedman,elite,"Arts, culture, media and design",,1,https://annfriedman.substack.com,pilot_v1
+substack,substack:yourlocalepidemiologist,yourlocalepidemiologist,Your Local Epidemiologist,elite,"Health, family and personal life",,1,https://yourlocalepidemiologist.substack.com,pilot_v1
+substack,substack:dinneralovestory,dinneralovestory,Dinner: A Love Story,elite,"Lifestyle, food, travel, home and leisure",,1,https://dinneralovestory.substack.com,pilot_v1
+medium,medium:tomaspueyo,tomaspueyo,Tomas Pueyo,elite,"Technology, science, education and environment",,1,https://medium.com/feed/@tomaspueyo,medium_pilot_v2
+medium,medium:anildash,anildash,Anil Dash,elite,"Technology, science, education and environment",,1,https://medium.com/feed/@anildash,medium_pilot_v2
+medium,medium:ev,ev,Ev Williams,elite,"Technology, science, education and environment",,1,https://medium.com/feed/@ev,medium_pilot_v2
+medium,medium:matthewcassinelli,matthewcassinelli,Matthew Cassinelli,elite,"Technology, science, education and environment",,1,https://medium.com/feed/@matthewcassinelli,medium_pilot_v2
+medium,medium:towardsdatascience,towardsdatascience,Towards Data Science,elite,"Technology, science, education and environment",,1,https://medium.com/feed/towards-data-science,medium_pilot_v2
+medium,medium:uxdesign,uxdesigncc,UX Collective,elite,"Arts, culture, media and design",,1,https://medium.com/feed/user-experience-design-1,medium_pilot_v2
+medium,medium:javascriptscene,javascriptscene,JavaScript Scene,elite,"Technology, science, education and environment",,1,https://medium.com/feed/javascript-scene,medium_pilot_v2
+medium,medium:levelupgitconnected,levelup,Level Up Coding,elite,"Technology, science, education and environment",,1,https://medium.com/feed/gitconnected,medium_pilot_v2
+medium,medium:betterprogramming,betterprogramming,Better Programming,elite,"Technology, science, education and environment",,1,https://medium.com/feed/better-programming,medium_pilot_v2
+medium,medium:thewritingcooperative,writingcooperative,The Writing Cooperative,elite,Literature and creative writing,,1,https://medium.com/feed/the-writing-cooperative,medium_pilot_v2
+medium,medium:aytekintank,aytekintank,Aytekin Tank,elite,"Business, finance and economics",,1,https://medium.com/feed/@aytekintank,medium_pilot_v2
+medium,medium:timdenning,timdenning,Tim Denning,elite,"Business, finance and economics",,1,https://medium.com/feed/@timdenning,medium_pilot_v2
+medium,medium:jasonfried,jasonfried,Jason Fried,elite,"Business, finance and economics",,1,https://medium.com/feed/@jasonfried,medium_pilot_v2
+medium,medium:theascent,theascent,The Ascent,elite,"Business, finance and economics",,1,https://medium.com/feed/the-ascent,medium_pilot_v2
+medium,medium:entrepreneurshandbook,entrepreneurshandbook,Entrepreneur's Handbook,elite,"Business, finance and economics",,1,https://medium.com/feed/entrepreneurs-handbook,medium_pilot_v2
+medium,medium:swlh,swlh,The Startup,elite,"Business, finance and economics",,1,https://medium.com/feed/swlh,medium_pilot_v2
+medium,medium:marker,marker,Marker,elite,"Business, finance and economics",,1,https://medium.com/feed/marker,medium_pilot_v2
+medium,medium:umairh,umairh,Umair Haque,elite,"Society, history and ideas",,1,https://medium.com/feed/@umairh,medium_pilot_v2
+medium,medium:gen,gen,GEN,elite,"Society, history and ideas",,1,https://medium.com/feed/gen,medium_pilot_v2
+medium,medium:zora,zora,ZORA,elite,"Arts, culture, media and design",,1,https://medium.com/feed/zora,medium_pilot_v2
+medium,medium:onezero,onezero,OneZero,elite,"Technology, science, education and environment",,1,https://medium.com/feed/one-zero,medium_pilot_v2
+medium,medium:humanparts,humanparts,Human Parts,elite,"Health, family and personal life",,1,https://medium.com/feed/human-parts,medium_pilot_v2
+medium,medium:zulie,zulie,Zulie Rane,elite,"Health, family and personal life",,1,https://medium.com/feed/@zulie,medium_pilot_v2
+medium,medium:betterhumans,betterhumans,Better Humans,elite,"Health, family and personal life",,1,https://medium.com/feed/better-humans,medium_pilot_v2
+medium,medium:forge,forge,Forge,elite,"Health, family and personal life",,1,https://medium.com/feed/forge,medium_pilot_v2
+medium,medium:elemental,elemental,Elemental,elite,"Health, family and personal life",,1,https://medium.com/feed/elemental,medium_pilot_v2
+medium,medium:psiloveyou,psiloveyou,PS I Love You,elite,"Health, family and personal life",,1,https://medium.com/feed/psiloveyou,medium_pilot_v2
+medium,medium:mindcafe,mindcafe,Mind Cafe,elite,"Health, family and personal life",,1,https://medium.com/feed/mind-cafe,medium_pilot_v2
+medium,medium:personalgrowth,personal-growth,Personal Growth,elite,"Society, history and ideas",,1,https://medium.com/feed/personal-growth,medium_pilot_v2
+medium,medium:illumination,illumination,ILLUMINATION,elite,"Society, history and ideas",,1,https://medium.com/feed/illumination,medium_pilot_v2
+medium,medium:curious,curious,Curious,elite,"Society, history and ideas",,1,https://medium.com/feed/curious,medium_pilot_v2
+medium,medium:thebolditalic,thebolditalic,The Bold Italic,elite,"Arts, culture, media and design",,1,https://medium.com/feed/the-bold-italic,medium_pilot_v2
+medium,medium:modus,modus,Modus,elite,"Arts, culture, media and design",,1,https://medium.com/feed/modus,medium_pilot_v2
+medium,medium:heated,heated,Heated,elite,"Lifestyle, food, travel, home and leisure",,1,https://medium.com/feed/heated,medium_pilot_v2
+medium,medium:krisgage,krisgage,Kris Gage,elite,"Health, family and personal life",,1,https://medium.com/feed/@krisgage,medium_pilot_v2
+medium,medium:nicolascole77,nicolascole77,Nicolas Cole,elite,Literature and creative writing,,1,https://medium.com/feed/@nicolascole77,medium_pilot_v2
+medium,medium:shauntago,shauntago,Shaun Go,elite,"Business, finance and economics",,1,https://medium.com/feed/@shauntago,medium_pilot_v2
+medium,medium:alltopstartups,alltopstartups,All Top Startups,elite,"Business, finance and economics",,1,https://medium.com/feed/@alltopstartups,medium_pilot_v2
+medium,medium:benjaminhardman,benjaminhardman,Benjamin Hardman,elite,"Arts, culture, media and design",,1,https://medium.com/feed/@benjaminhardman,medium_pilot_v2
+medium,medium:ryangrimsland,ryangrimsland,Ryan Grimsland,elite,"Technology, science, education and environment",,1,https://medium.com/feed/@ryangrimsland,medium_pilot_v2
