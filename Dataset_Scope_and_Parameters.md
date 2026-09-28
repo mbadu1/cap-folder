@@ -16,7 +16,7 @@
 | Strategy: most popular + subgroups of interest | Named, under-motivated | **§4** locked as elite + topic-stratified random |
 | Month-by-month N for time analysis | Missing | **§3.2–3.3** |
 | Core unit clear (post vs author) + data-volume implications | Named | **§2** sharpened |
-| Then start scraping (toy) | No CSV yet | **`data/toy/`** + `scripts/toy_scrape.py` |
+| Then start scraping (toy) | No CSV yet | **`data/toy/`** + `scripts/shared/toy_scrape.py` |
 
 ---
 

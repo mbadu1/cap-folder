@@ -1,0 +1,36 @@
+{
+  "assignment_rule": "existing_priority_sorted_round_robin_v1",
+  "baseline_count": 93799,
+  "baseline_errors": 1347,
+  "baseline_out_of_frame": 1,
+  "baseline_successes": 92452,
+  "batch_id": "2026-09-28-team-v1",
+  "code_sha256": {
+    "build_substack_platform_month.py": "a176eae76a3e771cc9ebd49d3940601c50e4c5af25cefce0d4dddcda4d8fc2ec",
+    "collect_substack_history.py": "46454a845661b7a307f1fd0575446185e02c491612ff3b3d285380dd0fe92ecb",
+    "team_collection.py": "46abaee5ff160858cc47cb44a14e32299ae31097df731da950b04c1664c2b824"
+  },
+  "created_at": "2026-09-28T23:25:53Z",
+  "end_date": "2026-09-17",
+  "files": {
+    "already_attempted.csv": "002696ab5a57d56a176f86c2d5b4026ef8ccc94e0b135e4bbe6553220ae869c9",
+    "existing_errors.csv": "a81d672a4c2fc269f7ea1b4f06c1eb15ebb168935855d469c2bf2b8da926679e",
+    "shard-1.csv": "556bcedcc64c357a73a0072edf63e0e2d37b5fade93345f9550d95ad62bc1794",
+    "shard-1.manifest.json": "f7bc57ce8c72a537147e3c4d3daf41c542ccbc937d0e00345b3975d2e5b68c2d",
+    "shard-2.csv": "6063b8363ff6e52f9cb15cd2edf0480dc7bf0274bfb937dd8e072d29d9f4fedc",
+    "shard-2.manifest.json": "5e3d6cfb1e3c5fbeb0b11eb5a640362b21924bade0531cdf304839dbd0ba9ad8",
+    "shard-3.csv": "185416b7cbc1d775c0cb55212b838ecc93ce1746af16ccb4782a0618ceaff5ec",
+    "shard-3.manifest.json": "8e7ba254a43afb81cc35640cfc56f224a3945eb99ff1a37ba16b9e40afd61bd0",
+    "source_frame.csv": "ffbe89ac0ec98f0d6baaaa8b3ee1c69d50ff21e241df1dc1eb4ae26fdac6085a"
+  },
+  "frame_count": 242052,
+  "min_delay_seconds_per_worker": 6.0,
+  "parent_frame_original_sha256": "ffbe89ac0ec98f0d6baaaa8b3ee1c69d50ff21e241df1dc1eb4ae26fdac6085a",
+  "remaining_count": 148253,
+  "shard_counts": {
+    "shard-1": 49418,
+    "shard-2": 49418,
+    "shard-3": 49417
+  },
+  "start_date": "2020-01-01"
+}

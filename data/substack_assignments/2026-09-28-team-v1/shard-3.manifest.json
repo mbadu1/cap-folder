@@ -1,0 +1,10 @@
+{
+  "batch_id": "2026-09-28-team-v1",
+  "created_at": "2026-09-28T23:25:53Z",
+  "frame_csv_sha256": "185416b7cbc1d775c0cb55212b838ecc93ce1746af16ccb4782a0618ceaff5ec",
+  "frozen_publications": 49417,
+  "parent_frame_sha256": "ffbe89ac0ec98f0d6baaaa8b3ee1c69d50ff21e241df1dc1eb4ae26fdac6085a",
+  "shard": "shard-3",
+  "study_end_date": "2026-09-17",
+  "study_start_date": "2020-01-01"
+}
