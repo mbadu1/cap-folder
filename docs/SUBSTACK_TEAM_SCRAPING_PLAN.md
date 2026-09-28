@@ -9,8 +9,8 @@ Batch: `2026-09-28-team-v1`, frozen at 2026-09-28T23:25:53Z.
 | Person | Shard argument | Publications |
 |---|---|---:|
 | Zherui | `--shard 1` | 49,418 |
-| Teammate 1 | `--shard 2` | 49,418 |
-| Teammate 2 | `--shard 3` | 49,417 |
+| Ziyang | `--shard 2` | 49,418 |
+| Michael | `--shard 3` | 49,417 |
 
 The original frozen frame has 242,052 publications. The preserved baseline has 93,799 in-frame committed results: 92,452 successes and 1,347 errors. An additional out-of-frame error stays in the private baseline. The remaining 148,253 publications are sorted by their existing hash priority and assigned round-robin. The three lists are pairwise disjoint and exclude every baseline result. Counts balance publications, not history length or runtime.
 
@@ -30,9 +30,9 @@ python3 -m unittest discover -s tests -p 'test_substack*.py'
 
 Python 3.10 or newer is recommended; the Substack tools need no third-party packages. Use `python` if that is your Python 3 executable. The Medium files are organized separately and are not part of these assignments.
 
-Run the [compatibility check](SUBSTACK_COMPATIBILITY.md) before the live pilot: `python3 scripts/substack/check_substack_compatibility.py --shard 2` (or `--shard 3` for teammate 2). Require `PASS`; share the JSON report with Zherui. The added checks leave the frozen collector and assignment hashes unchanged, so existing checkpoints remain compatible with the updated branch.
+Run the [compatibility check](SUBSTACK_COMPATIBILITY.md) before the live pilot: `python3 scripts/substack/check_substack_compatibility.py --shard 2` (or `--shard 3` for Michael). Require `PASS`; share the JSON report with Zherui. The added checks leave the frozen collector and assignment hashes unchanged, so existing checkpoints remain compatible with the updated branch.
 
-The rest of the commands show **teammate 1 / shard 2**. Teammate 2 changes every shard `2` to `3`; Zherui uses `1`. Do not change the batch ID, frame files, scraper logic, dates, or hashes. No one needs Zherui's original database or outer project workspace.
+The rest of the commands show **Ziyang / shard 2**. Michael changes every shard `2` to `3`; Zherui uses `1`. Do not change the batch ID, frame files, scraper logic, dates, or hashes. No one needs Zherui's original database or outer project workspace.
 
 ```sh
 python3 scripts/substack/team_collection.py run --batch data/substack_assignments/2026-09-28-team-v1 --shard 2 --check
@@ -128,7 +128,7 @@ Creator and coauthor IDs must be resolved globally. The up-to-2,500 creators/mon
 
 ## Paste to either teammate's AI agent
 
-Set `MY_SHARD` to 2 or 3 and supply the exact handoff commit SHA shown by Zherui.
+Set `MY_SHARD` to **2 for Ziyang** or **3 for Michael** and supply the exact handoff commit SHA shown by Zherui.
 
 ```text
 Work in the mbadu1/cap-folder GitHub repository.

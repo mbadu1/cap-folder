@@ -8,13 +8,13 @@ The committed `.gitattributes` preserves LF line endings for code, assignments a
 
 ## Before scraping
 
-Teammate 1:
+Ziyang:
 
 ```sh
 python3 scripts/substack/check_substack_compatibility.py --shard 2
 ```
 
-Teammate 2:
+Michael:
 
 ```sh
 python3 scripts/substack/check_substack_compatibility.py --shard 3
@@ -61,7 +61,7 @@ Return the final JSON report with your export manifest and compressed record par
 ## Paste to your AI agent
 
 ```text
-In mbadu1/cap-folder on zherui-substack-month-pilot, read docs/SUBSTACK_COMPATIBILITY.md. Run python3 scripts/substack/check_substack_compatibility.py --shard MY_SHARD, replacing MY_SHARD with my assigned 2 or 3. Require PASS with no skipped tests before beginning my live collection. Give me the JSON report path and its golden_output_sha256. Diagnose a failure without changing the shared scraper, frozen assignments, or expected fixture outputs.
+In mbadu1/cap-folder on zherui-substack-month-pilot, read docs/SUBSTACK_COMPATIBILITY.md. Run python3 scripts/substack/check_substack_compatibility.py --shard MY_SHARD, replacing MY_SHARD with 2 for Ziyang or 3 for Michael. Require PASS with no skipped tests before beginning my live collection. Give me the JSON report path and its golden_output_sha256. Diagnose a failure without changing the shared scraper, frozen assignments, or expected fixture outputs.
 
 After I have a final export, run the same checker with --export-dir pointing to it and --report pointing to a new final report. Require export_validation.status = PASS and pending = 0 before labeling delivery complete. Preserve/report failed publications separately. For an interim export use --allow-partial and clearly label PASS_PARTIAL. Include the final report with the return package.
 ```
