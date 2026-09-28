@@ -2,6 +2,8 @@
 
 Start with [the Substack team handoff](docs/SUBSTACK_TEAM_SCRAPING_PLAN.md). The three workers use one collector version with disjoint publication assignments. Run commands from this repository root, not its parent directory.
 
+Before scraping, run the [one-command compatibility check](docs/SUBSTACK_COMPATIBILITY.md): `python3 scripts/substack/check_substack_compatibility.py --shard 2` (teammate 1) or `--shard 3` (teammate 2). It checks your installation against fixed expected outputs and writes a shareable PASS/FAIL report. The same command can validate your actual exported records before delivery.
+
 ## Scripts
 
 | Folder | Contents |

@@ -30,6 +30,8 @@ python3 -m unittest discover -s tests -p 'test_substack*.py'
 
 Python 3.10 or newer is recommended; the Substack tools need no third-party packages. Use `python` if that is your Python 3 executable. The Medium files are organized separately and are not part of these assignments.
 
+Run the [compatibility check](SUBSTACK_COMPATIBILITY.md) before the live pilot: `python3 scripts/substack/check_substack_compatibility.py --shard 2` (or `--shard 3` for teammate 2). Require `PASS`; share the JSON report with Zherui. The added checks leave the frozen collector and assignment hashes unchanged, so existing checkpoints remain compatible with the updated branch.
+
 The rest of the commands show **teammate 1 / shard 2**. Teammate 2 changes every shard `2` to `3`; Zherui uses `1`. Do not change the batch ID, frame files, scraper logic, dates, or hashes. No one needs Zherui's original database or outer project workspace.
 
 ```sh
@@ -95,6 +97,8 @@ python3 scripts/substack/team_collection.py export --batch data/substack_assignm
 
 The exporter writes the actual checkpoint records, including payload text, failures, and observation times, into ordered compressed parts plus a checksum manifest and latest collection status. Each compressed part represents at most 8 MiB of uncompressed data. A JSON line can span parts; use the merge tool, not an ad hoc CSV parser. The manifest explicitly flags a partial export if pending URLs remain. Keep the original checkpoint and log.
 
+Before returning the final export, run `python3 scripts/substack/check_substack_compatibility.py --shard 2 --export-dir .cache/substack_exports/2026-09-28-team-v1-shard-2-final --report .cache/substack_compatibility/shard-2-final.json`. Include that report in the delivery. A complete delivery requires `export_validation.status = PASS` and zero pending publications; recorded failures remain separately reported. See the compatibility guide for interim checks.
+
 Return these files as assets on a **draft release in the team's repository**, with one release tag per shard. This avoids putting the changing database into ordinary Git history. The release is a data-transfer artifact, not a public dataset publication. Confirm the repository remains private to the team before uploading retained text. Using the GitHub CLI, when installed and authenticated to this repository:
 
 ```sh
@@ -132,7 +136,7 @@ MY_SHARD = 2
 HANDOFF_COMMIT = [the exact shared commit SHA]
 BATCH_ID = 2026-09-28-team-v1
 
-Read docs/SUBSTACK_TEAM_SCRAPING_PLAN.md at HANDOFF_COMMIT. All starting inputs are in this checkout. Run its offline tests and assignment preflight, then the five-publication pilot for MY_SHARD. Preserve that checkpoint and continue the same assignment using scripts/substack/team_collection.py. Collect only the assigned publication URLs for 2020-01-01 through 2026-09-17 with the shared parser, one worker, and the documented six-second per-worker interval.
+Read docs/SUBSTACK_TEAM_SCRAPING_PLAN.md at HANDOFF_COMMIT and docs/SUBSTACK_COMPATIBILITY.md. All starting inputs are in this checkout. Run python3 scripts/substack/check_substack_compatibility.py --shard MY_SHARD and require PASS, then run assignment preflight and the five-publication pilot for MY_SHARD. Preserve that checkpoint and continue the same assignment using scripts/substack/team_collection.py. Collect only the assigned publication URLs for 2020-01-01 through 2026-09-17 with the shared parser, one worker, and the documented six-second per-worker interval.
 
 Use the dedicated cache, preserve completed/error rows, and verify actual process/checkpoint progress. Diagnose abnormal exits and persistent PAUSED.json before resuming; honor STOP, Retry-After, access restrictions, and rate stops. Do not discover a new frame, run the full-frame scripts, change the parser independently, or collect another shard.
 
