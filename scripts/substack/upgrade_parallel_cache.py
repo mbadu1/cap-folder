@@ -14,6 +14,8 @@ import parallel_team_collection as parallel
 
 team = parallel.team
 PREDECESSOR_SHA256 = "d81df221edf001d9bf23eda0d89f1121f586fa526a472400d37a66dc6a408182"
+INVITE_ONLY_PREDECESSOR_SHA256 = "087aab2c8aeebd9557336edbc7343bdd467f8008163a578597bcbad4d603a6c2"
+SUPPORTED_PREDECESSORS = {PREDECESSOR_SHA256, INVITE_ONLY_PREDECESSOR_SHA256}
 
 
 def checkpoint_digest(path):
@@ -34,12 +36,13 @@ def upgrade(args):
     if not (source / "crawl.sqlite3").is_file():
         raise FileNotFoundError("Source checkpoint is missing")
     new_binding = parallel.runner_binding(batch["batch_id"], team.sha_file(args.batch / "manifest.json"), args.shard)
-    old_binding = dict(new_binding, runner_sha256=PREDECESSOR_SHA256)
     with team.cache_lock(source), team.cache_lock(target):
         team.check_binding(source, expected)
         if (source / "RETIRED.json").exists():
             raise RuntimeError("Source cache is already retired")
-        if team.read_json(source / "parallel_runner.json") != old_binding:
+        old_binding = team.read_json(source / "parallel_runner.json")
+        if (old_binding.get("runner_sha256") not in SUPPORTED_PREDECESSORS
+                or old_binding != dict(new_binding, runner_sha256=old_binding.get("runner_sha256"))):
             raise ValueError("Source is not the supported pinned predecessor")
         if any(p.name != "collector.lock" for p in target.iterdir()):
             raise FileExistsError("Destination must be empty")

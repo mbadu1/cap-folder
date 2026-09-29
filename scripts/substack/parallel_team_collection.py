@@ -123,9 +123,10 @@ class ParallelCollector(Collector):
                 raise InviteOnlyPublication(url, 403,
                     "Invite-only publication; HTTP 403; response_sha256=" + error.invite_response_sha256,
                     error.headers, None) from error
-            # Stop other workers immediately for an unexplained access failure.
-            if error.code in (401, 403, 429):
+            # Every 403 is a recorded failed history; continue other publications.
+            if error.code in (401, 429):
                 self.pause_event.set()
+            error.close()
             raise
 
     def _record_rate_limit(self, wait_seconds):
@@ -218,6 +219,7 @@ def collect(args, rows, cache, binding, expected=None):
         pool = CollectorPool(args.delay_seconds, args.global_gap_seconds, pause_event, log_start)
         fetched, reason, state = 0, None, "running"
         invite_only_count = 0
+        forbidden_count = 0
         prior = {sig: signal.getsignal(sig) for sig in (signal.SIGINT, signal.SIGTERM)}
         for sig in prior:
             signal.signal(sig, lambda *_: stop_event.set())
@@ -231,7 +233,8 @@ def collect(args, rows, cache, binding, expected=None):
                          request_count_this_run=requests,
                          http_status_counts_this_run=statuses,
                          new_publications_this_run=fetched,
-                         invite_only_failures_this_run=invite_only_count)
+                         invite_only_failures_this_run=invite_only_count,
+                         http_403_failures_this_run=forbidden_count)
             if expected is not None:
                 value.update(expected)
             team.write_json(cache / "collection_status.json", value)
@@ -276,7 +279,9 @@ def collect(args, rows, cache, binding, expected=None):
                             fetched += 1
                             if isinstance(error, InviteOnlyPublication):
                                 invite_only_count += 1
-                            elif isinstance(error, urllib.error.HTTPError) and error.code in (401, 403, 429):
+                            if isinstance(error, urllib.error.HTTPError) and error.code == 403:
+                                forbidden_count += 1
+                            elif isinstance(error, urllib.error.HTTPError) and error.code in (401, 429):
                                 pause_event.set()
                                 reason = reason or str(error)
                                 state = "access_or_rate_stop"

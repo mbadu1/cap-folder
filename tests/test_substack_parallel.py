@@ -92,12 +92,12 @@ class ParallelRunnerTests(unittest.TestCase):
             result, code = parallel.production(self.args())
         self.assertEqual((code, result["new_publications_this_run"]), (0, 0))
 
-    def test_403_pauses_without_dispatching_all_pending_work(self):
+    def test_401_pauses_without_dispatching_all_pending_work(self):
         first = self.shards[2][0]["publication_url"]
 
         def fake_history(_collector, url, _start, _end):
             if url == first:
-                raise urllib.error.HTTPError(url, 403, "invite only", {}, None)
+                raise urllib.error.HTTPError(url, 401, "authentication required", {}, None)
             time.sleep(0.01)
             return {"publication_url": url, "start_date": team.START, "end_date": team.END, "posts": []}
 
@@ -143,6 +143,7 @@ class ParallelRunnerTests(unittest.TestCase):
             result, code = parallel.production(self.args())
         self.assertEqual((code, result["successful"], result["failed"], result["pending"]), (2, 24, 1, 0))
         self.assertEqual(result["invite_only_failures_this_run"], 1)
+        self.assertEqual(result["http_403_failures_this_run"], 1)
         self.assertEqual(result["http_status_counts_this_run"], {"403": 1, "200": 24})
         self.assertFalse((self.root / "production/PAUSED.json").exists())
         with team.readonly(self.root / "production/crawl.sqlite3") as db:
@@ -153,7 +154,32 @@ class ParallelRunnerTests(unittest.TestCase):
             result, code = parallel.production(self.args())
         self.assertEqual(result["new_publications_this_run"], 0)
 
-    def test_invite_classifier_does_not_suppress_other_access_or_rate_failures(self):
+    def test_unexplained_403_is_saved_without_retry_and_other_histories_continue(self):
+        first = self.shards[2][0]["publication_url"]
+        calls = []
+        def response(request, **kwargs):
+            calls.append(request.full_url)
+            if request.full_url.startswith(first + "/"):
+                raise self.http_error(body=b"Forbidden")
+            result = io.BytesIO(b"[]")
+            result.status = 200
+            return result
+        with patch("urllib.request.urlopen", side_effect=response), \
+                patch.object(parallel.Pacing, "wait"), redirect_stdout(io.StringIO()):
+            result, code = parallel.production(self.args())
+        self.assertEqual((code, result["successful"], result["failed"], result["pending"]), (2, 24, 1, 0))
+        self.assertEqual((result["http_403_failures_this_run"], result["invite_only_failures_this_run"]), (1, 0))
+        self.assertEqual(sum(url.startswith(first + "/") for url in calls), 1)
+        self.assertFalse((self.root / "production/PAUSED.json").exists())
+        with team.readonly(self.root / "production/crawl.sqlite3") as db:
+            row = db.execute("SELECT ok,error_type,error_message,payload FROM parsed WHERE item_key=?", (first,)).fetchone()
+        self.assertEqual((row[0], row[1], row[3]), (0, "HTTPError", None))
+        self.assertIn("403", row[2])
+        with patch("urllib.request.urlopen", side_effect=AssertionError("Refetched saved failure")), redirect_stdout(io.StringIO()):
+            result, code = parallel.production(self.args())
+        self.assertEqual(result["new_publications_this_run"], 0)
+
+    def test_only_401_and_429_pause_and_unknown_403_is_not_labeled_invite_only(self):
         message = parallel.INVITE_ONLY_MESSAGE.encode()
         cases = [
             (401, message, None), (429, message, None),
@@ -172,7 +198,7 @@ class ParallelRunnerTests(unittest.TestCase):
                     with self.assertRaises((urllib.error.HTTPError, parallel.CrawlCircuitOpen)) as raised:
                         collector.fetch("https://test.substack.invalid/api/v1/posts")
                 self.assertNotIsInstance(raised.exception, parallel.InviteOnlyPublication)
-                self.assertTrue(event.is_set())
+                self.assertEqual(event.is_set(), code in (401, 429))
 
     def test_runner_upgrade_preserves_every_row_and_markers_without_rebinding_source(self):
         def history(_collector, url, _start, _end):
@@ -181,7 +207,7 @@ class ParallelRunnerTests(unittest.TestCase):
             parallel.production(self.args(limit=2, workers=1))
         source = self.root / "production"
         binding = team.read_json(source / "parallel_runner.json")
-        binding["runner_sha256"] = upgrade.PREDECESSOR_SHA256
+        binding["runner_sha256"] = upgrade.INVITE_ONLY_PREDECESSOR_SHA256
         team.write_json(source / "parallel_runner.json", binding)
         checkpoint = team.Checkpoint(source / "crawl.sqlite3")
         checkpoint.put(team.HISTORY_STAGE, self.shards[2][2]["publication_url"], False, None, self.http_error())
