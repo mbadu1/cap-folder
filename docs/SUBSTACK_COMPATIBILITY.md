@@ -67,7 +67,7 @@ The implemented `validation-list`, `validation-run`, `validation-export`, and `v
 
 The overlap comparator checks every normalized payload field, including post order, IDs, dates, text, access values, and hashes; it excludes only run-generated observation times and SQLite file layout. Offline tests verify that the parallel and existing runners produce identical payloads from the same fixed responses, and that a changed payload yields `REVIEW_REQUIRED`. For a live mismatch, source drift must be investigated separately before attributing it to the collector. Do not rewrite the old reference to force a pass.
 
-The current v2 fixture and its expected hash are unchanged. The parallel runner is pinned separately in each cache, while the existing checker validates every actual v2 export and flags incomplete exports. Ziyang's shard-2 production URLs have no prior local records because assignments are disjoint; the 21-history overlap is a validation-only exception.
+The current v2 fixture and its expected hash are unchanged. The compatibility report now records `parallel_runner_sha256`; the runner is pinned separately in each cache. The checker validates every actual v2 export and flags incomplete exports. Ziyang's shard-2 production URLs have no prior local records because assignments are disjoint; the 21-history overlap is a validation-only exception.
 
 ## Paste to your AI agent for the current v2 collector
 

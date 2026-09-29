@@ -188,7 +188,9 @@ def main():
             report.update(contract_version=reference["contract_version"], reference_commit=reference["reference_commit"],
                           fixture_manifest_sha256=team.sha_file(FIXTURES / "manifest.json"),
                           batch_manifest_sha256=team.sha_file(args.batch / "manifest.json"),
-                          collector_sha256=team.code_hashes(), golden_output_sha256=golden, assigned_publications=len(shards[args.shard]))
+                          collector_sha256=team.code_hashes(),
+                          parallel_runner_sha256=team.sha_file(ROOT / "scripts/substack/parallel_team_collection.py"),
+                          golden_output_sha256=golden, assigned_publications=len(shards[args.shard]))
             suite = unittest.defaultTestLoader.discover(str(ROOT / "tests"), pattern="test_substack*.py")
             with redirect_stdout(log):
                 result = unittest.TextTestRunner(stream=log, verbosity=1).run(suite)
