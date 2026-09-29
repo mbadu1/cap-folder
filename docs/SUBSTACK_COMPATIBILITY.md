@@ -20,7 +20,7 @@ Zherui:
 python3 scripts/substack/check_substack_compatibility.py --shard 1
 ```
 
-Expected terminal output begins with `PASS` and reports **50 tests passed** on the parallel-runner release. The command writes `.cache/substack_compatibility/2026-09-28-team-v2/shard-2.json` (or `shard-1.json`). It uses temporary synthetic checkpoints and blocks accidental network connections; it does not read or alter production checkpoints. A failure returns a nonzero exit code and saves a report explaining the failing check.
+Expected terminal output begins with `PASS` and reports **53 tests passed** on the parallel-runner release. The command writes `.cache/substack_compatibility/2026-09-28-team-v2/shard-2.json` (or `shard-1.json`). It uses temporary synthetic checkpoints and blocks accidental network connections; it does not read or alter production checkpoints. A failure returns a nonzero exit code and saves a report explaining the failing check.
 
 The report records your Python/OS, Git revision, collector file hashes, batch hash, test outcomes, and a fixed expected-output fingerprint. Both teammates should obtain:
 

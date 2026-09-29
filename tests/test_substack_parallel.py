@@ -109,15 +109,68 @@ class ParallelRunnerTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "pause"):
             parallel.production(self.args())
 
-    def test_429_opens_shared_pause_before_another_request(self):
+    def test_429_cooldown_blocks_other_workers_then_reopens_without_pause(self):
         event = threading.Event()
-        gate = parallel.Pacing(0.01, 0.01, event)
-        collector = parallel.ParallelCollector(0.01, gate, event)
-        with self.assertRaisesRegex(parallel.CrawlCircuitOpen, "HTTP 429"):
-            collector._record_rate_limit(0.01)
-        self.assertTrue(event.is_set())
-        with self.assertRaises(parallel.CrawlCircuitOpen):
-            gate.wait()
+        gate = parallel.Pacing(0, 0, event)
+        gate.rate_limit(0.06, {"http_status": 429})
+        started = time.monotonic()
+        finished = []
+        threads = [threading.Thread(target=lambda: (gate.wait(), finished.append(time.monotonic()))) for _ in range(3)]
+        for thread in threads: thread.start()
+        for thread in threads: thread.join()
+        self.assertGreaterEqual(min(finished) - started, 0.05)
+        self.assertFalse(event.is_set())
+        self.assertEqual(gate.cooldown()["cooldown_remaining_seconds"], 0)
+
+    def test_429_retries_more_than_four_times_without_losing_history(self):
+        first = self.shards[2][0]["publication_url"]
+        calls = []
+        def response(request, **kwargs):
+            calls.append(request.full_url)
+            if len(calls) <= 5:
+                raise self.http_error(code=429, headers={"Retry-After": "0"})
+            result = io.BytesIO(b"[]");result.status = 200
+            return result
+        with patch("urllib.request.urlopen", side_effect=response), \
+                patch.object(parallel.Pacing, "wait"), redirect_stdout(io.StringIO()):
+            result, code = parallel.production(self.args(workers=1, limit=1))
+        self.assertEqual((result["successful"], result["failed"], result["rate_limit_events_this_run"]), (1, 0, 5))
+        self.assertEqual(result["http_status_counts_this_run"], {"429": 5, "200": 1})
+        self.assertEqual(len(set(calls)), 1)
+        self.assertTrue(calls[0].startswith(first + "/"))
+        self.assertFalse((self.root / "production/PAUSED.json").exists())
+        events = [json.loads(line) for line in (self.root / "production/rate_limit_events.jsonl").read_text().splitlines()]
+        self.assertEqual(len(events), 5)
+        self.assertEqual(events[-1]["retry_after_raw"], "0")
+        self.assertEqual(events[-1]["delay_source"], "retry_after_seconds")
+
+    def test_retry_after_seconds_date_and_explicit_fallback(self):
+        from email.utils import formatdate
+        event = threading.Event()
+        collector = parallel.ParallelCollector(0, parallel.Pacing(0, 0, event), event)
+        cases = [("2", 2, "retry_after_seconds"), ("0", 0, "retry_after_seconds"),
+                 (formatdate(1700000017, usegmt=True), 17, "retry_after_http_date"),
+                 (None, 60, "fallback_missing_or_invalid"), ("NaN", 60, "fallback_missing_or_invalid")]
+        for raw, expected, source in cases:
+            with self.subTest(raw=raw), patch.object(parallel.time, "time", return_value=1700000000):
+                error = self.http_error(code=429, headers={"Retry-After": raw} if raw else None)
+                self.assertEqual(collector._retry_after_seconds(error, 3), expected)
+                self.assertEqual(collector.retry_evidence["delay_source"], source)
+                self.assertEqual(collector.retry_evidence["retry_after_raw"], raw)
+
+    def test_cooldown_restores_latest_deadline_and_operator_stop_interrupts_wait(self):
+        event, stop = threading.Event(), threading.Event()
+        gate = parallel.Pacing(0, 0, event, stop_requested=stop.is_set)
+        gate.rate_limit(120, {"http_status": 429})
+        first = gate.cooldown()["last_rate_limit"]["cooldown_until_utc"]
+        gate.rate_limit(1, {"http_status": 429})
+        self.assertGreater(gate.cooldown()["cooldown_remaining_seconds"], 119)
+        restored = parallel.Pacing(0, 0, event, stop_requested=stop.is_set)
+        restored.restore_cooldown(gate.cooldown()["last_rate_limit"])
+        self.assertGreater(restored.cooldown()["cooldown_remaining_seconds"], 119)
+        stop.set()
+        with self.assertRaises(parallel.CollectionStopping):restored.wait()
+        self.assertFalse(event.is_set())
 
     def http_error(self, code=403, body=None, headers=None):
         message = Message()
@@ -182,7 +235,7 @@ class ParallelRunnerTests(unittest.TestCase):
     def test_rate_limit_evidence_pauses_and_unknown_403_is_not_labeled_invite_only(self):
         message = parallel.INVITE_ONLY_MESSAGE.encode()
         cases = [
-            (401, message, None), (429, message, None),
+            (401, message, None),
             (403, b"Forbidden", None), (403, message + b" More information", None),
             (403, b"\xff", None), (403, b" " * 16385 + message, None),
             (403, message, {"Content-Type": "text/html", "Retry-After": "600"}),

@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 import gzip
 import hashlib
 import json
@@ -40,6 +41,14 @@ class InviteOnlyPublication(urllib.error.HTTPError):
 
 class RateLimitedForbidden(urllib.error.HTTPError):
     """HTTP 403 with explicit rate-limit evidence; pause all workers."""
+
+
+class RetryAfterWait(Exception):
+    """Internal control flow: retry this URL through the shared cooldown gate."""
+
+
+class CollectionStopping(Exception):
+    """Leave an interrupted, uncommitted history pending on operator stop."""
 
 
 def failed_response_body(error):
@@ -105,7 +114,8 @@ def digest(value):
 
 class Pacing:
     """One start gate tracks both aggregate and per-thread request intervals."""
-    def __init__(self, per_worker_gap, global_gap, pause_event, on_start=None):
+    def __init__(self, per_worker_gap, global_gap, pause_event, on_start=None,
+                 on_rate_limit=None, stop_requested=None):
         self.per_worker_gap = per_worker_gap
         self.global_gap = global_gap
         self.pause_event = pause_event
@@ -113,10 +123,17 @@ class Pacing:
         self.lock = threading.Lock()
         self.next_global = 0.0
         self.next_worker = {}
+        self.on_rate_limit = on_rate_limit
+        self.stop_requested = stop_requested
+        self.rate_limit_until = 0.0
+        self.last_rate_limit = None
+        self.rate_limit_count = 0
 
     def wait(self):
         ident = threading.get_ident()
         while True:
+            if self.stop_requested and self.stop_requested():
+                raise CollectionStopping("Operator stop during request wait")
             if self.pause_event.is_set():
                 raise CrawlCircuitOpen("Access/rate stop; no new request starts")
             with self.lock:
@@ -141,6 +158,34 @@ class Pacing:
         with self.lock:
             self.next_global = max(self.next_global, time.monotonic() + seconds)
 
+    def rate_limit(self, seconds, evidence):
+        with self.lock:
+            self.rate_limit_until = max(self.rate_limit_until, time.monotonic() + seconds)
+            self.next_global = max(self.next_global, self.rate_limit_until)
+            self.rate_limit_count += 1
+            until = time.time() + max(0.0, self.rate_limit_until - time.monotonic())
+            self.last_rate_limit = dict(evidence, wait_seconds=seconds,
+                cooldown_until_utc=datetime.fromtimestamp(until, timezone.utc).isoformat())
+            if self.on_rate_limit:
+                try:
+                    self.on_rate_limit(self.last_rate_limit)
+                except OSError as error:
+                    self.pause_event.set()
+                    raise CrawlCircuitOpen("Cannot persist HTTP 429 cooldown") from error
+
+    def cooldown(self):
+        with self.lock:
+            return {"cooldown_remaining_seconds": max(0.0, self.rate_limit_until - time.monotonic()),
+                    "rate_limit_events_this_run": self.rate_limit_count,
+                    "last_rate_limit": self.last_rate_limit}
+
+    def restore_cooldown(self, evidence):
+        until = datetime.fromisoformat(evidence["cooldown_until_utc"]).timestamp()
+        with self.lock:
+            self.last_rate_limit = evidence
+            self.rate_limit_until = time.monotonic() + max(0.0, until - time.time())
+            self.next_global = max(self.next_global, self.rate_limit_until)
+
 
 class ParallelCollector(Collector):
     def __init__(self, per_worker_gap, pacing, pause_event):
@@ -149,6 +194,14 @@ class ParallelCollector(Collector):
         self.pause_event = pause_event
 
     def fetch(self, url):
+        while True:
+            try:
+                return self._fetch_once(url)
+            except RetryAfterWait:
+                # 429s do not exhaust the ordinary transport-error retry budget.
+                continue
+
+    def _fetch_once(self, url):
         try:
             return super().fetch(url)
         except urllib.error.HTTPError as error:
@@ -164,21 +217,47 @@ class ParallelCollector(Collector):
                     "Invite-only publication; HTTP 403; response_sha256=" + error.invite_response_sha256,
                     error.headers, None) from error
             # Other 403s are recorded failures; continue other publications.
-            if error.code in (401, 429):
+            if error.code == 401:
                 self.pause_event.set()
             error.close()
             raise
 
+    def _retry_after_seconds(self, error, attempt):
+        raw = next((str(v).strip() for k, v in (error.headers or {}).items()
+                    if str(k).lower() == "retry-after"), "")
+        seconds, source = 60.0, "fallback_missing_or_invalid"
+        if raw:
+            try:
+                value = float(raw)
+                if not math.isfinite(value) or value < 0:
+                    raise ValueError("Invalid Retry-After seconds")
+                seconds, source = value, "retry_after_seconds"
+            except ValueError:
+                try:
+                    value = parsedate_to_datetime(raw)
+                    if value.tzinfo is None:
+                        value = value.replace(tzinfo=timezone.utc)
+                    seconds = max(0.0, value.timestamp() - time.time())
+                    source = "retry_after_http_date"
+                except (TypeError, ValueError, OverflowError):
+                    pass
+        self.retry_evidence = {"at": datetime.now(timezone.utc).isoformat(),
+                               "url": error.url, "http_status": 429,
+                               "retry_after_raw": raw or None, "delay_source": source}
+        error.close()
+        return seconds
+
     def _record_rate_limit(self, wait_seconds):
-        self.pause_event.set()
-        self.throttle.pause_for(wait_seconds)
-        raise CrawlCircuitOpen(f"HTTP 429; honor Retry-After/cooldown of at least {wait_seconds:.1f}s")
+        self.throttle.rate_limit(wait_seconds, self.retry_evidence)
+        raise RetryAfterWait()
 
 
 class CollectorPool:
-    def __init__(self, per_worker_gap, global_gap, pause_event, on_start=None):
+    def __init__(self, per_worker_gap, global_gap, pause_event, on_start=None,
+                 on_rate_limit=None, stop_requested=None):
         self.local = threading.local()
-        self.pacing = Pacing(per_worker_gap, global_gap, pause_event, on_start)
+        self.pacing = Pacing(per_worker_gap, global_gap, pause_event, on_start,
+                             on_rate_limit, stop_requested)
         self.per_worker_gap = per_worker_gap
         self.pause_event = pause_event
         self.collectors = []
@@ -256,7 +335,15 @@ def collect(args, rows, cache, binding, expected=None):
                                         "thread_id": ident}) + "\n")
             event_log.flush()
 
-        pool = CollectorPool(args.delay_seconds, args.global_gap_seconds, pause_event, log_start)
+        def log_rate_limit(evidence):
+            team.write_json(cache / "rate_limit_status.json", evidence)
+            with (cache / "rate_limit_events.jsonl").open("a", encoding="utf-8") as log:
+                log.write(json.dumps(evidence) + "\n")
+
+        pool = CollectorPool(args.delay_seconds, args.global_gap_seconds, pause_event, log_start,
+                             log_rate_limit, lambda: stop_event.is_set() or (cache / "STOP").exists())
+        if (cache / "rate_limit_status.json").exists():
+            pool.pacing.restore_cooldown(team.read_json(cache / "rate_limit_status.json"))
         fetched, reason, state = 0, None, "running"
         invite_only_count = 0
         forbidden_count = 0
@@ -266,8 +353,11 @@ def collect(args, rows, cache, binding, expected=None):
 
         def report():
             requests, statuses = pool.metrics()
+            cooldown = pool.pacing.cooldown()
             value = dict(binding, **team.counts(rows, keys), updated_at=team.iso_now(),
-                         worker_pid=os.getpid(), state=state, reason=reason,
+                         worker_pid=os.getpid(),
+                         state="cooldown" if state == "running" and cooldown["cooldown_remaining_seconds"] > 0 else state,
+                         reason=reason, **cooldown,
                          workers=args.workers, delay_seconds=args.delay_seconds,
                          global_gap_seconds=args.global_gap_seconds,
                          request_count_this_run=requests,
@@ -305,11 +395,15 @@ def collect(args, rows, cache, binding, expected=None):
                     if not submit():
                         break
                 while futures:
-                    done, _ = wait(futures, return_when=FIRST_COMPLETED)
+                    done, _ = wait(futures, timeout=5, return_when=FIRST_COMPLETED)
+                    if not done:
+                        report()
                     for future in done:
                         futures.pop(future)
                         url, ok, payload, error = future.result()
-                        if isinstance(error, CrawlCircuitOpen):
+                        if isinstance(error, CollectionStopping):
+                            stop_event.set()
+                        elif isinstance(error, CrawlCircuitOpen):
                             pause_event.set()
                             reason = reason or str(error)
                             state = "rate_limit_stop"
