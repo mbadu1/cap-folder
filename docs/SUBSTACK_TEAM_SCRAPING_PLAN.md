@@ -2,6 +2,8 @@
 
 Prepared 2026-09-28. Zherui and Ziyang perform the same task with the same parser and different publication URL lists. Everything needed to start is in this repository on branch `zherui-substack-month-pilot`. Record the shared handoff commit before collection; the launcher also verifies the exact collector file hashes.
 
+**2026-09-28 DCC amendment:** The team now targets **20 parallel workers per shard** on DCC, starting with Ziyang's shard 2. Read the [DCC implementation and test plan](SUBSTACK_DCC_20_WORKER_PLAN.md) before using this handoff. The commands below are the still-runnable **single-worker v2** path; they do not implement the 20-worker target. The new parallel collector requires a reviewed, separately pinned batch/release, a production-like pilot, and an aggregate request gate shared across active shards. Do not launch 20 copies of the v2 command or treat the one-minute rate probe as sustained-rate approval. Zherui's shard-1 `PAUSED.json` remains in force.
+
 ## Assignments
 
 Batch: `2026-09-28-team-v2`, frozen at 2026-09-29T02:38:08Z.
@@ -39,7 +41,9 @@ python3 scripts/substack/team_collection.py run --batch data/substack_assignment
 
 This makes no network requests. It verifies all frame/assignment files, checksums, collector code, nonoverlap, coverage, and the checkpoint binding if one exists. Missing input causes an error; it cannot silently fetch a new frame.
 
-## Pilot, run, and resume
+## Current v2 single-worker pilot, run, and resume
+
+These commands document the existing v2 checkpoint protocol. Ziyang's requested 20-worker DCC route is in the [DCC plan](SUBSTACK_DCC_20_WORKER_PLAN.md); use its new batch ID, release commit, commands, and cache only after that implementation passes its gates. Do not start this v2 run and a new parallel run against the same assignment at the same time.
 
 Start with five new publication histories:
 
@@ -88,6 +92,8 @@ A traceback also requires diagnosis. An abnormal exit may leave a stale status f
 
 ## Export and return through GitHub
 
+The commands and release tag in this section apply to a v2 single-worker export. For the parallel release, substitute the **actual new batch ID and its bound cache/export paths throughout**, and update the compatibility checker for that release before labeling its export complete. Never combine a v2 shard export with a new-batch shard export.
+
 Stop the worker before export so the exporter can acquire its lock. Use a new output directory for every export:
 
 ```sh
@@ -109,6 +115,8 @@ The same draft release and asset upload can be created through GitHub's website.
 
 ## Combine and audit (Zherui)
 
+The following paths are for v2. After the parallel release, use its actual batch and two same-release exports with the preserved original baseline; do not mix batch versions.
+
 Keep the original baseline and shard exports unchanged. Download both complete exports for batch `2026-09-28-team-v2`. Old-batch exports are not valid inputs to this merge. Merge into a new database:
 
 ```sh
@@ -127,17 +135,4 @@ Creator and coauthor IDs must be resolved globally. The up-to-2,500 creators/mon
 
 ## Paste to Ziyang's AI agent
 
-This prompt is for Ziyang (`MY_SHARD = 2`). Supply the exact new handoff commit SHA shown by Zherui. For Zherui, use `MY_SHARD = 1`.
-
-```text
-Work in the mbadu1/cap-folder GitHub repository.
-MY_SHARD = 2
-HANDOFF_COMMIT = [the exact shared commit SHA]
-BATCH_ID = 2026-09-28-team-v2
-
-Read docs/SUBSTACK_TEAM_SCRAPING_PLAN.md at HANDOFF_COMMIT and docs/SUBSTACK_COMPATIBILITY.md. All starting inputs are in this checkout. Run python3 scripts/substack/check_substack_compatibility.py --shard MY_SHARD and require PASS, then run assignment preflight and the five-publication pilot for MY_SHARD. Preserve that checkpoint and continue the same assignment using scripts/substack/team_collection.py. Collect only the assigned publication URLs for 2020-01-01 through 2026-09-17 with the shared parser, one worker, and the documented six-second per-worker interval.
-
-Use the dedicated cache, preserve completed/error rows, and verify actual process/checkpoint progress. Diagnose abnormal exits and persistent PAUSED.json before resuming; honor STOP, Retry-After, access restrictions, and rate stops. Do not discover a new frame, run the full-frame scripts, change the parser independently, or collect another shard.
-
-Track assigned/success/error/pending counts. When finished, stop cleanly, export the actual records with checksum manifest, and return the package through the documented private draft GitHub release. Report the package location, counts, and unresolved failures. Keep the source checkpoint. If a required file, revision, or GitHub upload permission is missing, identify it precisely instead of guessing or discarding data.
-```
+Use the current [Ziyang Codex prompt](SUBSTACK_DCC_20_WORKER_PLAN.md#handoff-for-ziyangs-codex). Supply the exact reviewed parallel-release commit when it exists. The former prompt for one worker and the v2 batch is superseded for Ziyang's requested DCC route.
