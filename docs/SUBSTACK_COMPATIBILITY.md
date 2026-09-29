@@ -59,7 +59,17 @@ For a deliberately incomplete pilot export, add `--allow-partial`. A valid incom
 
 Return the final JSON report with your export manifest and compressed record parts. The normal baseline-plus-two-shard merge and final creator/month/topic audit still apply. Passing compatibility and integrity checks does not establish that Substack supplied every historical post, that source metadata is factually correct, or that every acquired record qualifies for the final analytic sample.
 
-## Paste to your AI agent
+## Additional exact-alignment gate for the planned DCC parallel collector
+
+The commands above validate the **current single-worker v2 release**. Their fixed synthetic fingerprint and actual-export integrity check do not establish that 20-worker DCC output equals Zherui's locally collected output. Ziyang uses Codex locally to build/test/run the project remotely through his DCC compute allocation; see the [20-worker DCC plan](SUBSTACK_DCC_20_WORKER_PLAN.md).
+
+The new release must produce two additional PASS reports before sustained collection: (1) exact row-for-row equality when Zherui's stopped local shard-1 checkpoint is migrated, including payload bytes, errors, and observation times; and (2) exact canonical payload equality when the old local collector and new remote 20-worker collector replay the **same frozen real HTTP responses** into disposable caches. The replay comparison checks every content field, post order, ID, date, text, access value, and hash; it excludes only run-generated timestamps/timing and SQLite file layout. Deliberate mutations of text, order, access, and hashes must fail the comparator. A live refetch at a later time may legitimately differ because the source changed, so it cannot serve as an exact parity test.
+
+Keep the current v2 fixture and its expected hash unchanged. Version the new collector, assignment binding, fixture manifest, and comparison reports separately. The updated checker must still validate every actual DCC export and flag incomplete exports. Ziyang's shard-2 URLs have no prior local records because assignments are disjoint; same-input replay is the exact behavior comparison for his new records.
+
+## Paste to your AI agent for the current v2 collector
+
+This prompt verifies the existing single-worker release. For the planned 20-worker DCC route, use the [Ziyang Codex handoff](SUBSTACK_DCC_20_WORKER_PLAN.md#handoff-for-ziyangs-codex), which also requires the two exact-alignment reports above.
 
 ```text
 In mbadu1/cap-folder on zherui-substack-month-pilot, read docs/SUBSTACK_COMPATIBILITY.md. Run python3 scripts/substack/check_substack_compatibility.py --shard MY_SHARD, replacing MY_SHARD with 1 for Zherui or 2 for Ziyang. Require PASS with no skipped tests before beginning my live collection. Give me the JSON report path and its golden_output_sha256. Diagnose a failure without changing the shared scraper, frozen assignments, or expected fixture outputs.
