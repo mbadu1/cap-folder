@@ -38,6 +38,39 @@ class InviteOnlyPublication(urllib.error.HTTPError):
     """A confirmed publication restriction, retained as a failed history."""
 
 
+class RateLimitedForbidden(urllib.error.HTTPError):
+    """HTTP 403 with explicit rate-limit evidence; pause all workers."""
+
+
+def failed_response_body(error):
+    if not hasattr(error, "bounded_response_body"):
+        try:
+            error.bounded_response_body = error.read(16385)
+        except (OSError, ValueError):
+            error.bounded_response_body = None
+        finally:
+            error.close()
+    return error.bounded_response_body
+
+
+def forbidden_rate_limit_evidence(error):
+    if error.code != 403:
+        return None
+    headers = {str(k).lower(): str(v).strip() for k, v in (error.headers or {}).items()}
+    if "retry-after" in headers:
+        return "Retry-After=" + headers["retry-after"]
+    for name in ("ratelimit-remaining", "x-ratelimit-remaining", "x-rate-limit-remaining"):
+        if headers.get(name) == "0":
+            return name + "=0"
+    body = failed_response_body(error)
+    if body is not None:
+        text = " ".join(visible_text(body.decode("utf-8", errors="replace")).lower().split())
+        for marker in ("rate limit", "rate-limit", "rate_limit", "too many requests", "error 1015"):
+            if marker in text:
+                return marker + "; response_prefix_sha256=" + hashlib.sha256(body).hexdigest()
+    return None
+
+
 def confirmed_invite_only(error):
     """Inspect one failed response; never retry or infer from status alone."""
     headers = {str(k).lower(): str(v) for k, v in (error.headers or {}).items()}
@@ -46,8 +79,8 @@ def confirmed_invite_only(error):
     if headers.get("content-type", "").split(";", 1)[0].lower() not in ("text/html", "text/plain"):
         return False
     try:
-        body = error.read(16385)
-        if len(body) > 16384:
+        body = failed_response_body(error)
+        if body is None or len(body) > 16384:
             return False
         text = body.decode("utf-8")
     except (OSError, ValueError, UnicodeError):
@@ -119,11 +152,18 @@ class ParallelCollector(Collector):
         try:
             return super().fetch(url)
         except urllib.error.HTTPError as error:
+            rate_evidence = forbidden_rate_limit_evidence(error)
+            if rate_evidence:
+                self.pause_event.set()
+                error.close()
+                raise RateLimitedForbidden(url, 403,
+                    "Rate-limit evidence in HTTP 403; " + rate_evidence,
+                    error.headers, None) from error
             if confirmed_invite_only(error):
                 raise InviteOnlyPublication(url, 403,
                     "Invite-only publication; HTTP 403; response_sha256=" + error.invite_response_sha256,
                     error.headers, None) from error
-            # Every 403 is a recorded failed history; continue other publications.
+            # Other 403s are recorded failures; continue other publications.
             if error.code in (401, 429):
                 self.pause_event.set()
             error.close()
@@ -281,7 +321,8 @@ def collect(args, rows, cache, binding, expected=None):
                                 invite_only_count += 1
                             if isinstance(error, urllib.error.HTTPError) and error.code == 403:
                                 forbidden_count += 1
-                            elif isinstance(error, urllib.error.HTTPError) and error.code in (401, 429):
+                            if (isinstance(error, RateLimitedForbidden)
+                                    or isinstance(error, urllib.error.HTTPError) and error.code in (401, 429)):
                                 pause_event.set()
                                 reason = reason or str(error)
                                 state = "access_or_rate_stop"

@@ -179,7 +179,7 @@ class ParallelRunnerTests(unittest.TestCase):
             result, code = parallel.production(self.args())
         self.assertEqual(result["new_publications_this_run"], 0)
 
-    def test_only_401_and_429_pause_and_unknown_403_is_not_labeled_invite_only(self):
+    def test_rate_limit_evidence_pauses_and_unknown_403_is_not_labeled_invite_only(self):
         message = parallel.INVITE_ONLY_MESSAGE.encode()
         cases = [
             (401, message, None), (429, message, None),
@@ -189,6 +189,9 @@ class ParallelRunnerTests(unittest.TestCase):
             (403, message, {"Content-Type": "text/html", "CF-Mitigated": "challenge"}),
             (403, message, {"Content-Type": "application/json"}),
             (403, b"<script>cf-chl-test</script>" + message, None),
+            (403, b"Too many requests", None),
+            (403, b"Rate limit exceeded", None),
+            (403, b"Forbidden", {"X-RateLimit-Remaining": "0"}),
         ]
         for code, body, headers in cases:
             with self.subTest(code=code, body=body[:50], headers=headers):
@@ -198,7 +201,9 @@ class ParallelRunnerTests(unittest.TestCase):
                     with self.assertRaises((urllib.error.HTTPError, parallel.CrawlCircuitOpen)) as raised:
                         collector.fetch("https://test.substack.invalid/api/v1/posts")
                 self.assertNotIsInstance(raised.exception, parallel.InviteOnlyPublication)
-                self.assertEqual(event.is_set(), code in (401, 429))
+                rate_limited = (body in (b"Too many requests", b"Rate limit exceeded")
+                                or headers and ("Retry-After" in headers or headers.get("X-RateLimit-Remaining") == "0"))
+                self.assertEqual(event.is_set(), bool(code in (401, 429) or rate_limited))
 
     def test_runner_upgrade_preserves_every_row_and_markers_without_rebinding_source(self):
         def history(_collector, url, _start, _end):

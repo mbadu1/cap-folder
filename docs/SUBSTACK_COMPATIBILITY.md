@@ -78,3 +78,5 @@ In mbadu1/cap-folder on zherui-substack-month-pilot, read docs/SUBSTACK_COMPATIB
 
 After I have a final export, run the same checker with --export-dir pointing to it and --report pointing to a new final report. Require export_validation.status = PASS and pending = 0 before labeling delivery complete. Preserve/report failed publications separately. For an interim export use --allow-partial and clearly label PASS_PARTIAL. Include the final report with the return package.
 ```
+
+The 2026-09-29 rate-limited-403 clarification was deployed without rerunning tests at the user’s explicit request. The preceding release passed 50 checks; do not attribute that result to the later adjustment.
