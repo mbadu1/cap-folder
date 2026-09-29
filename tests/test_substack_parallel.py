@@ -1,4 +1,4 @@
-"""Offline checks for the 20-thread runner and private overlap comparison."""
+"""Offline checks for the 20-thread runner and private baseline comparison."""
 import argparse
 from contextlib import redirect_stdout
 import hashlib
@@ -120,17 +120,34 @@ class ParallelRunnerTests(unittest.TestCase):
     def test_owner_compares_disposable_rescrape_without_sharing_reference_db(self):
         reference = self.root / "local-reference.sqlite3"
         checkpoint = team.Checkpoint(reference)
-        urls = [row["publication_url"] for row in self.shards[1][:21]]
-        for url in urls:
+        frame = self.root / "baseline-frame.csv"
+        rows = []
+        for n in range(100):
+            url = f"https://baseline-test-{n}.substack.invalid"
+            rows.append({"publication_url": url, "frame_lastmod": "",
+                         "frame_priority": hashlib.sha256(("publication-frame-v1|substack|" + url).encode()).hexdigest()})
+        team.write_csv(frame, team.FIELDS, rows)
+        team.write_json(frame.with_suffix(".manifest.json"), {"frame_csv_sha256": team.sha_file(frame)})
+        baseline_urls = [row["publication_url"] for row in rows[:60]]
+        for url in baseline_urls:
             checkpoint.put(team.HISTORY_STAGE, url, True,
                            {"publication_url": url, "start_date": team.START,
                             "end_date": team.END, "posts": []}, None)
         checkpoint.close()
+        batch = self.root / "baseline-batch"
+        team.prepare(frame, reference, batch, shard_count=2)
         list_path = self.root / "urls.json"
-        parallel.make_validation_list(argparse.Namespace(batch=self.batch, reference_db=reference,
+        parallel.make_validation_list(argparse.Namespace(batch=batch, reference_db=reference,
                                                         output=list_path))
+        selected = parallel.validation_list(list_path, batch)
+        urls = selected["urls"]
+        self.assertEqual((len(urls), selected["reference"]), (40, "baseline"))
+        self.assertTrue(set(urls) <= set(baseline_urls))
+        with self.assertRaisesRegex(ValueError, "baseline inventory"):
+            parallel.make_validation_list(argparse.Namespace(batch=batch,
+                reference_db=self.root / "baseline.sqlite3", output=self.root / "bad-urls.json"))
         cache = self.root / "disposable-test"
-        args = self.args(command="validation-run", urls=list_path, cache_root=cache,
+        args = self.args(command="validation-run", batch=batch, urls=list_path, cache_root=cache,
                          continuous=True)
 
         def fake_history(_collector, url, _start, _end):
@@ -139,23 +156,23 @@ class ParallelRunnerTests(unittest.TestCase):
 
         with patch.object(parallel, "parse_publication_history", side_effect=fake_history), redirect_stdout(io.StringIO()):
             result, code = parallel.validation_run(args)
-        self.assertEqual((code, result["successful"]), (0, 21))
+        self.assertEqual((code, result["successful"]), (0, 40))
         export = self.root / "test-export"
-        parallel.validation_export(argparse.Namespace(batch=self.batch, urls=list_path,
+        parallel.validation_export(argparse.Namespace(batch=batch, urls=list_path,
                                                       cache_root=cache, output=export))
-        report, code = parallel.validation_compare(argparse.Namespace(batch=self.batch, urls=list_path,
+        report, code = parallel.validation_compare(argparse.Namespace(batch=batch, urls=list_path,
                                                      reference_db=reference, export_dir=export,
                                                      report=self.root / "comparison.json"))
-        self.assertEqual((code, report["status"], report["exact"]), (0, "PASS_EXACT", 21))
+        self.assertEqual((code, report["status"], report["exact"]), (0, "PASS_EXACT", 40))
         checkpoint = team.Checkpoint(reference)
         checkpoint.put(team.HISTORY_STAGE, urls[0], True,
                        {"publication_url": urls[0], "start_date": team.START,
                         "end_date": team.END, "posts": [{"changed": True}]}, None)
         checkpoint.close()
-        report, code = parallel.validation_compare(argparse.Namespace(batch=self.batch, urls=list_path,
+        report, code = parallel.validation_compare(argparse.Namespace(batch=batch, urls=list_path,
                                                      reference_db=reference, export_dir=export,
                                                      report=self.root / "comparison-changed.json"))
-        self.assertEqual((code, report["status"], report["exact"]), (1, "REVIEW_REQUIRED", 20))
+        self.assertEqual((code, report["status"], report["exact"]), (1, "REVIEW_REQUIRED", 39))
 
     def test_parallel_and_existing_runner_parse_identical_frozen_responses(self):
         _, fixture, _ = checks.load_reference()

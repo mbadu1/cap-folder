@@ -30,6 +30,7 @@ ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_BATCH = ROOT / "data/substack_assignments/2026-09-28-team-v2"
 RUNNER = Path(__file__).resolve()
 MISSING = object()
+BASELINE_SAMPLE_SIZE = 40
 
 
 def canonical(value):
@@ -277,15 +278,21 @@ def production(args):
 
 
 def make_validation_list(args):
-    batch, shards = team.validate_batch(args.batch)
-    allowed = {r["publication_url"] for r in shards[1]}
+    batch, _ = team.validate_batch(args.batch)
+    inventory = {r["publication_url"]: int(r["ok"]) for r in team.read_csv(args.batch / "already_attempted.csv")}
     with team.readonly(args.reference_db) as db:
-        urls = [r[0] for r in db.execute("SELECT item_key FROM parsed WHERE stage=? AND ok=1 ORDER BY item_key", (HISTORY_STAGE,))]
-    if len(urls) != 21 or not set(urls) <= allowed:
-        raise ValueError("Expected exactly 21 successful local shard-1 histories")
+        actual = dict(db.execute("SELECT item_key, ok FROM parsed WHERE stage=?", (HISTORY_STAGE,)))
+    if {url: actual.get(url) for url in inventory} != inventory:
+        raise ValueError("Reference database does not match the frozen baseline inventory")
+    eligible = [url for url, ok in inventory.items() if ok]
+    if len(eligible) != batch["baseline_successes"] or len(eligible) < BASELINE_SAMPLE_SIZE:
+        raise ValueError("Frozen baseline has too few successful histories")
+    urls = sorted(eligible, key=lambda url: (hashlib.sha256(
+        ("substack-baseline-parallel-validation-v1|" + url).encode("utf-8")).hexdigest(), url))[:BASELINE_SAMPLE_SIZE]
     if args.output.exists():
         raise FileExistsError(args.output)
-    value = {"batch_id": batch["batch_id"], "shard": 1, "urls": urls,
+    value = {"batch_id": batch["batch_id"], "reference": "baseline",
+             "baseline_inventory_sha256": batch["files"]["already_attempted.csv"], "urls": urls,
              "urls_sha256": digest(urls), "created_at": team.iso_now()}
     team.write_json(args.output, value)
     return {"output": str(args.output), "count": len(urls), "urls_sha256": value["urls_sha256"]}
@@ -293,13 +300,15 @@ def make_validation_list(args):
 
 def validation_list(path, batch_path):
     value = team.read_json(path)
-    batch, shards = team.validate_batch(batch_path)
+    batch, _ = team.validate_batch(batch_path)
     urls = value.get("urls")
-    allowed = {r["publication_url"] for r in shards[1]}
-    if (value.get("batch_id"), value.get("shard")) != (batch["batch_id"], 1):
-        raise ValueError("Validation list belongs to another assignment")
-    if not isinstance(urls, list) or len(urls) != 21 or len(set(urls)) != 21 or not set(urls) <= allowed:
-        raise ValueError("Validation list must contain exactly 21 distinct shard-1 URLs")
+    allowed = {r["publication_url"] for r in team.read_csv(batch_path / "already_attempted.csv") if r["ok"] == "1"}
+    if (value.get("batch_id"), value.get("reference"), value.get("baseline_inventory_sha256")) != (
+            batch["batch_id"], "baseline", batch["files"]["already_attempted.csv"]):
+        raise ValueError("Validation list belongs to another baseline or assignment")
+    if (not isinstance(urls, list) or len(urls) != BASELINE_SAMPLE_SIZE or
+            len(set(urls)) != BASELINE_SAMPLE_SIZE or not set(urls) <= allowed):
+        raise ValueError("Validation list must contain 40 distinct successful baseline URLs")
     if value.get("urls_sha256") != digest(urls):
         raise ValueError("Validation list checksum mismatch")
     return value
@@ -401,11 +410,13 @@ def validation_compare(args):
     local = {}
     with team.readonly(args.reference_db) as db:
         db.row_factory = sqlite3.Row
-        for row in db.execute("SELECT * FROM parsed WHERE stage=? AND ok=1", (HISTORY_STAGE,)):
-            if row["item_key"] in value["urls"]:
-                local[row["item_key"]] = dict(row)
+        for url in value["urls"]:
+            row = db.execute("SELECT * FROM parsed WHERE stage=? AND item_key=? AND ok=1",
+                             (HISTORY_STAGE, url)).fetchone()
+            if row is not None:
+                local[url] = dict(row)
     if set(local) != set(value["urls"]):
-        raise ValueError("Local reference no longer matches the frozen 21-URL list")
+        raise ValueError("Local baseline reference no longer matches the frozen URL sample")
     comparisons = []
     for url in value["urls"]:
         old, new = local[url], dcc.get(url)
@@ -419,8 +430,8 @@ def validation_compare(args):
                             "local_observed_at": old["observed_at"], "dcc_observed_at": new["observed_at"],
                             "differences": differences})
     exact = sum(c["status"] == "EXACT" for c in comparisons)
-    report = {"status": "PASS_EXACT" if exact == 21 and len(dcc) == 21 else "REVIEW_REQUIRED",
-              "exact": exact, "expected": 21, "dcc_rows": len(dcc),
+    report = {"status": "PASS_EXACT" if exact == len(value["urls"]) and len(dcc) == len(value["urls"]) else "REVIEW_REQUIRED",
+              "reference": "baseline", "exact": exact, "expected": len(value["urls"]), "dcc_rows": len(dcc),
               "urls_sha256": value["urls_sha256"], "test_export_manifest_sha256": team.sha_file(args.export_dir / "manifest.json"),
               "checked_at": datetime.now(timezone.utc).isoformat(), "comparisons": comparisons}
     team.write_json(args.report, report)
@@ -435,11 +446,11 @@ def main():
     run.add_argument("--shard", type=int, choices=(1, 2), required=True)
     run.add_argument("--cache-root", type=Path)
     run.add_argument("--check", action="store_true")
-    make = commands.add_parser("validation-list", help="Local owner: export only 21 successful URLs")
+    make = commands.add_parser("validation-list", help="Local owner: sample 40 successful baseline URLs")
     make.add_argument("--batch", type=Path, default=DEFAULT_BATCH)
     make.add_argument("--reference-db", type=Path, required=True)
     make.add_argument("--output", type=Path, required=True)
-    vr = commands.add_parser("validation-run", help="DCC: rescrape 21 URLs to a separate test cache")
+    vr = commands.add_parser("validation-run", help="DCC: rescrape 40 baseline URLs to a separate test cache")
     vr.add_argument("--batch", type=Path, default=DEFAULT_BATCH)
     vr.add_argument("--urls", type=Path, required=True)
     vr.add_argument("--cache-root", type=Path, required=True)
@@ -448,7 +459,7 @@ def main():
     ve.add_argument("--urls", type=Path, required=True)
     ve.add_argument("--cache-root", type=Path, required=True)
     ve.add_argument("--output", type=Path, required=True)
-    vc = commands.add_parser("validation-compare", help="Local owner: compare DCC test export with local checkpoint")
+    vc = commands.add_parser("validation-compare", help="Local owner: compare DCC test export with local baseline")
     vc.add_argument("--batch", type=Path, default=DEFAULT_BATCH)
     vc.add_argument("--urls", type=Path, required=True)
     vc.add_argument("--reference-db", type=Path, required=True)

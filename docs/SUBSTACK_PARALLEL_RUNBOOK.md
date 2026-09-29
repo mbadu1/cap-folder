@@ -15,34 +15,34 @@ python3 scripts/substack/parallel_team_collection.py run --shard 2 --check
 
 Zherui substitutes `--shard 1`. The compatibility check is offline and includes 45 tests and the unchanged golden parser fingerprint `2987d6b4406fa38ef2ac7700b726f468afff3c576943465d3505a057b16e3ded`. `--check` validates the frozen assignment without network or cache writes. Do not start shard 1 while its existing `PAUSED.json` is in place; inspect and resolve that access stop first. Do not run two collectors on one shard cache.
 
-## Check DCC output against the 21 local histories
+## Check DCC output against the earlier local baseline
 
-Zherui runs this **locally**, against his stopped v2 shard-1 checkpoint. The output contains URLs only, not checkpoint payloads:
-
-```sh
-python3 scripts/substack/parallel_team_collection.py validation-list --reference-db .cache/substack_shards/2026-09-28-team-v2/shard-1/crawl.sqlite3 --output .cache/substack_parallel_validation/local-21-urls.json
-```
-
-Send Ziyang only `local-21-urls.json`. Ziyang places it in his checkout at the path used below. On a DCC compute allocation, he runs the bounded test in its **own** cache:
+Zherui runs this **locally**, against his preserved 93,799-attempt baseline (92,452 successes). The command selects 40 successful baseline publications by a fixed SHA-256 order, enough for two waves of 20 workers. It checks the database against the frozen baseline inventory. The output contains URLs only, not historical payloads:
 
 ```sh
-python3 -u scripts/substack/parallel_team_collection.py validation-run --urls .cache/substack_parallel_validation/local-21-urls.json --cache-root .cache/substack_parallel_validation/overlap-cache --workers 20 --global-gap-seconds 0.6 --continuous
-python3 scripts/substack/parallel_team_collection.py validation-export --urls .cache/substack_parallel_validation/local-21-urls.json --cache-root .cache/substack_parallel_validation/overlap-cache --output .cache/substack_parallel_validation/overlap-export
+python3 scripts/substack/parallel_team_collection.py validation-list --reference-db .cache/substack_history/baseline_team_2026-09-28/crawl.sqlite3 --output .cache/substack_parallel_validation/baseline-40-urls.json
 ```
 
-The validation run uses the same six-second minimum per worker and a 0.6-second minimum gap between request starts **within this process**. It pauses on access/rate failures. If it pauses, preserve `PAUSED.json`, diagnose the response, and return the partial test export; do not label the comparison exact. Ziyang returns the private `overlap-export` directory to Zherui. It has a checksum manifest and the 21 test records; it is never merged into production. Ziyang never needs Zherui's checkpoint or baseline database.
+Send Ziyang only `baseline-40-urls.json`. Ziyang places it in his checkout at the path used below. On a DCC compute allocation, he runs the bounded test in its **own** cache:
+
+```sh
+python3 -u scripts/substack/parallel_team_collection.py validation-run --urls .cache/substack_parallel_validation/baseline-40-urls.json --cache-root .cache/substack_parallel_validation/baseline-40-cache --workers 20 --global-gap-seconds 0.6 --continuous
+python3 scripts/substack/parallel_team_collection.py validation-export --urls .cache/substack_parallel_validation/baseline-40-urls.json --cache-root .cache/substack_parallel_validation/baseline-40-cache --output .cache/substack_parallel_validation/baseline-40-export
+```
+
+The validation run uses the same six-second minimum per worker and a 0.6-second minimum gap between request starts **within this process**. It pauses on access/rate failures. If it pauses, preserve `PAUSED.json`, diagnose the response, and return the partial test export; do not label the comparison exact. Ziyang returns the private `baseline-40-export` directory to Zherui. It has a checksum manifest and up to 40 test records; it is never merged into production. Ziyang does not need Zherui's baseline database or shard-1 checkpoint.
 
 Zherui compares that export against his local database:
 
 ```sh
-python3 scripts/substack/parallel_team_collection.py validation-compare --urls .cache/substack_parallel_validation/local-21-urls.json --reference-db .cache/substack_shards/2026-09-28-team-v2/shard-1/crawl.sqlite3 --export-dir .cache/substack_parallel_validation/overlap-export --report .cache/substack_parallel_validation/overlap-comparison.json
+python3 scripts/substack/parallel_team_collection.py validation-compare --urls .cache/substack_parallel_validation/baseline-40-urls.json --reference-db .cache/substack_history/baseline_team_2026-09-28/crawl.sqlite3 --export-dir .cache/substack_parallel_validation/baseline-40-export --report .cache/substack_parallel_validation/baseline-40-comparison.json
 ```
 
-The report is `PASS_EXACT` only when all 21 URLs have identical complete normalized payloads. It lists field-level differences and both observation times. `REVIEW_REQUIRED` blocks a sustained run until Zherui inspects changed source content versus a collector discrepancy. A live refetch may differ because the source changed; retain the old result and the test export instead of changing the reference to force a pass.
+The report is `PASS_EXACT` only when all 40 URLs have identical complete normalized payloads. It lists field-level differences and both observation times. `REVIEW_REQUIRED` blocks a sustained run until Zherui inspects changed source content versus a collector discrepancy. A live refetch may differ because the source changed; retain the old result and the test export instead of changing the reference to force a pass. This sampled gate checks alignment with the earlier 90,000+ baseline; it does not assert equality for every previously scraped publication.
 
 ## Pilot and resume the assigned shard
 
-After the exact-overlap result and permission/rate terms are reviewed, Ziyang starts shard 2 with a five-publication pilot:
+After the baseline comparison and permission/rate terms are reviewed, Ziyang starts shard 2 with a five-publication pilot:
 
 ```sh
 python3 -u scripts/substack/parallel_team_collection.py run --shard 2 --workers 20 --global-gap-seconds 0.6 --limit 5
@@ -62,4 +62,4 @@ python3 scripts/substack/team_collection.py export --batch data/substack_assignm
 python3 scripts/substack/check_substack_compatibility.py --shard 2 --export-dir .cache/substack_exports/2026-09-28-team-v2-shard-2-parallel-final --report .cache/substack_compatibility/2026-09-28-team-v2/shard-2-parallel-final.json
 ```
 
-Require `export_validation.status = PASS` and zero pending assigned publications for a complete handoff. Failed publications remain explicit. Return the final export through the private draft release described in the [team plan](SUBSTACK_TEAM_SCRAPING_PLAN.md); merge both v2 shard exports with the preserved baseline only after both are complete. Include the parallel runner SHA, commit, request/status counts, and the 21-history comparison report in the handoff.
+Require `export_validation.status = PASS` and zero pending assigned publications for a complete handoff. Failed publications remain explicit. Return the final export through the private draft release described in the [team plan](SUBSTACK_TEAM_SCRAPING_PLAN.md); merge both v2 shard exports with the preserved baseline only after both are complete. Include the parallel runner SHA, commit, request/status counts, and the baseline-sample comparison report in the handoff.
