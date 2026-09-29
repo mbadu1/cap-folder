@@ -2,7 +2,7 @@
 
 **Code available; no live DCC full-history run has been verified.** Use `scripts/substack/parallel_team_collection.py` from the same reviewed Git commit on both machines. It uses the frozen `2026-09-28-team-v2` assignments, parser, SQLite schema, export command, and merge command. The original `team_collection.py` and v2 manifest remain unchanged. The parallel runner pins its own SHA-256 in each cache and refuses a different runner on resume.
 
-Ziyang uses Codex locally to work in his DCC checkout through `ssh dcc-agent '<command>'`. Zherui uses the corresponding CPU compute route. These are CPU jobs; do not compute on a DCC login node. Run the commands below **inside the project checkout on a compute allocation**. `--workers 20` means 20 threads in one process and one shard cache. It does not request 20 Slurm CPUs.
+Read the repository's [AGENTS.md](../AGENTS.md) first. From a local chat, Ziyang operates his DCC checkout through `ssh dcc-agent '<command>'`. If his chat is attached to a remote project through that alias, verify that its shell is already on the Slurm compute allocation and run there directly without nested SSH. Zherui uses the corresponding CPU compute route. These are CPU jobs; do not compute on a DCC login node. Run the commands below **inside the project checkout on a compute allocation**. `--workers 20` means 20 threads in one process and one shard cache. It does not request 20 Slurm CPUs.
 
 ## Before either production shard
 
