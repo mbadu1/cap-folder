@@ -1,14 +1,16 @@
 # Capstone collection tools
 
-Start with [the Substack team handoff](docs/SUBSTACK_TEAM_SCRAPING_PLAN.md). The three workers use one collector version with disjoint publication assignments. Run commands from this repository root, not its parent directory.
+Start with [the Substack team handoff](docs/SUBSTACK_TEAM_SCRAPING_PLAN.md). The two workers (Zherui and Ziyang) use one collector version with disjoint publication assignments. Run commands from this repository root, not its parent directory.
 
-Before scraping, run the [one-command compatibility check](docs/SUBSTACK_COMPATIBILITY.md): `python3 scripts/substack/check_substack_compatibility.py --shard 2` (Ziyang) or `--shard 3` (Michael). It checks your installation against fixed expected outputs and writes a shareable PASS/FAIL report. The same command can validate your actual exported records before delivery.
+Before scraping, run the [one-command compatibility check](docs/SUBSTACK_COMPATIBILITY.md): `python3 scripts/substack/check_substack_compatibility.py --shard 2` (Ziyang) or `--shard 1` (Zherui). It checks your installation against fixed expected outputs and writes a shareable PASS/FAIL report. The same command can validate your actual exported records before delivery.
+
+The active batch is **`2026-09-28-team-v2`**: Zherui owns shard 1 (74,127 publications), Ziyang owns shard 2 (74,126). The old three-person batch is superseded. Read the handoff guide’s cutover section before reusing an old checkpoint.
 
 ## Scripts
 
 | Folder | Contents |
 |---|---|
-| `scripts/substack/` | History collection, three-person assignment/run/export/merge tooling, creator audits, monthly builders, publication helpers |
+| `scripts/substack/` | History collection, two-person assignment/run/export/merge tooling, creator audits, monthly builders, publication helpers |
 | `scripts/medium/` | Historical collector, mirror adapter, access probes, diagnostic toy and source audits |
 | `scripts/shared/` | Older combined-platform toy scraper and monthly-schema migration utility |
 

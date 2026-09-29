@@ -20,8 +20,8 @@ import collect_substack_history as history
 import team_collection as team
 
 ROOT = Path(__file__).resolve().parents[2]
-FIXTURES = ROOT / "tests/fixtures/substack_compatibility_v1"
-DEFAULT_BATCH = ROOT / "data/substack_assignments/2026-09-28-team-v1"
+FIXTURES = ROOT / "tests/fixtures/substack_compatibility_v2"
+DEFAULT_BATCH = ROOT / "data/substack_assignments/2026-09-28-team-v2"
 
 
 def normalized_hash(value):
@@ -165,13 +165,13 @@ def validate_export(path, batch_path, batch, rows, shard, allow_partial=False):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--shard", type=int, choices=(1, 2, 3), required=True)
+    p.add_argument("--shard", type=int, choices=(1, 2), required=True)
     p.add_argument("--batch", type=Path, default=DEFAULT_BATCH)
     p.add_argument("--report", type=Path)
     p.add_argument("--export-dir", type=Path, help="Optional offline audit of actual exported records")
     p.add_argument("--allow-partial", action="store_true", help="Label an incomplete export PASS_PARTIAL, never complete")
     args = p.parse_args()
-    report_path = args.report or ROOT / f".cache/substack_compatibility/shard-{args.shard}.json"
+    report_path = args.report or ROOT / f".cache/substack_compatibility/{args.batch.name}/shard-{args.shard}.json"
     report = {"status": "FAIL", "shard": args.shard, "checked_at": datetime.now(timezone.utc).isoformat(),
               "python": platform.python_version(), "platform": platform.system(), "network_requests": 0,
               "production_data_modified": False, "export_validation": {"status": "NOT_RUN"},

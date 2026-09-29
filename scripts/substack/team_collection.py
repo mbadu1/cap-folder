@@ -17,6 +17,7 @@ import math
 import os
 from pathlib import Path
 import signal
+import shutil
 import sqlite3
 import urllib.error
 
@@ -105,6 +106,13 @@ def cache_lock(cache):
                 fcntl.flock(f, fcntl.LOCK_UN)
 
 
+def shard_numbers(manifest):
+    names = set(manifest["shard_counts"])
+    if names not in ({"shard-1", "shard-2"}, {"shard-1", "shard-2", "shard-3"}):
+        raise ValueError("A batch must declare exactly two or three consecutive shards")
+    return tuple(range(1, len(names) + 1))
+
+
 def validate_batch(batch, check_code=True):
     batch = Path(batch)
     m = read_json(batch / "manifest.json")
@@ -129,7 +137,7 @@ def validate_batch(batch, check_code=True):
     if len(seen) != len(attempted) or not seen <= all_urls or len(seen) != m["baseline_count"]:
         raise ValueError("Baseline inventory mismatch")
     shards = {}
-    for n in (1, 2, 3):
+    for n in shard_numbers(m):
         name = f"shard-{n}"
         rows = read_csv(batch / (name + ".csv"))
         sm = read_json(batch / (name + ".manifest.json"))
@@ -138,6 +146,8 @@ def validate_batch(batch, check_code=True):
             raise ValueError("Assignments overlap or contain invalid URLs")
         if (sm["shard"], sm["batch_id"], sm["frozen_publications"]) != (name, m["batch_id"], len(rows)):
             raise ValueError("Shard identity or count mismatch")
+        if m["shard_counts"][name] != len(rows):
+            raise ValueError("Batch shard count mismatch")
         if sm["frame_csv_sha256"] != m["files"][name + ".csv"]:
             raise ValueError("Shard manifest checksum mismatch")
         if (sm["study_start_date"], sm["study_end_date"]) != (START, END):
@@ -148,10 +158,14 @@ def validate_batch(batch, check_code=True):
         shards[n] = rows
     if seen != all_urls:
         raise ValueError("Baseline plus shards do not cover the parent frame")
+    if sum(map(len, shards.values())) != m["remaining_count"]:
+        raise ValueError("Batch remaining count mismatch")
     return m, shards
 
 
-def prepare(frame, baseline, output):
+def prepare(frame, baseline, output, shard_count=3):
+    if shard_count not in (2, 3):
+        raise ValueError("Choose two or three shards")
     frame, baseline, output = map(Path, (frame, baseline, output))
     if not baseline.is_file():
         raise FileNotFoundError(baseline)
@@ -171,8 +185,8 @@ def prepare(frame, baseline, output):
     write_csv(output / "already_attempted.csv", ["publication_url", "ok"], attempted)
     write_csv(output / "existing_errors.csv", ["publication_url", "ok"], [r for r in attempted if not r["ok"]])
     counts = {}
-    for n in (1, 2, 3):
-        assigned = pending[n - 1::3]
+    for n in range(1, shard_count + 1):
+        assigned = pending[n - 1::shard_count]
         name = f"shard-{n}"
         path = output / (name + ".csv")
         write_csv(path, FIELDS, assigned)
@@ -197,14 +211,117 @@ def prepare(frame, baseline, output):
     return m
 
 
+def repartition(source_batch, output):
+    """Retain owners 1/2 and distribute former shard 3 without moving their work."""
+    source_batch, output = Path(source_batch), Path(output)
+    source, shards = validate_batch(source_batch, check_code=False)
+    if set(shards) != {1, 2, 3}:
+        raise ValueError("Repartition requires a three-shard source batch")
+    # Only the orchestration changes; cached parser output must remain compatible.
+    current = code_hashes()
+    for name in CODE:
+        if name != "team_collection.py" and source["code_sha256"][name] != current[name]:
+            raise ValueError("Source parser differs; cannot reuse its checkpoints")
+    output.mkdir(parents=True, exist_ok=False)
+    for name in ("source_frame.csv", "already_attempted.csv", "existing_errors.csv"):
+        shutil.copyfile(source_batch / name, output / name)
+    counts = {}
+    former_three = sorted(shards[3], key=lambda r: (r["frame_priority"], r["publication_url"]))
+    for n in (1, 2):
+        rows = sorted(shards[n] + former_three[n - 1::2],
+                      key=lambda r: (r["frame_priority"], r["publication_url"]))
+        name = f"shard-{n}"
+        path = output / (name + ".csv")
+        write_csv(path, FIELDS, rows)
+        counts[name] = len(rows)
+        write_json(path.with_suffix(".manifest.json"), {
+            "batch_id": output.name, "shard": name, "created_at": iso_now(),
+            "study_start_date": START, "study_end_date": END,
+            "frame_csv_sha256": sha_file(path), "frozen_publications": len(rows),
+            "parent_frame_sha256": source["parent_frame_original_sha256"],
+        })
+    manifest = dict(source, batch_id=output.name, created_at=iso_now(), shard_counts=counts,
+                    assignment_rule="retain_shards_1_2_split_former_3_priority_alternating_v2",
+                    code_sha256=current, supersedes_batch={
+                        "batch_id": source["batch_id"],
+                        "manifest_sha256": sha_file(source_batch / "manifest.json"),
+                        "migration_owners": {"1": 1, "2": 2},
+                    }, files={p.name: sha_file(p) for p in sorted(output.iterdir())})
+    write_json(output / "manifest.json", manifest)
+    validate_batch(output)
+    return manifest
+
+
 def setup(args):
     batch, shards = validate_batch(args.batch)
+    if args.shard not in shards:
+        raise ValueError("Shard is not part of this batch")
     cache = args.cache_root or ROOT / ".cache/substack_shards" / batch["batch_id"] / f"shard-{args.shard}"
     expected = {"batch_id": batch["batch_id"], "shard": args.shard,
                 "batch_manifest_sha256": sha_file(args.batch / "manifest.json"),
                 "assignment_sha256": batch["files"][f"shard-{args.shard}.csv"],
                 "code_sha256": batch["code_sha256"]}
     return batch, shards[args.shard], cache, expected
+
+
+def migrate(args):
+    """Copy an existing owner's frozen checkpoint into a new, larger assignment."""
+    batch, rows, cache, expected = setup(args)
+    source, old_shards = validate_batch(args.source_batch, check_code=False)
+    parent = batch.get("supersedes_batch", {})
+    if (parent.get("batch_id") != source["batch_id"] or
+            parent.get("manifest_sha256") != sha_file(args.source_batch / "manifest.json") or
+            parent.get("migration_owners", {}).get(str(args.source_shard)) != args.shard):
+        raise ValueError("Migration source batch or owner does not match this cutover")
+    for name in CODE:
+        if name != "team_collection.py" and source["code_sha256"][name] != batch["code_sha256"][name]:
+            raise ValueError("Cannot migrate between different parsers")
+    old_rows = old_shards[args.source_shard]
+    if not {r["publication_url"] for r in old_rows} <= {r["publication_url"] for r in rows}:
+        raise ValueError("New assignment does not contain all of the source owner's URLs")
+    old_cache = args.source_cache
+    old_expected = {"batch_id": source["batch_id"], "shard": args.source_shard,
+                    "batch_manifest_sha256": parent["manifest_sha256"],
+                    "assignment_sha256": source["files"][f"shard-{args.source_shard}.csv"],
+                    "code_sha256": source["code_sha256"]}
+    if not (old_cache / "crawl.sqlite3").is_file():
+        raise FileNotFoundError("No old checkpoint to migrate; use a fresh new-batch run instead")
+    if cache.resolve() == old_cache.resolve():
+        raise ValueError("Migration needs a separate new cache")
+    with cache_lock(old_cache), cache_lock(cache):
+        check_binding(old_cache, old_expected)
+        if (old_cache / "RETIRED.json").exists():
+            raise RuntimeError("Source checkpoint was already migrated; use its recorded destination")
+        if any(p.name != "collector.lock" for p in cache.iterdir()):
+            raise FileExistsError("New cache must be empty; preserve existing work instead of overwriting")
+        keys = checkpoint_keys(old_cache / "crawl.sqlite3")
+        counts(old_rows, keys)
+        summary = counts(rows, keys)
+        # Copy exact checkpoint bytes through SQLite's consistent backup API.
+        # Keep a failed migration unbound so run() cannot accidentally use it.
+        destination = sqlite3.connect(cache / "crawl.sqlite3")
+        try:
+            with readonly(old_cache / "crawl.sqlite3") as db:
+                db.backup(destination)
+            if destination.execute("PRAGMA quick_check").fetchone()[0] != "ok":
+                raise ValueError("Migrated checkpoint failed SQLite integrity check")
+        finally:
+            destination.close()
+        for name in ("STOP", "PAUSED.json"):
+            if (old_cache / name).exists():
+                shutil.copyfile(old_cache / name, cache / name)
+        state = "access_or_rate_stop" if (cache / "PAUSED.json").exists() else "stopped" if (cache / "STOP").exists() else "migrated"
+        result = dict(expected, **summary, updated_at=iso_now(), state=state, worker_pid=None,
+                      migrated_from=str(old_cache.resolve()), source_batch_id=source["batch_id"],
+                      source_shard=args.source_shard, request_count_this_run=0,
+                      reason="Offline migration; existing stop/pause markers preserved")
+        write_json(cache / "migration.json", result)
+        write_json(cache / "collection_status.json", result)
+        # Old revisions recognize STOP too. Both caches must never collect in parallel.
+        (old_cache / "STOP").write_text("Retired after migration to " + str(cache.resolve()) + "\n", encoding="utf-8")
+        write_json(old_cache / "RETIRED.json", {"new_batch": batch["batch_id"], "new_cache": str(cache.resolve()), "at": iso_now()})
+        write_json(cache / "assignment.json", expected)
+        return result
 
 
 def check_binding(cache, expected, create=False):
@@ -242,6 +359,8 @@ def run(args):
             result.update(counts(rows, checkpoint_keys(cache / "crawl.sqlite3")))
         return result, 0
     with cache_lock(cache):
+        if (cache / "RETIRED.json").exists():
+            raise RuntimeError("This checkpoint was retired by a migration; use the new batch/cache")
         if (cache / "PAUSED.json").exists():
             raise RuntimeError("This shard has an access/rate pause; inspect PAUSED.json before deliberate resumption")
         check_binding(cache, expected, create=True)
@@ -411,8 +530,8 @@ def merge(args):
             if any(m.get(k) != v for k, v in actual.items()) or actual["pending"]:
                 raise ValueError("Incomplete export or incorrect exported counts")
             target.connection.commit()
-        if owners != {1, 2, 3} or seen & full_frame != full_frame:
-            raise ValueError("Merge does not cover the full frame and all three shards")
+        if owners != set(shards) or seen & full_frame != full_frame:
+            raise ValueError("Merge does not cover the full frame and every declared shard")
         if target.connection.execute("PRAGMA quick_check").fetchone()[0] != "ok":
             raise ValueError("Merged database integrity check failed")
     finally:
@@ -431,6 +550,17 @@ def main():
     prep.add_argument("--frame", type=Path, required=True)
     prep.add_argument("--baseline-db", type=Path, required=True)
     prep.add_argument("--output", type=Path, required=True)
+    prep.add_argument("--shards", type=int, choices=(2, 3), default=3)
+    repart = sub.add_parser("repartition", help="Offline: retain owners 1/2 and split former shard 3")
+    repart.add_argument("--source-batch", type=Path, required=True)
+    repart.add_argument("--output", type=Path, required=True)
+    migration = sub.add_parser("migrate", help="Offline: copy a stopped old checkpoint to its new assignment")
+    migration.add_argument("--source-batch", type=Path, required=True)
+    migration.add_argument("--source-shard", type=int, choices=(1, 2), required=True)
+    migration.add_argument("--source-cache", type=Path, required=True)
+    migration.add_argument("--batch", type=Path, required=True)
+    migration.add_argument("--shard", type=int, choices=(1, 2), required=True)
+    migration.add_argument("--cache-root", type=Path)
     for command in ("run", "status", "export"):
         parser = sub.add_parser(command)
         parser.add_argument("--batch", type=Path, required=True)
@@ -446,12 +576,16 @@ def main():
     merger = sub.add_parser("merge")
     merger.add_argument("--batch", type=Path, required=True)
     merger.add_argument("--baseline-db", type=Path, required=True)
-    merger.add_argument("--exports", type=Path, nargs=3, required=True)
+    merger.add_argument("--exports", type=Path, nargs="+", required=True)
     merger.add_argument("--output", type=Path, required=True)
     args = p.parse_args()
     code = 0
     if args.command == "prepare":
-        result = prepare(args.frame, args.baseline_db, args.output)
+        result = prepare(args.frame, args.baseline_db, args.output, args.shards)
+    elif args.command == "repartition":
+        result = repartition(args.source_batch, args.output)
+    elif args.command == "migrate":
+        result = migrate(args)
     elif args.command == "run":
         result, code = run(args)
     elif args.command == "export":

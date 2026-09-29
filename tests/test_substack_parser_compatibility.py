@@ -136,8 +136,7 @@ class RealParserHandoffTests(unittest.TestCase):
         return argparse.Namespace(**values)
 
     def collect_export(self, n, failure=False):
-        url = self.shards[n][0]["publication_url"]
-        response = checks.FixtureTransport({checks.endpoint(url): self.fixture["posts"]})
+        response = checks.FixtureTransport({checks.endpoint(row["publication_url"]): self.fixture["posts"] for row in self.shards[n]})
         # Only the HTTP boundary is replaced; the actual history and post parsers run.
         effect = ValueError("synthetic source error") if failure else response.fetch
         with patch.object(team.Collector, "fetch", side_effect=effect), redirect_stdout(io.StringIO()):
@@ -150,10 +149,10 @@ class RealParserHandoffTests(unittest.TestCase):
             team.export(self.args(n, output=output))
         return output
 
-    def test_actual_parsing_three_shards_export_merge_equals_expected_records(self):
+    def assert_parser_merge(self):
         exports = []
-        for n in (1, 2, 3):
-            output = self.collect_export(n, failure=n == 3)
+        for n in self.shards:
+            output = self.collect_export(n, failure=n == max(self.shards))
             result = checks.validate_export(output, self.batch, self.manifest, self.shards[n], n)
             self.assertEqual((result["status"], result["pending"]), ("PASS", 0))
             exports.append(output)
@@ -173,6 +172,15 @@ class RealParserHandoffTests(unittest.TestCase):
                 if post["post_id"] != "1001":  # Canonical URL was supplied only for this post.
                     post["candidate_url"] = post["canonical_url"] = post["canonical_url"].replace(self.fixture["publication_url"], key)
             self.assertEqual(json.loads(payload), expected)
+
+    def test_actual_parsing_three_shards_export_merge_equals_expected_records(self):
+        self.assert_parser_merge()
+
+    def test_actual_parsing_two_shards_export_merge_equals_expected_records(self):
+        self.batch = self.root / "batch-two"
+        team.prepare(self.root / "frame.csv", self.baseline, self.batch, shard_count=2)
+        self.manifest, self.shards = team.validate_batch(self.batch)
+        self.assert_parser_merge()
 
     def test_wrong_shard_and_missing_or_reordered_parts_fail(self):
         output = self.collect_export(1)
