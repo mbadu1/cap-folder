@@ -40,6 +40,21 @@ python3 scripts/substack/parallel_team_collection.py validation-compare --urls d
 
 The report is `PASS_EXACT` only when all 40 URLs have identical complete normalized payloads. It lists field-level differences and both observation times. `REVIEW_REQUIRED` blocks a sustained run until Zherui inspects changed source content versus a collector discrepancy. A live refetch may differ because the source changed; retain the old result and the test export instead of changing the reference to force a pass. This sampled gate checks alignment with the earlier 90,000+ baseline; it does not assert equality for every previously scraped publication.
 
+## Monitor the active run
+
+Before launching, record the checkout, Git commit, cache path, process ID, compute node, Slurm job ID and stdout/stderr log location. Keep observing the 40-publication validation test in the active session, checking about once per minute until completion or a pause. The production monitoring cadence is every ten minutes after production is authorized and launched.
+
+At each check:
+
+- Confirm the original process and Slurm allocation still exist. A new SSH connection can provision a different allocation; verify the node/job identity before interpreting a process ID. An unreachable old allocation is an incident, not evidence that collection restarted elsewhere.
+- Read the active cache's `collection_status.json`, the latest entries of `request_starts.jsonl`, and a bounded tail of the run's stdout/stderr. Track committed successful/failed/pending counts, new request starts, HTTP statuses, `PAUSED.json`, `STOP`, and process exit.
+- Check memory, available storage and remaining Slurm walltime when running on DCC. Report approaching resource limits, preemption, unexpected exits, access/rate stops and completion.
+- Treat `collection_status.json` as a publication-boundary snapshot, not a continuously refreshed heartbeat. A long history can leave it unchanged while requests continue. If neither requests nor committed progress advance over successive checks, inspect the process and logs for a suspected stall. Do not start a duplicate collector because a status file is old.
+
+During validation, report meaningful progress and export the completed or partial test cache once the collector exits. Scheduled production monitoring should stay quiet while healthy or unchanged and notify only on a meaningful change or needed action. Preserve checkpoint/binding/pause files; monitoring does not authorize automatic retries, restarts, rate changes, `scancel`, or advancement from validation to production.
+
+If production will continue beyond the active session, configure and verify a persistent monitor in the operator's own environment before leaving it unattended. Record the monitor's schedule, run identity and notification destination. The repository supplies these instructions and the collector telemetry; pulling it does not install a scheduler or transfer Zherui's existing local monitor to Ziyang. Do not report monitoring as active until its registration and an initial successful check are verified.
+
 ## Pilot and resume the assigned shard
 
 After the baseline comparison and permission/rate terms are reviewed, Ziyang starts shard 2 with a five-publication pilot:

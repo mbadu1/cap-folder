@@ -68,6 +68,7 @@ Use the parallel runbook for the 20-worker route; the team plan also retains the
 - Preserve `PAUSED.json`, `STOP`, retirement markers and committed errors. Diagnose an access/rate stop before deliberate resumption; do not automatically delete markers or reset caches.
 - The runner pins its source hash to each cache. Preserve that binding and use the pinned revision when resuming; do not edit the binding to bypass a mismatch.
 - Use one collector per shard cache. Keep validation records outside production exports and the final merge. Use the existing export/check/merge commands and report incomplete or failed results accurately.
+- Follow the runbook's monitoring procedure: observe validation in the active session and verify a persistent monitor before leaving authorized production unattended. Check actual process/job and request progress alongside publication-boundary status. Do not claim a monitor is active merely because telemetry files exist.
 
 ## Files and verification
 
