@@ -2,7 +2,7 @@
 
 Prepared 2026-09-28. Zherui and Ziyang perform the same task with the same parser and different publication URL lists. Everything needed to start is in this repository on branch `zherui-substack-month-pilot`. Record the shared handoff commit before collection; the launcher also verifies the exact collector file hashes.
 
-**2026-09-28 DCC amendment:** The team now targets **20 parallel workers per shard** on DCC, starting with Ziyang's shard 2. Ziyang uses Codex **locally** to build and run the project remotely through his DCC compute allocation. Read the [DCC implementation and exact-alignment test plan](SUBSTACK_DCC_20_WORKER_PLAN.md) and [compatibility guide](SUBSTACK_COMPATIBILITY.md#additional-exact-alignment-gate-for-the-planned-dcc-parallel-collector) before using this handoff. The commands below are the still-runnable **single-worker v2** path; they do not implement the 20-worker target. The new parallel collector requires a reviewed, separately pinned batch/release, exact same-input output comparison against the local collector, and a bounded live rescrape of the 21 successful local shard-1 histories in a disposable test cache. The production-like pilot and aggregate request gate remain required. Do not launch 20 copies of the v2 command or treat the one-minute rate probe as sustained-rate approval. Zherui's shard-1 `PAUSED.json` remains in force.
+**2026-09-28 DCC amendment:** A separate [20-worker runbook](SUBSTACK_PARALLEL_RUNBOOK.md) now gives runnable commands for both owners using the frozen v2 assignments and existing export/merge tools. Ziyang uses Codex **locally** to operate his DCC compute checkout. The parallel runner pins its own code hash to the cache; no new assignment batch or shard-1 database transfer is needed. The commands below remain the single-worker path. The runbook includes a disposable 21-history rescrape and a local exact-result comparison. Do not launch two shards simultaneously without a shared aggregate gate, and do not resume shard 1 while its `PAUSED.json` remains unresolved.
 
 ## Assignments
 
@@ -43,7 +43,7 @@ This makes no network requests. It verifies all frame/assignment files, checksum
 
 ## Current v2 single-worker pilot, run, and resume
 
-These commands document the existing v2 checkpoint protocol. Ziyang's requested 20-worker DCC route is in the [DCC plan](SUBSTACK_DCC_20_WORKER_PLAN.md); use its new batch ID, release commit, commands, and cache only after that implementation passes its gates. Do not start this v2 run and a new parallel run against the same assignment at the same time.
+These commands document the existing single-worker v2 checkpoint protocol. Ziyang's 20-worker DCC route is in the [parallel runbook](SUBSTACK_PARALLEL_RUNBOOK.md). Both runners use the same shard cache, so never run them against one assignment at the same time.
 
 Start with five new publication histories:
 
@@ -92,7 +92,7 @@ A traceback also requires diagnosis. An abnormal exit may leave a stale status f
 
 ## Export and return through GitHub
 
-The commands and release tag in this section apply to a v2 single-worker export. For the parallel release, substitute the **actual new batch ID and its bound cache/export paths throughout**, and update the compatibility checker for that release before labeling its export complete. Never combine a v2 shard export with a new-batch shard export.
+The same v2 exporter and compatibility checker apply after either the single-worker or parallel runner stops. Use a new output directory and a release tag that identifies the parallel run; see the [runbook](SUBSTACK_PARALLEL_RUNBOOK.md).
 
 Stop the worker before export so the exporter can acquire its lock. Use a new output directory for every export:
 
@@ -115,7 +115,7 @@ The same draft release and asset upload can be created through GitHub's website.
 
 ## Combine and audit (Zherui)
 
-The following paths are for v2. After the parallel release, use its actual batch and two same-release exports with the preserved original baseline; do not mix batch versions.
+The following paths remain valid for v2 exports from the parallel runner. Keep the preserved original baseline and both owners' exports from the same frozen v2 assignment.
 
 Keep the original baseline and shard exports unchanged. Download both complete exports for batch `2026-09-28-team-v2`. Old-batch exports are not valid inputs to this merge. Merge into a new database:
 
@@ -135,4 +135,4 @@ Creator and coauthor IDs must be resolved globally. The up-to-2,500 creators/mon
 
 ## Paste to Ziyang's AI agent
 
-Use the current [Ziyang Codex prompt](SUBSTACK_DCC_20_WORKER_PLAN.md#handoff-for-ziyangs-codex). Supply the exact reviewed parallel-release commit when it exists. The former prompt for one worker and the v2 batch is superseded for Ziyang's requested DCC route.
+Use the [20-worker runbook](SUBSTACK_PARALLEL_RUNBOOK.md) with the exact pushed commit supplied by Zherui. The single-worker prompt is superseded for Ziyang's DCC route.
