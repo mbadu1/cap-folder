@@ -12,9 +12,11 @@ import time
 import unittest
 from unittest.mock import patch
 import urllib.error
+from email.message import Message
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts/substack"))
 import parallel_team_collection as parallel
+import upgrade_parallel_cache as upgrade
 import team_collection as team
 from build_substack_platform_month import Collector
 import check_substack_compatibility as checks
@@ -116,6 +118,109 @@ class ParallelRunnerTests(unittest.TestCase):
         self.assertTrue(event.is_set())
         with self.assertRaises(parallel.CrawlCircuitOpen):
             gate.wait()
+
+    def http_error(self, code=403, body=None, headers=None):
+        message = Message()
+        for key, value in (headers or {"Content-Type": "text/html; charset=utf-8"}).items():
+            message[key] = value
+        if body is None:
+            body = parallel.INVITE_ONLY_MESSAGE.encode()
+        return urllib.error.HTTPError("https://test.substack.invalid/api/v1/posts", code,
+                                      "Forbidden", message, io.BytesIO(body))
+
+    def test_confirmed_invite_only_is_recorded_and_other_histories_continue(self):
+        first = self.shards[2][0]["publication_url"]
+
+        def response(request, **kwargs):
+            if request.full_url.startswith(first + "/"):
+                raise self.http_error()
+            result = io.BytesIO(b"[]")
+            result.status = 200
+            return result
+
+        with patch("urllib.request.urlopen", side_effect=response), \
+                patch.object(parallel.Pacing, "wait"), redirect_stdout(io.StringIO()):
+            result, code = parallel.production(self.args())
+        self.assertEqual((code, result["successful"], result["failed"], result["pending"]), (2, 24, 1, 0))
+        self.assertEqual(result["invite_only_failures_this_run"], 1)
+        self.assertEqual(result["http_status_counts_this_run"], {"403": 1, "200": 24})
+        self.assertFalse((self.root / "production/PAUSED.json").exists())
+        with team.readonly(self.root / "production/crawl.sqlite3") as db:
+            row = db.execute("SELECT ok,error_type,error_message FROM parsed WHERE item_key=?", (first,)).fetchone()
+        self.assertEqual(row[:2], (0, "InviteOnlyPublication"))
+        self.assertIn("response_sha256=", row[2])
+        with patch("urllib.request.urlopen", side_effect=AssertionError("Refetched saved failure")), redirect_stdout(io.StringIO()):
+            result, code = parallel.production(self.args())
+        self.assertEqual(result["new_publications_this_run"], 0)
+
+    def test_invite_classifier_does_not_suppress_other_access_or_rate_failures(self):
+        message = parallel.INVITE_ONLY_MESSAGE.encode()
+        cases = [
+            (401, message, None), (429, message, None),
+            (403, b"Forbidden", None), (403, message + b" More information", None),
+            (403, b"\xff", None), (403, b" " * 16385 + message, None),
+            (403, message, {"Content-Type": "text/html", "Retry-After": "600"}),
+            (403, message, {"Content-Type": "text/html", "CF-Mitigated": "challenge"}),
+            (403, message, {"Content-Type": "application/json"}),
+            (403, b"<script>cf-chl-test</script>" + message, None),
+        ]
+        for code, body, headers in cases:
+            with self.subTest(code=code, body=body[:50], headers=headers):
+                event = threading.Event()
+                collector = parallel.ParallelCollector(0, parallel.Pacing(0, 0, event), event)
+                with patch("urllib.request.urlopen", side_effect=self.http_error(code, body, headers)):
+                    with self.assertRaises((urllib.error.HTTPError, parallel.CrawlCircuitOpen)) as raised:
+                        collector.fetch("https://test.substack.invalid/api/v1/posts")
+                self.assertNotIsInstance(raised.exception, parallel.InviteOnlyPublication)
+                self.assertTrue(event.is_set())
+
+    def test_runner_upgrade_preserves_every_row_and_markers_without_rebinding_source(self):
+        def history(_collector, url, _start, _end):
+            return {"publication_url": url, "start_date": team.START, "end_date": team.END, "posts": []}
+        with patch.object(parallel, "parse_publication_history", side_effect=history), redirect_stdout(io.StringIO()):
+            parallel.production(self.args(limit=2, workers=1))
+        source = self.root / "production"
+        binding = team.read_json(source / "parallel_runner.json")
+        binding["runner_sha256"] = upgrade.PREDECESSOR_SHA256
+        team.write_json(source / "parallel_runner.json", binding)
+        checkpoint = team.Checkpoint(source / "crawl.sqlite3")
+        checkpoint.put(team.HISTORY_STAGE, self.shards[2][2]["publication_url"], False, None, self.http_error())
+        checkpoint.close()
+        (source / "PAUSED.json").write_bytes(b'{"reason":"old pause"}\n')
+        (source / "STOP").write_bytes(b"intentional stop\n")
+        old_digest = upgrade.checkpoint_digest(source / "crawl.sqlite3")
+        target = self.root / "successor"
+        result = upgrade.upgrade(self.args(source_cache=source, cache_root=target))
+        self.assertEqual(result["exact_rows"], old_digest)
+        self.assertEqual(team.read_json(source / "parallel_runner.json"), binding)
+        self.assertEqual((target / "PAUSED.json").read_bytes(), b'{"reason":"old pause"}\n')
+        self.assertEqual((target / "STOP").read_bytes(), b"intentional stop\n")
+        self.assertTrue((source / "RETIRED.json").exists())
+        self.assertEqual(team.read_json(target / "parallel_runner.json")["runner_sha256"], team.sha_file(parallel.RUNNER))
+        with self.assertRaisesRegex(RuntimeError, "pause"):
+            parallel.production(self.args(cache_root=target))
+        with self.assertRaisesRegex(RuntimeError, "retired"):
+            upgrade.upgrade(self.args(source_cache=source, cache_root=self.root / "another"))
+
+    def test_runner_upgrade_rejects_foreign_binding_and_existing_destination(self):
+        source = self.root / "source"
+        args = self.args(cache_root=source)
+        batch, rows, _, expected = team.setup(args)
+        with team.cache_lock(source):
+            team.check_binding(source, expected, create=True)
+            team.Checkpoint(source / "crawl.sqlite3").close()
+            binding = parallel.runner_binding(batch["batch_id"], team.sha_file(self.batch / "manifest.json"), 2)
+            team.write_json(source / "parallel_runner.json", binding)
+        target = self.root / "target"
+        with self.assertRaisesRegex(ValueError, "predecessor"):
+            upgrade.upgrade(self.args(source_cache=source, cache_root=target))
+        binding["runner_sha256"] = upgrade.PREDECESSOR_SHA256
+        team.write_json(source / "parallel_runner.json", binding)
+        (target / "keep.txt").write_text("existing data")
+        with self.assertRaises(FileExistsError):
+            upgrade.upgrade(self.args(source_cache=source, cache_root=target))
+        self.assertEqual((target / "keep.txt").read_text(), "existing data")
+        self.assertFalse((source / "RETIRED.json").exists())
 
     def test_owner_compares_disposable_rescrape_without_sharing_reference_db(self):
         reference = self.root / "local-reference.sqlite3"

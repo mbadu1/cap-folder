@@ -23,7 +23,7 @@ import time
 import urllib.error
 
 import team_collection as team
-from build_substack_platform_month import Collector, CrawlCircuitOpen
+from build_substack_platform_month import Collector, CrawlCircuitOpen, visible_text
 from collect_substack_history import HISTORY_STAGE, parse_publication_history
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -31,6 +31,35 @@ DEFAULT_BATCH = ROOT / "data/substack_assignments/2026-09-28-team-v2"
 RUNNER = Path(__file__).resolve()
 MISSING = object()
 BASELINE_SAMPLE_SIZE = 40
+INVITE_ONLY_MESSAGE = "This publication is only open to subscribers who have been invited"
+
+
+class InviteOnlyPublication(urllib.error.HTTPError):
+    """A confirmed publication restriction, retained as a failed history."""
+
+
+def confirmed_invite_only(error):
+    """Inspect one failed response; never retry or infer from status alone."""
+    headers = {str(k).lower(): str(v) for k, v in (error.headers or {}).items()}
+    if error.code != 403 or "retry-after" in headers or headers.get("cf-mitigated"):
+        return False
+    if headers.get("content-type", "").split(";", 1)[0].lower() not in ("text/html", "text/plain"):
+        return False
+    try:
+        body = error.read(16385)
+        if len(body) > 16384:
+            return False
+        text = body.decode("utf-8")
+    except (OSError, ValueError, UnicodeError):
+        return False
+    finally:
+        error.close()
+    if any(marker in text.lower() for marker in ("cf-chl-", "challenge-platform", "captcha", "just a moment")):
+        return False
+    if " ".join(visible_text(text).split()) != INVITE_ONLY_MESSAGE:
+        return False
+    error.invite_response_sha256 = hashlib.sha256(body).hexdigest()
+    return True
 
 
 def canonical(value):
@@ -85,6 +114,19 @@ class ParallelCollector(Collector):
         super().__init__(per_worker_gap, 1, 600)
         self.throttle = pacing
         self.pause_event = pause_event
+
+    def fetch(self, url):
+        try:
+            return super().fetch(url)
+        except urllib.error.HTTPError as error:
+            if confirmed_invite_only(error):
+                raise InviteOnlyPublication(url, 403,
+                    "Invite-only publication; HTTP 403; response_sha256=" + error.invite_response_sha256,
+                    error.headers, None) from error
+            # Stop other workers immediately for an unexplained access failure.
+            if error.code in (401, 403, 429):
+                self.pause_event.set()
+            raise
 
     def _record_rate_limit(self, wait_seconds):
         self.pause_event.set()
@@ -175,6 +217,7 @@ def collect(args, rows, cache, binding, expected=None):
 
         pool = CollectorPool(args.delay_seconds, args.global_gap_seconds, pause_event, log_start)
         fetched, reason, state = 0, None, "running"
+        invite_only_count = 0
         prior = {sig: signal.getsignal(sig) for sig in (signal.SIGINT, signal.SIGTERM)}
         for sig in prior:
             signal.signal(sig, lambda *_: stop_event.set())
@@ -187,7 +230,8 @@ def collect(args, rows, cache, binding, expected=None):
                          global_gap_seconds=args.global_gap_seconds,
                          request_count_this_run=requests,
                          http_status_counts_this_run=statuses,
-                         new_publications_this_run=fetched)
+                         new_publications_this_run=fetched,
+                         invite_only_failures_this_run=invite_only_count)
             if expected is not None:
                 value.update(expected)
             team.write_json(cache / "collection_status.json", value)
@@ -230,11 +274,14 @@ def collect(args, rows, cache, binding, expected=None):
                             checkpoint.put(HISTORY_STAGE, url, ok, payload, error)
                             keys[url] = int(ok)
                             fetched += 1
-                            if isinstance(error, urllib.error.HTTPError) and error.code in (401, 403, 429):
+                            if isinstance(error, InviteOnlyPublication):
+                                invite_only_count += 1
+                            elif isinstance(error, urllib.error.HTTPError) and error.code in (401, 403, 429):
                                 pause_event.set()
                                 reason = reason or str(error)
                                 state = "access_or_rate_stop"
                             print(json.dumps({"publication_url": url, "ok": int(ok),
+                                              "failure_kind": type(error).__name__ if error else None,
                                               **team.counts(rows, keys)}), flush=True)
                         report()
                     while len(futures) < args.workers and submit():

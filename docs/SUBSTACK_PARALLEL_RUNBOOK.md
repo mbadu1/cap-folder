@@ -1,6 +1,6 @@
 # Run the two Substack shards with 20 workers on DCC
 
-**Code available; no live DCC full-history run has been verified.** Use `scripts/substack/parallel_team_collection.py` from the same reviewed Git commit on both machines. It uses the frozen `2026-09-28-team-v2` assignments, parser, SQLite schema, export command, and merge command. The original `team_collection.py` and v2 manifest remain unchanged. The parallel runner pins its own SHA-256 in each cache and refuses a different runner on resume.
+**2026-09-29: the runner records confirmed invite-only HTTP 403 responses as failed publications and continues other assignments.** Use `scripts/substack/parallel_team_collection.py` from the same reviewed Git commit on both machines. It uses the frozen `2026-09-28-team-v2` assignments, parser, SQLite schema, export command, and merge command. The original `team_collection.py` and v2 manifest remain unchanged. The parallel runner pins its own SHA-256 in each cache and refuses a different runner on resume.
 
 Read the repository's [AGENTS.md](../AGENTS.md) first. From a local chat, Ziyang operates his DCC checkout through `ssh dcc-agent '<command>'`. If his chat is attached to a remote project through that alias, verify that its shell is already on the Slurm compute allocation and run there directly without nested SSH. Zherui uses the corresponding CPU compute route. These are CPU jobs; do not compute on a DCC login node. Run the commands below **inside the project checkout on a compute allocation**. `--workers 20` means 20 threads in one process and one shard cache. It does not request 20 Slurm CPUs.
 
@@ -13,7 +13,7 @@ python3 scripts/substack/check_substack_compatibility.py --shard 2
 python3 scripts/substack/parallel_team_collection.py run --shard 2 --check
 ```
 
-Zherui substitutes `--shard 1`. The compatibility check is offline and includes 45 tests and the unchanged golden parser fingerprint `2987d6b4406fa38ef2ac7700b726f468afff3c576943465d3505a057b16e3ded`. `--check` validates the frozen assignment without network or cache writes. Do not start shard 1 while its existing `PAUSED.json` is in place; inspect and resolve that access stop first. Do not run two collectors on one shard cache.
+Zherui substitutes `--shard 1`. The compatibility check is offline and includes 49 tests and the unchanged golden parser fingerprint `2987d6b4406fa38ef2ac7700b726f468afff3c576943465d3505a057b16e3ded`. `--check` validates the frozen assignment without network or cache writes. Do not start shard 1 while its existing `PAUSED.json` is in place; inspect and resolve that access stop first. Do not run two collectors on one shard cache.
 
 ## Check DCC output against the earlier local baseline
 
@@ -30,7 +30,7 @@ python3 -u scripts/substack/parallel_team_collection.py validation-run --urls da
 python3 scripts/substack/parallel_team_collection.py validation-export --urls data/substack_validation/2026-09-28-team-v2/baseline-40-urls.json --cache-root .cache/substack_parallel_validation/baseline-40-cache --output .cache/substack_parallel_validation/baseline-40-export
 ```
 
-The validation run uses the same six-second minimum per worker and a 0.6-second minimum gap between request starts **within this process**. It pauses on access/rate failures. If it pauses, preserve `PAUSED.json`, diagnose the response, and return the partial test export; do not label the comparison exact. Ziyang returns the private `baseline-40-export` directory to Zherui. It has a checksum manifest and up to 40 test records; it is never merged into production. Ziyang does not need Zherui's baseline database or shard-1 checkpoint.
+The validation run uses the same six-second minimum per worker and a 0.6-second minimum gap between request starts **within this process**. It records confirmed invite-only restrictions as failures and continues; other access/rate failures pause it. If it pauses, preserve `PAUSED.json`, diagnose the response, and return the partial test export; do not label the comparison exact. Ziyang returns the private `baseline-40-export` directory to Zherui. It has a checksum manifest and up to 40 test records; it is never merged into production. Ziyang does not need Zherui's baseline database or shard-1 checkpoint.
 
 Zherui compares that export against his local database:
 
@@ -66,7 +66,23 @@ python3 scripts/substack/team_collection.py status --batch data/substack_assignm
 
 The default production cache remains `.cache/substack_shards/2026-09-28-team-v2/shard-2/`. `request_starts.jsonl` logs each request start for pace review, and `collection_status.json` records HTTP status counts. Continue the same cache with bounded chunks or `--continuous` after checking the pilot. Resume with the **same runner revision**, shard, and cache; committed successes and failures are skipped. For shard 1, Zherui substitutes `--shard 1` and uses its existing v2 checkpoint only after resolving the preserved pause. Do not delete a cache to resume.
 
-Both shards at `--global-gap-seconds 0.6` would have two independent gates. **Run them at separate times** until a reliable shared cross-shard gate is implemented and verified. The one-minute DCC probe does not establish a sustained two-shard aggregate rate. Keep the written Substack permission and DCC terms as the upper bounds; use a slower gap if required. A 401/403/429 or circuit stop creates `PAUSED.json`, and the runner stops new request starts while in-flight histories settle.
+Both shards at `--global-gap-seconds 0.6` would have two independent gates. **Run them at separate times** until a reliable shared cross-shard gate is implemented and verified. The one-minute DCC probe does not establish a sustained two-shard aggregate rate. Keep the written Substack permission and DCC terms as the upper bounds; use a slower gap if required. An unexplained 403, any 401/429, or circuit stop creates `PAUSED.json`; new request starts stop while in-flight histories settle. A 403 is classified as invite-only only when its complete bounded HTML/plain-text response has the exact known invitation message and has no Retry-After, challenge header, or recognized challenge marker. It is saved as `InviteOnlyPublication` with the response hash, remains a failure, and is skipped on resume. No restricted content is fetched and no extra diagnostic request is made by this classification.
+
+## Upgrade an existing stopped parallel cache
+
+The invite-only handling changes the runner hash. Do not rewrite an existing `parallel_runner.json`. Use the checked migration for the pinned predecessor (`d81df221…`), preserving its database, binding, and pause evidence:
+
+```sh
+python3 scripts/substack/upgrade_parallel_cache.py --shard 1 --source-cache .cache/substack_shards/2026-09-28-team-v2/shard-1 --cache-root .cache/substack_shards/2026-09-28-team-v2/shard-1-invite-only-v1
+```
+
+The command verifies source assignment and runner bindings, locks both caches, copies via SQLite backup, checks exact ordered rows and integrity, preserves STOP/PAUSED markers, binds the separate successor, and retires the source. It refuses an existing destination or unexpected predecessor. It never clears a pause. After the carried pause is diagnosed and deliberately archived under operator authorization, run with the **explicit successor cache**:
+
+```sh
+python3 scripts/substack/parallel_team_collection.py run --shard 1 --cache-root .cache/substack_shards/2026-09-28-team-v2/shard-1-invite-only-v1 --workers 20 --global-gap-seconds 0.6 --continuous
+```
+
+Use this same `--cache-root` for status/export commands after migration. Historical exports and validation reports retain their original runner provenance; the original 40-URL validation remains unchanged. Successful payload parsing, frozen assignments, SQLite/export schema, rate limits and unknown-access stop behavior are unchanged. The 49 offline checks cover confirmed invite-only continuation, retained failures/no refetch, rejection of rate/challenge/unknown responses, and exact stopped-cache upgrade with preserved markers and source binding.
 
 ## Export and return
 
