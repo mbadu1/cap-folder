@@ -1,6 +1,6 @@
 # Check that your scraper matches the team's scraper
 
-Use the new two-person handoff on `zherui-substack-month-pilot`, batch `2026-09-28-team-v2`. Zherui owns shard 1 and Ziyang owns shard 2. This release changes the orchestration and assignment fingerprints. The article parser and fixed expected output are unchanged from the earlier handoff; migrate old checkpoints using the team guide rather than rebinding them.
+Use the new two-person handoff on `zherui-substack-month-pilot`, batch `2026-09-28-team-v2`. Zherui owns shard 1 and Ziyang owns shard 2. This release changes the orchestration and assignment fingerprints. The article parser and fixed expected output are unchanged from the earlier handoff; use the new batch and its dedicated checkpoint.
 
 Run from the repository root with Python 3.10 or newer. No extra packages, Substack requests, original database, or files from Zherui's computer are required.
 

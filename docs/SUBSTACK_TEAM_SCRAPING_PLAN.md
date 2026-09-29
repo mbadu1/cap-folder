@@ -15,22 +15,6 @@ The original frozen frame has 242,052 publications. The preserved baseline has 9
 
 Each person collects the full available history for their assigned publications from 2020-01-01 through 2026-09-17. September 2026 is a 17-day partial month. Keep public/free bodies and paid metadata according to the shared parser. Numeric author IDs and post IDs are resolved across the combined results later. A successful publication result can be empty and does not certify a complete historical archive.
 
-## Cutover from the old three-person plan
-
-This batch supersedes `2026-09-28-team-v1`. Do not start the old batch or Michael’s former shard 3. Existing copies of the old instructions are historical; use the new shared handoff commit. The old CSVs/manifests remain unchanged for provenance and migration. Compatibility checks now require **39 passing tests**.
-
-**Ziyang:** You have not started the old batch, so clone/pull the new handoff and follow setup below. No checkpoint migration or access to Zherui’s computer is needed.
-
-**Zherui:** Your old shard-1 checkpoint has already been copied to `.cache/substack_shards/2026-09-28-team-v2/shard-1/`. It retains all 22 exact records and the existing `PAUSED.json` for the prior HTTP 403. The old cache is preserved and retired with `STOP`/`RETIRED.json`. This cutover makes no network requests and does not authorize removing the pause. Diagnose the existing access stop before deliberately resuming the new cache. Do not run migration again on an already migrated checkpoint.
-
-If another local checkout unexpectedly contains old shard-1/2 work, stop its worker first and use the offline migration command below (example: shard 2). It locks the source, checks ownership/fingerprints, copies exact records including failures and timestamps, carries STOP/PAUSED markers, and retires the old cache. The destination must be new; preserve any existing destination rather than overwrite it.
-
-```sh
-python3 scripts/substack/team_collection.py migrate --source-batch data/substack_assignments/2026-09-28-team-v1 --source-shard 2 --source-cache .cache/substack_shards/2026-09-28-team-v1/shard-2 --batch data/substack_assignments/2026-09-28-team-v2 --shard 2
-```
-
-If Michael has any unexpected previously collected shard-3 data, preserve it and reconcile with Zherui before anyone re-fetches those URLs; this migration command deliberately does not guess ownership for split former shard 3.
-
 ## Setup and validation
 
 Clone the repository or fetch the shared branch into an existing checkout. Preserve any local changes before switching branches. For a fresh checkout:
