@@ -1,0 +1,15 @@
+metric,value
+feeds_attempted,35
+feeds_errors,5
+full_text_articles,92
+train,63
+val,11
+test,18
+min_words,200
+median_words,1192
+label,human
+"topic::Arts, culture, media and design",11
+"topic::Business, finance and economics",19
+"topic::Health, family and personal life",20
+"topic::Society, history and ideas",10
+"topic::Technology, science, education and environment",32

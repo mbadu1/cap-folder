@@ -1,0 +1,36 @@
+platform,creator_id,handle_or_slug,display_name,stratum,topic_family,url
+medium,medium:anildash,anildash,Anil Dash,elite,"Technology, science, education and environment",https://medium.com/feed/@anildash
+medium,medium:ev,ev,Ev Williams,elite,"Technology, science, education and environment",https://medium.com/feed/@ev
+medium,medium:towardsdatascience,towardsdatascience,Towards Data Science,elite,"Technology, science, education and environment",https://medium.com/feed/towards-data-science
+medium,medium:betterprogramming,betterprogramming,Better Programming,elite,"Technology, science, education and environment",https://medium.com/feed/better-programming
+medium,medium:javascriptscene,javascriptscene,JavaScript Scene,elite,"Technology, science, education and environment",https://medium.com/feed/javascript-scene
+medium,medium:gitconnected,gitconnected,Level Up Coding,elite,"Technology, science, education and environment",https://medium.com/feed/gitconnected
+medium,medium:onezero,onezero,OneZero,elite,"Technology, science, education and environment",https://medium.com/feed/one-zero
+medium,medium:uxdesign,uxdesign,UX Collective,elite,"Arts, culture, media and design",https://medium.com/feed/user-experience-design-1
+medium,medium:hackernoon,hackernoon,HackerNoon,elite,"Technology, science, education and environment",https://medium.com/feed/hackernoon
+medium,medium:codenewbie,codenewbie,CodeNewbie,elite,"Technology, science, education and environment",https://medium.com/feed/codenewbie
+medium,medium:jasonfried,jasonfried,Jason Fried,elite,"Business, finance and economics",https://medium.com/feed/@jasonfried
+medium,medium:aytekintank,aytekintank,Aytekin Tank,elite,"Business, finance and economics",https://medium.com/feed/@aytekintank
+medium,medium:swlh,swlh,The Startup,elite,"Business, finance and economics",https://medium.com/feed/swlh
+medium,medium:theascent,theascent,The Ascent,elite,"Business, finance and economics",https://medium.com/feed/the-ascent
+medium,medium:marker,marker,Marker,elite,"Business, finance and economics",https://medium.com/feed/marker
+medium,medium:entrepreneurshandbook,entrepreneurshandbook,Entrepreneur's Handbook,elite,"Business, finance and economics",https://medium.com/feed/entrepreneurs-handbook
+medium,medium:timdenning,timdenning,Tim Denning,elite,"Business, finance and economics",https://medium.com/feed/@timdenning
+medium,medium:umairh,umairh,Umair Haque,elite,"Society, history and ideas",https://medium.com/feed/@umairh
+medium,medium:gen,gen,GEN,elite,"Society, history and ideas",https://medium.com/feed/gen
+medium,medium:illumination,illumination,ILLUMINATION,elite,"Society, history and ideas",https://medium.com/feed/illumination
+medium,medium:curious,curious,Curious,elite,"Society, history and ideas",https://medium.com/feed/curious
+medium,medium:personalgrowth,personal-growth,Personal Growth,elite,"Society, history and ideas",https://medium.com/feed/personal-growth
+medium,medium:zulie,zulie,Zulie Rane,elite,"Health, family and personal life",https://medium.com/feed/@zulie
+medium,medium:betterhumans,betterhumans,Better Humans,elite,"Health, family and personal life",https://medium.com/feed/better-humans
+medium,medium:humanparts,humanparts,Human Parts,elite,"Health, family and personal life",https://medium.com/feed/human-parts
+medium,medium:forge,forge,Forge,elite,"Health, family and personal life",https://medium.com/feed/forge
+medium,medium:mindcafe,mindcafe,Mind Cafe,elite,"Health, family and personal life",https://medium.com/feed/mind-cafe
+medium,medium:krisgage,krisgage,Kris Gage,elite,"Health, family and personal life",https://medium.com/feed/@krisgage
+medium,medium:zora,zora,ZORA,elite,"Arts, culture, media and design",https://medium.com/feed/zora
+medium,medium:thebolditalic,thebolditalic,The Bold Italic,elite,"Arts, culture, media and design",https://medium.com/feed/the-bold-italic
+medium,medium:modus,modus,Modus,elite,"Arts, culture, media and design",https://medium.com/feed/modus
+medium,medium:nicolascole77,nicolascole77,Nicolas Cole,elite,Literature and creative writing,https://medium.com/feed/@nicolascole77
+medium,medium:writingcooperative,writingcooperative,The Writing Cooperative,elite,Literature and creative writing,https://medium.com/feed/the-writing-cooperative
+medium,medium:heated,heated,Heated,elite,"Lifestyle, food, travel, home and leisure",https://medium.com/feed/heated
+medium,medium:psiloveyou,psiloveyou,PS I Love You,elite,"Health, family and personal life",https://medium.com/feed/psiloveyou
