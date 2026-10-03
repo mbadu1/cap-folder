@@ -1,8 +1,26 @@
 # Handoff validation — 2026-10-03
 
+## Live staged DCC results
+
+Executed pinned code commit `53e42a791fd968da11552bfc066c6f44264a3644` through `dcc-agent` on `dcc-mism-ferc-u-ab25-4-3`, job 57438801: four CPUs, 16 GiB, no GPU, Python 3.13.5. The original local worker stopped gracefully with its final report/lock verified; the refreshed ledger pinned baseline request 106475. The local checkpoint did not advance during DCC work. The full local compatibility suite ran 141 tests (140 passed/one expected skip); DCC reproduced Medium's 70 tests (69 passed/one expected skip).
+
+| Trial | Workers observed | Successful feeds | Elapsed | Minimum global gap | Minimum worker gap | Assessment |
+| --- | ---: | ---: | ---: | ---: | ---: | --- |
+| smoke | 1 | 5/5 | 24.47 s | 6.0007 s | 6.0007 s | PASS |
+| ten | 10 | 20/20 | 29.14 s | 1.5007 s | 6.0088 s | PASS |
+| twenty | 20 | 40/40 | 59.01 s | 1.5008 s | 6.0046 s | PASS |
+
+All **65 requests** returned HTTP 200 without access/parser errors or stop markers. Minimum global spacing across all three trials, including process transitions, was 1.5007 seconds. Exact-response replay on local Python 3.12 matched every DCC normalized record in each trial, with zero additional requests. Five/20-feed historical comparisons returned PASS_NORMALIZED: only RSS build timestamps changed. The final trial matched **39/40 historical profile payloads**; its original comparison remains REVIEW_REQUIRED, with the source change inspected and documented below.
+
+`@abewbinnie` kept the same candidate creator ID and ten feed entries. Since the baseline fetch on September 29, one new September 30 post (outside the frozen September 17 study cutoff) displaced an older September 14, 2025 post (inside the study window). All nine shared post records are unchanged. This is a reviewed live-source change: the same DCC bytes reparse exactly locally, and the immutable historical reference and displaced baseline record are preserved. No expected result was rewritten to obtain agreement.
+
+All three DCC PIDs exited and locks were free before the original local collector resumed deliberately with its original 3.1-second setting, 250,000 author-candidate target and retention/resource policy. Fresh HTTP 200 progress and its lock/heartbeat were verified. Only the intentional test STOP was archived. No continuous DCC production or assigned feed/mirror pilot was launched. Validation caches remain separate from production. The test ledger is now historical because local collection resumed; obtain a new stopped-owner ledger before Ziyang's live run. Ziyang must repeat the staged validation on his own node/account. Bounded RSS trials do not establish sustained throughput, full histories or sampling eligibility.
+
+See [machine-readable results and artifact hashes](../validation/2026-10-03-dcc-results.json), [immutable sample/replay manifest](../validation/2026-10-03-baseline-40/manifest.json) and [reproduction commands](DCC_VALIDATION_PLAN.md). Raw responses, bodies, SQLite caches and the expected reference remain private.
+
 ## Staged validation implementation
 
-The updated Medium suite runs **70 tests: 69 passed and one expected private-artifact skip**. Seven new tests verify immutable 40-feed freezing/replay, selected-feed scope, validation-only bindings, pacing/access review, reference tampering, separate stage bindings and exact-response replay drift detection. The shipped 40-feed local baseline sample passed exact same-response replay with zero network requests, snapshot request watermark 106471. The [staged plan](DCC_VALIDATION_PLAN.md) and Ziyang prompt now require 1/10/20-worker trials and private baseline comparison before an assigned-shard pilot. Live DCC results will be recorded separately; the historical sections below describe earlier revisions.
+The updated Medium suite runs **70 tests: 69 passed and one expected private-artifact skip**. Seven new tests verify immutable 40-feed freezing/replay, selected-feed scope, validation-only bindings, pacing/access review, reference tampering, separate stage bindings and exact-response replay drift detection. The shipped 40-feed local baseline sample passed exact same-response replay with zero network requests, snapshot request watermark 106471. The [staged plan](DCC_VALIDATION_PLAN.md) and Ziyang prompt now require 1/10/20-worker trials and private baseline comparison before an assigned-shard pilot. The historical sections below describe earlier revisions.
 
 ## Updated pacing (v2)
 

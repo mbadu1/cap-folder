@@ -1,0 +1,192 @@
+{
+  "date": "2026-10-03",
+  "version": "medium-dcc-validation-results-v1",
+  "generated_at": "2026-10-03T22:34:02.292421+00:00",
+  "code_commit": "53e42a791fd968da11552bfc066c6f44264a3644",
+  "sample_sha256": "4cdfabf488be3edfc935d7dae4b59f9171132573544e0c305a6e2c55187293b9",
+  "private_reference_sha256": "80ae8cadb9a00e0ba0c221514327dfcec1c1f8b44e2fc31fd51d8c6e502a7d28",
+  "source_hashes": {
+    "medium/scripts/validate_dcc.py": "803525b5391aafe3218622dc2d8af972a2a9dcd06924c9141681a956e0df8d8e",
+    "medium/scripts/parallel_medium_collection.py": "97418ea2c0fb9e571333b9af44db51eafa3c47ee475a9371a88239bdc409ed93",
+    "medium/scripts/collect_medium_history.py": "3689982d7e4902d94af6b494ff65832a083530a73b47e6c135a69ce53900b425",
+    "medium/scripts/build_medium_toy.py": "237ca06f0ada4e3569deaae65918e580ad8459e6d1a94ffbefa338e19bb22cde",
+    "medium/scripts/medium_mirror_adapter.py": "886a3ec2514430fbee3fe6143a6266fcee0ba19c1131e96cdf042da9f17e4df0",
+    "substack/scripts/build_substack_platform_month.py": "a176eae76a3e771cc9ebd49d3940601c50e4c5af25cefce0d4dddcda4d8fc2ec"
+  },
+  "sample_watermark": 106471,
+  "stopped_baseline_watermark": 106475,
+  "stopped_ledger_sha256": "dba05cdfd4b0f0ff28ae0f822feb7a4a164acb1e8ceeb66b6256ec15f04c6e7d",
+  "resources": {
+    "cpus": 4,
+    "memory_gib": 16,
+    "gpus": 0,
+    "partition": "scavenger",
+    "existing_time_limit": "48:00:00"
+  },
+  "python_local": "3.12",
+  "python_dcc": "3.13.5",
+  "tests": {
+    "local": {
+      "total": 141,
+      "passed": 140,
+      "skipped": 1
+    },
+    "dcc_medium": {
+      "total": 70,
+      "passed": 69,
+      "skipped": 1
+    }
+  },
+  "stages": [
+    {
+      "stage": "smoke",
+      "workers": 1,
+      "workers_observed": 1,
+      "requests": 5,
+      "http_statuses": {
+        "200": 5
+      },
+      "operational_status": "PASS",
+      "minimum_global_gap_seconds": 6.000744342803955,
+      "minimum_worker_gap_seconds": 6.000744342803955,
+      "elapsed_seconds": 24.47275009844452,
+      "node": "dcc-mism-ferc-u-ab25-4-3",
+      "job": "57438801",
+      "pid": 1133045,
+      "baseline_comparison": "PASS_NORMALIZED",
+      "normalized_difference_profiles": [],
+      "raw_source_changed_profiles": 5,
+      "same_response_replay": "PASS_EXACT",
+      "raw_xml_changed_elements": {
+        "lastBuildDate": 5
+      },
+      "artifact_sha256": {
+        "assessment.json": "f8ecf804cdf06000b48cd1bc883d66f4d5555349388808101070d5110c45568c",
+        "run_receipt.json": "6a4add1149c52b697a00c7e2d5356f1618a666adea218454713af1a12425b2aa",
+        "comparison.json": "dcc0ae381a0373377d824c283e24c57d136e8582191a0c332c1127c817b9e96e",
+        "same_response_replay.json": "4a450d67baa8f8c2359da1368d9b70a48f65cb8090a015e18138121e63038c90",
+        "request_starts.jsonl": "91ea0b81b5b30735a4417351b5ac44851f681e7127f66549e0230f49b822477d"
+      }
+    },
+    {
+      "stage": "ten",
+      "workers": 10,
+      "workers_observed": 10,
+      "requests": 20,
+      "http_statuses": {
+        "200": 20
+      },
+      "operational_status": "PASS",
+      "minimum_global_gap_seconds": 1.5007247924804688,
+      "minimum_worker_gap_seconds": 6.008836984634399,
+      "elapsed_seconds": 29.143589763902128,
+      "node": "dcc-mism-ferc-u-ab25-4-3",
+      "job": "57438801",
+      "pid": 1134280,
+      "baseline_comparison": "PASS_NORMALIZED",
+      "normalized_difference_profiles": [],
+      "raw_source_changed_profiles": 20,
+      "same_response_replay": "PASS_EXACT",
+      "raw_xml_changed_elements": {
+        "lastBuildDate": 20
+      },
+      "artifact_sha256": {
+        "assessment.json": "786a5ca13758960b24eee42e0ece90ec3072b899aba3eff57d59600821b997ee",
+        "run_receipt.json": "7659a40ed7baf5bfeb7722ea1443b5eb8d9f33550e356c1e1d88b7572eebdb72",
+        "comparison.json": "ecfb378d1dae3285668aae4ee58fce1110d13ff142b422c81e425a39e02ef830",
+        "same_response_replay.json": "20e36bce77f0293194873d35eedbd94359c275ec0b634ad5689088cf35adf39f",
+        "request_starts.jsonl": "9a4e7c2f133488a924c9161f11fa81c6dedb4b91a092c4025f1874031501c15c"
+      }
+    },
+    {
+      "stage": "twenty",
+      "workers": 20,
+      "workers_observed": 20,
+      "requests": 40,
+      "http_statuses": {
+        "200": 40
+      },
+      "operational_status": "PASS",
+      "minimum_global_gap_seconds": 1.5008087158203125,
+      "minimum_worker_gap_seconds": 6.004587650299072,
+      "elapsed_seconds": 59.007450862787664,
+      "node": "dcc-mism-ferc-u-ab25-4-3",
+      "job": "57438801",
+      "pid": 1135185,
+      "baseline_comparison": "REVIEW_REQUIRED",
+      "normalized_difference_profiles": [
+        "https://medium.com/@abewbinnie"
+      ],
+      "raw_source_changed_profiles": 40,
+      "same_response_replay": "PASS_EXACT",
+      "raw_xml_changed_elements": {
+        "lastBuildDate": 40,
+        "link": 10,
+        "{http://purl.org/rss/1.0/modules/content/}encoded": 10,
+        "{http://www.w3.org/2005/Atom}updated": 10,
+        "pubDate": 10,
+        "title": 10,
+        "guid": 10
+      },
+      "artifact_sha256": {
+        "assessment.json": "02d2eab0adb7405f79471a9e183982a61d8b78f83b4a668477dbb2117f4ac198",
+        "run_receipt.json": "a62e678a55f637b998dda8fee017c14eb9f5d6eca78e5260f407df64a3df81ea",
+        "comparison.json": "5372099a78f6f6249260fcc223238791f391067e9ccc8e3e5195562372b933a0",
+        "same_response_replay.json": "c4f3442bb089ab04bd1474ab33472c62b7ad6251c5d2287793f55477744dad02",
+        "request_starts.jsonl": "0fe8c3a9edf21e2cd6a6668589aae59ca3286ee5531ac7318c56fd0229bb5b97"
+      }
+    }
+  ],
+  "total_requests": 65,
+  "distinct_validation_profiles": 40,
+  "minimum_global_gap_across_all_stages_seconds": 1.5007247924804688,
+  "all_stages_exited": true,
+  "source_change_review": {
+    "profile_url": "https://medium.com/@abewbinnie",
+    "baseline_observed_at": "2026-09-29T22:52:25.878961+00:00",
+    "creator_before": {
+      "candidate_id": "6b176609a96f",
+      "feed_count": 10,
+      "name": "tekok",
+      "profile_url": "https://medium.com/@abewbinnie"
+    },
+    "creator_after": {
+      "profile_url": "https://medium.com/@abewbinnie",
+      "name": "tekok",
+      "candidate_id": "6b176609a96f",
+      "feed_count": 10
+    },
+    "posts_before": 10,
+    "posts_after": 10,
+    "added": [
+      {
+        "post_id": "a2fcd351abdd",
+        "published_at": "2026-09-30T06:40:06+00:00",
+        "year_month": "2026-09",
+        "in_window": 0
+      }
+    ],
+    "removed": [
+      {
+        "post_id": "5403e1866be1",
+        "published_at": "2025-09-14T09:24:46+00:00",
+        "year_month": "2025-09",
+        "in_window": 1
+      }
+    ],
+    "changed_shared_fields": {},
+    "same_response_replay": "PASS_EXACT",
+    "historical_reference_preserved": true,
+    "disposition": "SOURCE_CHANGE_REVIEWED",
+    "rationale": "Live ten-entry RSS adds one 2026-09-30 post outside the study window and drops one 2025-09-14 post inside it; creator identity and all nine shared post records are unchanged. Exact-response local/DCC replay passes. Historical reference and displaced baseline record retained; original comparison remains REVIEW_REQUIRED."
+  },
+  "local_collection_resumed": true,
+  "production_dcc_started": false,
+  "limitations": [
+    "Feed-only bounded trials; production feed/mirror scheduling and sustained throughput are not measured.",
+    "One historical-to-live RSS rollover; expected reference was never rewritten.",
+    "This is Zherui account/node evidence; Ziyang must verify his own DCC route and staged trial.",
+    "The stopped ledger was for this test; refresh it after stopping the resumed owner before Ziyang live work.",
+    "RSS candidate identities and truncated feeds do not establish validated people, complete histories or monthly sampling eligibility."
+  ]
+}

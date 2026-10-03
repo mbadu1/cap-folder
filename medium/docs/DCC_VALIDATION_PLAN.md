@@ -53,7 +53,7 @@ Inspect `assessment.json`, `run_receipt.json`, `request_starts.jsonl`, `report/h
   --previous-assessment "$task_validation/ten/assessment.json" --exclusive-team-window
 ```
 
-Execute the second command only after reviewing ten's PASS. Any HTTP/access/parser/resource/pacing failure ends escalation. Active requests settle and their outcomes remain recorded. Preserve failed caches for diagnosis. Observe live stages about once a minute and retain the exact job/node/PID and revision. Do not start production from this validator.
+Execute the second command only after reviewing ten's PASS. Wait at least six seconds after a stage exits before launching the next stage or assigned-shard pilot, so process changes cannot compress the request spacing; gates in separate caches do not coordinate with one another. Any HTTP/access/parser/resource/pacing failure ends escalation. Active requests settle and their outcomes remain recorded. Preserve failed caches for diagnosis. Observe live stages about once a minute and retain the exact job/node/PID and revision. Do not start production from this validator.
 
 ## Compare and replay after every stage
 
