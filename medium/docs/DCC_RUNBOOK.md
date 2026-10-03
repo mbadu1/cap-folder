@@ -57,6 +57,8 @@ The command verifies all assignment hashes, ownership, dates, URLs and source bi
 
 ## Pilot, inspect and continue
 
+First complete [DCC_VALIDATION_PLAN.md](DCC_VALIDATION_PLAN.md): the frozen 40-feed same-response baseline replay, five requests with one worker, 20 with ten workers, and 40 with twenty workers in separate validation caches. Review their timing/access/integrity assessments, compare against Zherui's private historical reference and replay the exact DCC responses locally. Preserve source changes for review. A failed stage blocks escalation. These feed-only validation caches are separate from the assigned-shard cache below and must never enter production exports/merges. Repeat this verification on Ziyang's own account/node before his production pilot.
+
 After confirming Zherui's previous Medium process and every other Medium shard are stopped, run a 40-request pilot inside the active allocation:
 
 ```sh
@@ -65,7 +67,7 @@ bash medium/scripts/run_dcc.sh pilot --shard 2 \
 .venv/bin/python medium/scripts/check_run.py --cache-root "$task_cache"
 ```
 
-The pilot takes at least roughly one minute at the global gate, with additional latency possible. Inspect `report/status.json`, `report/heartbeat.json`, `request_starts.jsonl`, `request_gate.json` and any pause. Verify starts are at least 1.5 seconds apart globally and at least 6 seconds apart for each recorded worker_id and inspect successful RSS identities/dates plus free-only mirror retention. Check job/node/PID/lock and fresh request progress. Access challenges, repeated 429s, parser changes or resource errors require diagnosis, not production continuation. The pilot has **not** been run on DCC by the repository author for this new Medium runner.
+The assigned-shard pilot takes at least roughly one minute at the global gate, with additional latency possible. Inspect `report/status.json`, `report/heartbeat.json`, `request_starts.jsonl`, `request_gate.json` and any pause. Verify starts are at least 1.5 seconds apart globally and at least 6 seconds apart for each recorded worker_id and inspect successful RSS identities/dates plus free-only mirror retention. Check job/node/PID/lock and fresh request progress. Access challenges, repeated 429s, parser changes or resource errors require diagnosis, not production continuation. See [VALIDATION.md](VALIDATION.md) for dated evidence; a prior test never substitutes for your own reviewed pilot.
 
 After a healthy reviewed pilot, continue the same revision, ledger and cache:
 

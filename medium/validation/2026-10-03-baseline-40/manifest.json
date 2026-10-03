@@ -1,0 +1,18 @@
+{
+  "version": "medium-dcc-validation-v1",
+  "sample_sha256": "4cdfabf488be3edfc935d7dae4b59f9171132573544e0c305a6e2c55187293b9",
+  "private_reference_sha256": "80ae8cadb9a00e0ba0c221514327dfcec1c1f8b44e2fc31fd51d8c6e502a7d28",
+  "offline_replay_status": "PASS_EXACT",
+  "offline_replay_mismatches": [],
+  "source_hashes": {
+    "medium/scripts/validate_dcc.py": "803525b5391aafe3218622dc2d8af972a2a9dcd06924c9141681a956e0df8d8e",
+    "medium/scripts/parallel_medium_collection.py": "97418ea2c0fb9e571333b9af44db51eafa3c47ee475a9371a88239bdc409ed93",
+    "medium/scripts/collect_medium_history.py": "3689982d7e4902d94af6b494ff65832a083530a73b47e6c135a69ce53900b425",
+    "medium/scripts/build_medium_toy.py": "237ca06f0ada4e3569deaae65918e580ad8459e6d1a94ffbefa338e19bb22cde",
+    "medium/scripts/medium_mirror_adapter.py": "886a3ec2514430fbee3fe6143a6266fcee0ba19c1131e96cdf042da9f17e4df0",
+    "substack/scripts/build_substack_platform_month.py": "a176eae76a3e771cc9ebd49d3940601c50e4c5af25cefce0d4dddcda4d8fc2ec"
+  },
+  "no_network_requests": true,
+  "feeds": 40,
+  "snapshot_last_request_id": 106471
+}

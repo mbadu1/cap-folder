@@ -2,6 +2,8 @@
 
 Read the [team plan](docs/TEAM_SCRAPING_PLAN.md), [DCC runbook](docs/DCC_RUNBOOK.md) and [Ziyang starter prompt](docs/ZIYANG_START_PROMPT.md).
 
+Before sustained scraping, use the [staged validation plan](docs/DCC_VALIDATION_PLAN.md): fixed local replay, 1/10/20-worker trials, baseline comparison and replay of identical DCC responses.
+
 | Folder | Contents |
 | --- | --- |
 | scripts/ | Existing parser/collector, frozen-list builder, parallel shard runner, DCC wrapper, status checker, private exporter and merge utility |
@@ -9,6 +11,7 @@ Read the [team plan](docs/TEAM_SCRAPING_PLAN.md), [DCC runbook](docs/DCC_RUNBOOK
 | tests/ | Offline parser, identity, retention, scope, transport and export/merge tests |
 | assignments/2026-10-03-team-v1/ | Frozen public profile worklists, hashes and snapshot documentation |
 | handoff/ | Metadata-only preparation snapshot and receipt; refresh after stopping the old owner before live use |
+| validation/ | Frozen 40-feed public test sample and replay manifest; private expected records remain outside Git |
 | requirements.txt | Pinned Python dependencies |
 
 From the repository root, run `python3 -m venv .venv`, `.venv/bin/python -m pip install -r medium/requirements.txt`, then `.venv/bin/python -m unittest discover -s medium/tests -p 'test_*.py'`. Preparation and tests make no collection requests. Use Python 3.10+ on Linux/macOS/WSL. Durable scraped data belongs in private `.cache/` checkpoints, outside Git.
