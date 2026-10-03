@@ -40,7 +40,7 @@ From Zherui's checkout, generate a new immutable metadata ledger after the stop:
   --output .cache/medium_handoff/final-before-ziyang.json.gz
 ```
 
-Use the enclosing workspace's Python environment if that is where dependencies are installed. Share this ledger and its `.receipt.json` through the agreed private channel. Verify the receipt's SHA-256 on Ziyang's machine. Do not replace the checked-in preparation snapshot, assignment CSVs or a previously used ledger. Coordinate the exclusive team window explicitly; a timestamp alone does not prove the other process stopped.
+Use the enclosing workspace's Python environment if that is where dependencies are installed. Publish the metadata-only ledger, its `.receipt.json` and a current exclusive-window release for the next owner in `medium/handoff/`, or use the agreed private channel. A self-service clone requires the published option; article bodies, raw responses and databases remain private. If another shard has started since the local stop, that old receipt is insufficient: wait for the current owner to stop and refresh from the merged state. Verify the receipt's SHA-256 on Ziyang's machine. Do not replace the checked-in preparation snapshot, assignment CSVs or a previously used ledger. Coordinate the exclusive team window explicitly; a timestamp alone does not prove the other process stopped.
 
 ## No-network preflight — Ziyang
 
@@ -57,7 +57,7 @@ The command verifies all assignment hashes, ownership, dates, URLs and source bi
 
 ## Pilot, inspect and continue
 
-First complete [DCC_VALIDATION_PLAN.md](DCC_VALIDATION_PLAN.md): the frozen 40-feed same-response baseline replay, five requests with one worker, 20 with ten workers, and 40 with twenty workers in separate validation caches. Review their timing/access/integrity assessments, compare against Zherui's private historical reference and replay the exact DCC responses locally. Preserve source changes for review. A failed stage blocks escalation. These feed-only validation caches are separate from the assigned-shard cache below and must never enter production exports/merges. Repeat this verification on Ziyang's own account/node before his production pilot.
+First complete [DCC_VALIDATION_PLAN.md](DCC_VALIDATION_PLAN.md): the frozen 40-feed same-response baseline replay, five requests with one worker, 20 with ten workers, and 40 with twenty workers in separate validation caches. Review their timing/access/integrity assessments, compare against the shipped immutable `medium/validation/2026-10-03-baseline-40-v3/reference-metadata.json.gz` and replay the exact DCC responses locally. Preserve source changes for review. A failed stage blocks escalation. These feed-only validation caches are separate from the assigned-shard cache below and must never enter production exports/merges. Repeat this verification on Ziyang's own account/node before his production pilot.
 
 After confirming Zherui's previous Medium process and every other Medium shard are stopped, run a 40-request pilot inside the active allocation:
 

@@ -11,7 +11,7 @@ Before sustained scraping, use the [staged validation plan](docs/DCC_VALIDATION_
 | tests/ | Offline parser, identity, retention, scope, transport and export/merge tests |
 | assignments/2026-10-03-team-v1/ | Frozen public profile worklists, hashes and snapshot documentation |
 | handoff/ | Metadata-only preparation snapshot and receipt; refresh after stopping the old owner before live use |
-| validation/ | Frozen 40-feed public test sample and replay manifest; private expected records remain outside Git |
+| validation/ | Frozen 40-feed sample, replay manifest and expected public metadata/text hashes; article bodies and caches stay private |
 | requirements.txt | Pinned Python dependencies |
 
 From the repository root, run `python3 -m venv .venv`, `.venv/bin/python -m pip install -r medium/requirements.txt`, then `.venv/bin/python -m unittest discover -s medium/tests -p 'test_*.py'`. Preparation and tests make no collection requests. Use Python 3.10+ on Linux/macOS/WSL. Durable scraped data belongs in private `.cache/` checkpoints, outside Git.

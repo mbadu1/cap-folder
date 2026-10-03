@@ -23,7 +23,7 @@ python medium/scripts/validate_dcc.py freeze \
   --reference .cache/medium_validation_reference/2026-10-03-v3/baseline.json.gz
 ```
 
-The shipped sample is already frozen; do not rerun into these paths. The command reads one consistent SQLite snapshot, selects 40 previously successful pool feeds by a deterministic profile hash, verifies retained response hashes, and reparses the same bytes in a temporary cache. It compares candidate IDs, dates, post counts, titles, tags, normalized text hashes and retention classifications. Public files contain URLs and hashes; the reference and corpus stay private. Existing expected results are immutable. `PASS_EXACT` is required before live requests; code changes require a new sample/reference directory and fresh replay.
+The shipped sample is already frozen; do not rerun into these paths. The command reads one consistent SQLite snapshot, selects 40 previously successful pool feeds by a deterministic profile hash, verifies retained response hashes, and reparses the same bytes in a temporary cache. It compares candidate IDs, dates, post counts, titles, tags, normalized text hashes and retention classifications. The v3 directory now also ships `reference-metadata.json.gz`, containing the exact expected public RSS metadata, classifications, word counts and text hashes. Article bodies, raw responses and caches stay private. The manifest retains its original `private_reference_sha256` field; verify the shipped reference against it. Existing expected results are immutable. `PASS_EXACT` is required before live requests; code changes require a new sample/reference directory and fresh replay.
 
 ## Stop and reconcile before live work
 
@@ -57,14 +57,14 @@ Execute the second command only after reviewing ten's PASS. Wait at least six se
 
 ## Compare and replay after every stage
 
-Zherui retains the private baseline reference. After the DCC process exits, transfer each cache privately, including SQLite and retained gzip responses; use a consistent SQLite backup if another reader might retain WAL files. Do not upload caches or raw/text data to GitHub. From the original pinned local checkout:
+The exact v3 metadata reference is shipped, so each operator can compare and replay on their own verified compute node after each stage exits. No baseline database or private reference transfer is needed. Keep all validation caches, raw responses and article bodies private; use a consistent SQLite backup for any later private transfer. From the pinned checkout:
 
 ```sh
 python medium/scripts/validate_dcc.py compare \
-  --cache-root .cache/medium_validation_received/smoke \
-  --reference .cache/medium_validation_reference/2026-10-03-v3/baseline.json.gz
+  --cache-root "$task_validation/smoke" \
+  --reference medium/validation/2026-10-03-baseline-40-v3/reference-metadata.json.gz
 python medium/scripts/validate_dcc.py replay \
-  --cache-root .cache/medium_validation_received/smoke
+  --cache-root "$task_validation/smoke"
 ```
 
 Repeat for ten and twenty. Comparison reports `PASS_EXACT`, `PASS_NORMALIZED` (raw bytes changed but normalized records agree), or `REVIEW_REQUIRED` with affected profiles. RSS can change between the historical fetch and live test; never rewrite the historical reference to make it pass. Same-response replay verifies identical DCC response bytes produce identical normalized records locally, without new HTTP requests. Source drift with exact replay still requires a recorded review of changed dates/IDs/posts/text; parser drift blocks rollout.
