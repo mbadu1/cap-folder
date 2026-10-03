@@ -17,5 +17,5 @@ fi
 repo_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)
 cd -- "$repo_dir"
 exec .venv/bin/python -u medium/scripts/parallel_medium_collection.py run \
-  --workers 20 --delay-seconds 3.1 --min-free-gb 20 --max-cache-gb 0 \
+  --workers 20 --global-gap-seconds 1.5 --per-worker-gap-seconds 6.0 --min-free-gb 20 --max-cache-gb 0 \
   --require-dcc "${phase_options[@]}" "$@"

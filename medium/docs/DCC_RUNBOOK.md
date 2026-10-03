@@ -48,12 +48,12 @@ Save the received ledger at the following example location in your own checkout 
 
 ```sh
 task_ledger=.cache/medium_handoff/final-before-ziyang.json.gz
-task_cache=.cache/medium_shards/2026-10-03-team-v1/shard-2
+task_cache=.cache/medium_shards/2026-10-03-team-v1/shard-2-v2
 .venv/bin/python medium/scripts/parallel_medium_collection.py prepare \
   --shard 2 --reconciliation "$task_ledger" --cache-root "$task_cache"
 ```
 
-The command verifies all assignment hashes, ownership, dates, URLs and source bindings, imports completed/failed metadata exclusions and writes the pinned cache binding. It makes no HTTP requests. A new source/ledger/configuration cannot overwrite an existing cache binding.
+The command verifies all assignment hashes, ownership, dates, URLs and source bindings, imports completed/failed metadata exclusions and writes the pinned cache binding. It makes no HTTP requests. A new source/ledger/configuration cannot overwrite an existing cache binding. The v2 runner uses a 1.5-second global gap and a six-second per-worker gap, as explicitly requested on 2026-10-03. Both are pinned in the binding; caches prepared with v1 remain preserved and require their original revision. Use the new v2 cache path for this rollout.
 
 ## Pilot, inspect and continue
 
@@ -65,7 +65,7 @@ bash medium/scripts/run_dcc.sh pilot --shard 2 \
 .venv/bin/python medium/scripts/check_run.py --cache-root "$task_cache"
 ```
 
-The pilot takes at least roughly two minutes at the global gate, with additional latency possible. Inspect `report/status.json`, `report/heartbeat.json`, `request_starts.jsonl`, `request_gate.json` and any pause. Verify starts are at least 3.1 seconds apart and inspect successful RSS identities/dates plus free-only mirror retention. Check job/node/PID/lock and fresh request progress. Access challenges, repeated 429s, parser changes or resource errors require diagnosis, not production continuation. The pilot has **not** been run on DCC by the repository author for this new Medium runner.
+The pilot takes at least roughly one minute at the global gate, with additional latency possible. Inspect `report/status.json`, `report/heartbeat.json`, `request_starts.jsonl`, `request_gate.json` and any pause. Verify starts are at least 1.5 seconds apart globally and at least 6 seconds apart for each recorded worker_id and inspect successful RSS identities/dates plus free-only mirror retention. Check job/node/PID/lock and fresh request progress. Access challenges, repeated 429s, parser changes or resource errors require diagnosis, not production continuation. The pilot has **not** been run on DCC by the repository author for this new Medium runner.
 
 After a healthy reviewed pilot, continue the same revision, ledger and cache:
 

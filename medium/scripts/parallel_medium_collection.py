@@ -29,7 +29,7 @@ from collect_medium_history import (Collector, ROOT, START, END, atomic_json,
                                     retry_after_seconds)
 from medium_mirror_adapter import story_id
 
-VERSION = "medium-parallel-team-v1"
+VERSION = "medium-parallel-team-v2"
 DEFAULT_BATCH = ROOT / "data/medium_assignments/2026-10-03-team-v1"
 
 
@@ -115,10 +115,14 @@ def reconcile(checkpoint, output, batch):
 
 
 class Gate:
-    def __init__(self, cache, delay, stop, min_free, *, enforce_minimum=True):
-        if not math.isfinite(delay) or delay <= 0 or (enforce_minimum and delay < 3.1):
-            raise ValueError("Global gap must be finite and at least 3.1 seconds")
+    def __init__(self, cache, delay, stop, min_free, *, per_worker_gap=6.0, enforce_minimum=True):
+        if not math.isfinite(delay) or delay <= 0 or (enforce_minimum and delay < 1.5):
+            raise ValueError("Global gap must be finite and at least 1.5 seconds")
+        if not math.isfinite(per_worker_gap) or per_worker_gap < 0 or (enforce_minimum and per_worker_gap < 6.0):
+            raise ValueError("Per-worker gap must be finite and at least 6 seconds")
         self.cache, self.delay, self.stop, self.min_free = Path(cache), delay, stop, min_free
+        self.per_worker_gap = per_worker_gap
+        self.last_worker_start = {}
         self.lock = threading.RLock()
         path = self.cache / "request_gate.json"
         self.state = json.loads(path.read_text()) if path.exists() else dict(last_start=0, cooldown_until=0, rate_events=[])
@@ -130,21 +134,26 @@ class Gate:
         return self.stop.is_set() or any((self.cache / n).exists() for n in ("STOP", "PAUSED.json"))
 
     def start(self, task):
+        worker = threading.get_ident()
         while not self.stopped():
             with self.lock:
                 if self.stopped():
                     return None
-                remaining = max(self.state["last_start"] + self.delay, self.state["cooldown_until"]) - time.time()
+                remaining = max(self.state["last_start"] + self.delay,
+                                self.last_worker_start.get(worker, 0) + self.per_worker_gap,
+                                self.state["cooldown_until"]) - time.time()
                 if remaining <= 0:
                     if shutil.disk_usage(self.cache).free < self.min_free:
                         self.pause("Minimum free-disk reserve reached")
                         return None
                     started = time.time()
                     self.state["last_start"] = started
+                    self.last_worker_start[worker] = started
                     self.save()
                     stamp = now()
                     with (self.cache / "request_starts.jsonl").open("a") as stream:
-                        stream.write(json.dumps(dict(at=stamp, epoch=started, kind=task["kind"], key=task["item_key"])) + "\n")
+                        stream.write(json.dumps(dict(at=stamp, epoch=started, worker_id=worker,
+                                                     kind=task["kind"], key=task["item_key"])) + "\n")
                     return stamp
             self.stop.wait(min(0.2, max(0, remaining)))
         return None
@@ -173,7 +182,7 @@ class Gate:
 
 def fetch(task, gate):
     with requests.Session() as session:
-        session.headers.update({"User-Agent": "DukeCapstoneMediumCollector/1.0 (research permission; shared 3.1s gate; public data)"})
+        session.headers.update({"User-Agent": f"DukeCapstoneMediumCollector/1.0 (research permission; shared {gate.delay}s gate; {gate.per_worker_gap}s per worker; public data)"})
         stamp = gate.start(task)
         result = dict(task=task, stamp=stamp, status=0, size=0, raw=None, sha=None, cf=None, retry=None, error=None)
         if stamp is None:
@@ -205,9 +214,20 @@ def fetch(task, gate):
 
 
 class TeamCollector(Collector):
+    def __init__(self, cache, output, delay=1.5, min_free_gb=20, max_cache_gb=20, per_worker_gap=6.0):
+        if not math.isfinite(delay) or delay < 1.5:
+            raise ValueError("Global gap must be finite and at least 1.5 seconds")
+        if not math.isfinite(per_worker_gap) or per_worker_gap < 6.0:
+            raise ValueError("Per-worker gap must be finite and at least 6 seconds")
+        # The legacy sequential collector keeps its original delay policy.
+        # This runner owns transport and enforces its two timers in Gate.
+        super().__init__(cache, output, max(3.1, delay), min_free_gb, max_cache_gb)
+        self.delay, self.per_worker_gap = delay, per_worker_gap
+
     def heartbeat(self, state="running", reason=None):
         result = super().heartbeat(state, reason)
         result.update(version=VERSION, binding=self.get("team_binding"),
+                      per_worker_gap_seconds=self.per_worker_gap,
                       slurm_job_id=os.environ.get("SLURM_JOB_ID"), node=os.uname().nodename)
         atomic_json(self.output / "heartbeat.json", result)
         return result
@@ -222,7 +242,7 @@ class TeamCollector(Collector):
             return False
         return super().admit_pool_profile(profile, candidate)
 
-    def prepare(self, batch, shard, ledger_path, delay=3.1):
+    def prepare(self, batch, shard, ledger_path, delay=1.5):
         manifest, rows = validate_batch(batch, shard)
         ledger = json.loads(gzip.decompress(Path(ledger_path).read_bytes()))
         if (ledger["version"] != "medium-team-reconciliation-v1"
@@ -238,6 +258,7 @@ class TeamCollector(Collector):
                    ROOT / "scripts/substack/build_substack_platform_month.py"]
         binding = dict(version=VERSION, shard=shard, batch_sha256=sha_file(Path(batch) / "manifest.json"),
                        reconciliation_sha256=sha_file(ledger_path), delay_seconds=delay,
+                       per_worker_gap_seconds=self.per_worker_gap,
                        min_free_bytes=self.min_free, max_cache_bytes=self.max_cache,
                        sources={p.name: sha_file(p) for p in sources})
         previous = self.get("team_binding")
@@ -358,7 +379,7 @@ def collect(c, workers, max_requests, continuous=False, transport=fetch):
     if not 1 <= workers <= 20:
         raise ValueError("workers must be between 1 and 20")
     stop = threading.Event()
-    gate = Gate(c.cache, c.delay, stop, c.min_free)
+    gate = Gate(c.cache, c.delay, stop, c.min_free, per_worker_gap=c.per_worker_gap)
     c.active_gate = gate
     submitted = 0
     state = "pilot_complete"
@@ -464,7 +485,8 @@ def main():
         p.add_argument("--shard", type=int, choices=(1, 2), required=True)
         p.add_argument("--reconciliation", type=Path, required=True)
         p.add_argument("--cache-root", type=Path, required=True)
-        p.add_argument("--delay-seconds", type=float, default=3.1)
+        p.add_argument("--delay-seconds", "--global-gap-seconds", dest="delay_seconds", type=float, default=1.5)
+        p.add_argument("--per-worker-gap-seconds", type=float, default=6.0)
         p.add_argument("--min-free-gb", type=float, default=20)
         p.add_argument("--max-cache-gb", type=float, default=0)
         if name == "run":
@@ -492,15 +514,18 @@ def main():
             parser.error("Use dcc-agent on a compute node inside an active Slurm allocation")
     if not math.isfinite(args.min_free_gb) or args.min_free_gb < 20:
         parser.error("Keep at least the 20 GiB free-disk reserve")
-    if not math.isfinite(args.delay_seconds) or args.delay_seconds < 3.1:
-        parser.error("Keep a finite global gap of at least 3.1 seconds")
+    if not math.isfinite(args.delay_seconds) or args.delay_seconds < 1.5:
+        parser.error("Keep a finite global gap of at least 1.5 seconds")
+    if not math.isfinite(args.per_worker_gap_seconds) or args.per_worker_gap_seconds < 6.0:
+        parser.error("Keep a finite per-worker gap of at least 6 seconds")
     args.cache_root.mkdir(parents=True, exist_ok=True)
     with (args.cache_root / "collector.lock").open("a") as lock:
         try:
             fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError:
             parser.error("A collector or exporter already holds this cache lock")
-        c = TeamCollector(args.cache_root, args.cache_root / "report", args.delay_seconds, args.min_free_gb, args.max_cache_gb)
+        c = TeamCollector(args.cache_root, args.cache_root / "report", args.delay_seconds,
+                          args.min_free_gb, args.max_cache_gb, args.per_worker_gap_seconds)
         try:
             c.prepare(args.batch, args.shard, args.reconciliation, args.delay_seconds)
             if args.command == "run":
@@ -513,6 +538,7 @@ def main():
                 state = "prepared" if args.command == "prepare" else "inspection"
             result = c.report(state)
             result["team_binding"] = c.get("team_binding")
+            result["per_worker_gap_seconds"] = c.per_worker_gap
             result["tasks"] = [dict(r) for r in c.db.execute("SELECT kind,state,COUNT(*) count FROM tasks GROUP BY kind,state")]
             print(json.dumps(result, indent=2))
             return 2 if state in ("paused", "blocked") else 0

@@ -4,7 +4,7 @@ Zherui owns shard 1; Ziyang owns shard 2. Each shard has 96,160 primary profiles
 
 ## Scheduling and limits
 
-One coordinator parses and commits SQLite; up to 20 transport threads each use an isolated HTTP session. All request kinds share one gate at **3.1 seconds or slower** between starts, with persisted cooldowns. Twenty threads overlap response waits; they do not permit twenty times the request rate. The theoretical ceiling remains about 19.35 starts/minute before latency, parsing or cooldowns. Sustained DCC performance has not been measured.
+One coordinator parses and commits SQLite; up to 20 transport threads each use an isolated HTTP session. All request kinds share one gate at **1.5 seconds or slower** between starts across all workers, plus **6 seconds per worker**, with persisted cooldowns. Twenty threads overlap response waits; they do not permit twenty times the request rate. The theoretical ceiling is now 40 starts/minute before latency, parsing or cooldowns. The user explicitly requested these final-Substack pacing settings on 2026-10-03, superseding the original 3.1-second Medium DCC handoff setting. Sustained Medium DCC performance has not been measured. The separate legacy local collector retains its previous setting until a deliberate handoff.
 
 **Only one Medium team run may be active at a time.** This includes the original local worker, the other shard and pilots. Separate machines do not share this gate. Coordinate an exclusive window, stop the previous collector gracefully, verify its lock/process have ended, refresh its ledger, then start the next owner. `--exclusive-team-window` records the operator's confirmation; it cannot remotely detect another person's process. Do not run two independent timers simultaneously.
 

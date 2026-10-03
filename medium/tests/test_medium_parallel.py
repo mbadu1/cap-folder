@@ -69,7 +69,42 @@ class MediumParallelTests(unittest.TestCase):
                     raw=raw, sha=p.digest(raw) if raw else None, cf=None, retry=None, error=error)
 
     def gate(self, **kw):
-        return p.Gate(self.c.cache, kw.get("delay", 0.015), threading.Event(), 0, enforce_minimum=False)
+        return p.Gate(self.c.cache, kw.get("delay", 0.015), threading.Event(), 0,
+                      per_worker_gap=kw.get("per_worker_gap", 0), enforce_minimum=False)
+
+    def test_production_defaults_and_both_pacing_values_are_pinned(self):
+        self.assertEqual(1.5, self.c.delay)
+        self.assertEqual(6.0, self.c.per_worker_gap)
+        self.assertEqual(1.5, self.c.get("team_binding")["delay_seconds"])
+        self.assertEqual(6.0, self.c.get("team_binding")["per_worker_gap_seconds"])
+        self.c.per_worker_gap = 7.0
+        with self.assertRaisesRegex(ValueError, "binding differs"):
+            self.c.prepare(self.batch, 2, self.ledger)
+
+    def test_shared_gate_also_enforces_each_workers_gap(self):
+        gate = self.gate(delay=0.005, per_worker_gap=0.025)
+        task = dict(kind="feed", item_key="fixture")
+        def worker():
+            for _ in range(3):
+                gate.start(task)
+        with ThreadPoolExecutor(max_workers=2) as executor:
+            futures = [executor.submit(worker) for _ in range(2)]
+            for future in futures:
+                future.result()
+        log = [json.loads(line) for line in (self.c.cache / "request_starts.jsonl").read_text().splitlines()]
+        self.assertEqual(6, len(log))
+        self.assertGreaterEqual(min(b["epoch"] - a["epoch"] for a, b in zip(log, log[1:])), 0.004)
+        self.assertEqual(2, len({r["worker_id"] for r in log}))
+        for ident in {r["worker_id"] for r in log}:
+            stamps = [r["epoch"] for r in log if r["worker_id"] == ident]
+            self.assertGreaterEqual(min(b - a for a, b in zip(stamps, stamps[1:])), 0.024)
+
+    def test_invalid_production_gaps_are_rejected_before_cache_creation(self):
+        for global_gap, worker_gap in ((1.4, 6), (float("nan"), 6), (1.5, 5.9), (1.5, float("inf"))):
+            with self.subTest(global_gap=global_gap, worker_gap=worker_gap), self.assertRaises(ValueError):
+                p.TeamCollector(self.root / "invalid", self.root / "report-invalid",
+                                delay=global_gap, per_worker_gap=worker_gap)
+        self.assertFalse((self.root / "invalid").exists())
 
     def test_prepare_offline_no_discovery_and_binding_refusal(self):
         self.assertEqual(4, self.c.db.execute("SELECT COUNT(*) FROM tasks").fetchone()[0])
