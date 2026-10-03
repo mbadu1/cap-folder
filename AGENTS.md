@@ -53,10 +53,10 @@ When the task requires different resources, adjust only the needed launcher argu
 
 Read these documents in order before working on the DCC parallel rollout:
 
-1. [Team scraping plan](docs/SUBSTACK_TEAM_SCRAPING_PLAN.md): ownership, assignments and handoff.
-2. [DCC 20-worker rollout design](docs/SUBSTACK_DCC_20_WORKER_PLAN.md): rationale, pacing and validation gates.
-3. [Compatibility guide](docs/SUBSTACK_COMPATIBILITY.md): offline and actual-export checks.
-4. [Parallel runbook](docs/SUBSTACK_PARALLEL_RUNBOOK.md): executable setup, validation, collection and export commands.
+1. [Team scraping plan](substack/docs/SUBSTACK_TEAM_SCRAPING_PLAN.md): ownership, assignments and handoff.
+2. [DCC 20-worker rollout design](substack/docs/SUBSTACK_DCC_20_WORKER_PLAN.md): rationale, pacing and validation gates.
+3. [Compatibility guide](substack/docs/SUBSTACK_COMPATIBILITY.md): offline and actual-export checks.
+4. [Parallel runbook](substack/docs/SUBSTACK_PARALLEL_RUNBOOK.md): executable setup, validation, collection and export commands.
 
 Use the parallel runbook for the 20-worker route; the team plan also retains the original single-worker commands.
 
@@ -77,3 +77,13 @@ Use the parallel runbook for the 20-worker route; the team plan also retains the
 - Keep databases, raw corpus payloads, credentials and logs out of Git. The URL-only baseline sample is intentionally tracked. Follow the team plan for private data exports.
 - Preserve unrelated local changes. Stage only files belonging to the requested task.
 - Run checks appropriate to the change. Documentation-only changes need link/path and diff checks; collector changes need the relevant offline compatibility tests. Do not make live scraping requests merely to test documentation.
+
+## Medium team workflow — 2026-10-03
+
+- Read `medium/README.md`, `medium/docs/TEAM_SCRAPING_PLAN.md` and `medium/docs/DCC_RUNBOOK.md`. Use `medium/scripts/parallel_medium_collection.py` for frozen-shard work; never start duplicate autonomous legacy collectors.
+- Batch `2026-10-03-team-v1`: Zherui shard 1, Ziyang shard 2; preserve the frozen assignment CSVs/manifests. Twenty threads share a minimum 3.1-second gate. Run only one Medium shard/pilot/legacy process across the team at a time; independent machines do not share that gate.
+- Refresh the metadata ledger after the previous collector has stopped. The shipped preparation ledger is an earlier read-only snapshot, not proof the baseline stopped. Preserve completed/failed tasks, known creator keys, route blocks, cooldowns and all baseline data. Use a fresh cache for a changed ledger/source binding.
+- Run offline checks and no-network preparation, then review a 40-request DCC pilot before continuous production. Medium 429 responses remain recorded item errors with shared cooldowns; three in ten minutes pause. Access/challenge/schema/resource stops preserve markers. Do not copy Substack's retry/rate rules into Medium.
+- Preserve the global 250,000 dated RSS candidate target, primary-before-reserve order, assigned-feed/in-window-story scope, free-only mirror body retention and 20 GiB reserve. Candidate IDs and pool endpoints do not establish verified people, exhaustive history or a monthly sample.
+- Private exports and new-copy merge/reconciliation preserve source versions/failures; corpus data stays outside Git. Verify the operator's own persistent monitor before unattended collection. Repository organization and telemetry do not create a monitor or authorize automatic recovery.
+- Platform code/docs/tests/assignments now live under `substack/` and `medium/`; compatibility symlinks preserve earlier paths. Run both platform suites after collector or import-layout changes. Leave unrelated designs, artifacts and local edits untouched.

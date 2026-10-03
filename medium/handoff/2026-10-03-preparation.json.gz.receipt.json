@@ -1,0 +1,28 @@
+{
+  "version": "medium-team-reconciliation-v1",
+  "generated_at": "2026-10-03T22:02:40.052454+00:00",
+  "batch_manifest_sha256": "29c9f78a0e1d73437cadb3df50a4edba467f82ea7ee81b3159992a26cdeca3f7",
+  "snapshot_last_request_id": 106092,
+  "target": 250000,
+  "routes": [
+    {
+      "route": "graphql",
+      "state": "blocked",
+      "reason": "2026-09-24 read-only profile query returned HTTP 403 / Cloudflare challenge",
+      "updated_at": "2026-09-24T15:56:23.515427+00:00"
+    },
+    {
+      "route": "profile_html",
+      "state": "blocked",
+      "reason": "Earlier direct profile HTTP challenge; browser evidence is a separate source",
+      "updated_at": "2026-09-24T15:56:23.515482+00:00"
+    }
+  ],
+  "cooldown_until": 0,
+  "rate_events": [],
+  "requires_exclusive_team_window": true,
+  "note": "Snapshot only; refresh after stopping prior owner. Existing bodies remain in the prior checkpoint.",
+  "sha256": "6cf39af86f796f3554359b96425edee89a3edd382fbb84e501d3c05e9ef660c3",
+  "known_creators": 58385,
+  "completed_or_failed_tasks": 98479
+}

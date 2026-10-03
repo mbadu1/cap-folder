@@ -1,8 +1,3 @@
-# Keep frozen code, input and fixture fingerprints identical across checkouts.
-*.py text eol=lf
-*.mjs text eol=lf
-*.json text eol=lf
-*.csv text eol=lf
-*.md text eol=lf
-*.txt text eol=lf
-*.gz -text
+# Frozen assignment manifests hash exact bytes, including CSV line endings.
+medium/assignments/**/*.csv -text whitespace=cr-at-eol
+substack/assignments/**/*.csv -text whitespace=cr-at-eol

@@ -1,0 +1,50 @@
+{
+  "version": "medium-candidate-worklists-v1",
+  "frozen_at": "2026-10-03T21:00:45.041698+00:00",
+  "target_collected_authors": 250000,
+  "primary_frame_rows": 250000,
+  "already_collected_author_candidates": 57680,
+  "unattempted_primary_profiles": 192320,
+  "reserve_profiles": 50000,
+  "source_checkpoint": "/Users/zheruizhang/Desktop/capstone project/cap-folder/.cache/medium_history/history_v1/crawl.sqlite3",
+  "snapshot_last_request_id": 104893,
+  "assignment_rule": "priority_order_alternating_two_owners",
+  "owners": {
+    "baseline": "Zherui",
+    "shard-1": "Zherui",
+    "shard-2": "Ziyang"
+  },
+  "shard_counts": {
+    "shard-1": 96160,
+    "shard-2": 96160
+  },
+  "reserve_counts": {
+    "shard-1": 25000,
+    "shard-2": 25000
+  },
+  "start_date": "2020-01-01",
+  "end_date": "2026-09-17",
+  "runtime_bound": false,
+  "additional_workers_launched": false,
+  "execution_ready": false,
+  "final_250000_qualifying_identities_known": false,
+  "builder_sha256": "7c62e2df767ee53b53333b463dec0b55770b6c86782722bc83372c63514d1568",
+  "files": {
+    "already_collected.csv": "9909719dff70ea2410c54dabdaa941be6c4a88b2c23e419e8eb8451636eba801",
+    "known_aliases.csv": "692027f1b8798411c99cd62662c8ef2dd4abef468c04f815a05fe1510770c16b",
+    "shard-1-reserve.csv": "c68027f76e9658a8288aceb01ad8e71bca8fd55628146757603fd0e75c48d831",
+    "shard-1.csv": "df6bae48b2c1518f6cddcc603261b70954cd5366c68cddc6b6f773d66e88229a",
+    "shard-2-reserve.csv": "f214bf23a7d59f7654f4a7f4069e8f1ccbbffecf044f68cbe025f5979a2cc843",
+    "shard-2.csv": "105e4a92ede9965894249ac2b80299397c85ea9770a9109152d6c65d873441b7",
+    "source_frame.csv": "d46e0f6d727032e1ba3db92cb2496857fd557f9f7ad6cdf57d91512c9b3de8e5"
+  },
+  "limitations": [
+    "Primary frame rows are author candidates, not 250000 validated eligible people.",
+    "Failed, empty, out-of-window and duplicate-ID feeds can require reserves; reserves may also fall short.",
+    "RSS histories and bodies may be truncated; no full-history or final eligibility claim.",
+    "Existing collector is still autonomous and is not bound to these planning worklists.",
+    "Reconcile post-snapshot collection and bind a shard-aware runner before execution.",
+    "Use one worker or a verified shared global request gate; do not start independent concurrent collectors.",
+    "Preserve failures and prior cache; no automatic retry of failed items."
+  ]
+}

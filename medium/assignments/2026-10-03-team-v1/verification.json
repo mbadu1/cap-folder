@@ -1,0 +1,22 @@
+{
+  "counts": {
+    "already_collected.csv": 57680,
+    "known_aliases.csv": 57680,
+    "shard-1-reserve.csv": 25000,
+    "shard-1.csv": 96160,
+    "shard-2-reserve.csv": 25000,
+    "shard-2.csv": 96160,
+    "source_frame.csv": 250000
+  },
+  "all_csv_hashes_match": true,
+  "primary_frame_partition_exact": true,
+  "profile_overlap_between_primary_shards": 0,
+  "profile_overlap_with_reserves": 0,
+  "offline_tests": {
+    "run": 46,
+    "skipped": 1,
+    "result": "PASS"
+  },
+  "runtime_bound": false,
+  "additional_workers_launched": false
+}

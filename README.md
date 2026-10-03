@@ -1,47 +1,30 @@
-# Capstone collection tools
+# Capstone scraping tools
 
-Start with [the Substack team handoff](docs/SUBSTACK_TEAM_SCRAPING_PLAN.md). The two workers (Zherui and Ziyang) use one collector version with disjoint publication assignments. Run commands from this repository root, not its parent directory.
-
-Before scraping, run the [one-command compatibility check](docs/SUBSTACK_COMPATIBILITY.md): `python3 scripts/substack/check_substack_compatibility.py --shard 2` (Ziyang) or `--shard 1` (Zherui). It checks your installation against fixed expected outputs and writes a shareable PASS/FAIL report. The same command can validate your actual exported records before delivery.
-
-The active batch is **`2026-09-28-team-v2`**: Zherui owns shard 1 (74,127 publications), Ziyang owns shard 2 (74,126). The old three-person batch is superseded.
-
-## Scripts
+Platform workflows are organized in two folders:
 
 | Folder | Contents |
-|---|---|
-| `scripts/substack/` | History collection, two-person assignment/run/export/merge tooling, creator audits, monthly builders, publication helpers |
-| `scripts/medium/` | Historical collector, mirror adapter, access probes, diagnostic toy and source audits |
-| `scripts/shared/` | Older combined-platform toy scraper and monthly-schema migration utility |
+| --- | --- |
+| [substack/](substack/README.md) | Substack scripts, docs, tests, fixtures and frozen assignments |
+| [medium/](medium/README.md) | Medium scripts, docs, tests, dependencies, frozen assignments and metadata handoff |
+| scripts/shared/ | Older combined-platform toy scraper and monthly-schema migration |
 
-The Substack history and team collection tools use the Python standard library. Use Python 3.10 or newer; the handoff was tested with Python 3.12. The Medium collector supports macOS/Linux (or WSL) and uses the dependencies below:
+For Medium's new 20-thread DCC handoff, start with the [team plan](medium/docs/TEAM_SCRAPING_PLAN.md), [runbook](medium/docs/DCC_RUNBOOK.md) and [Ziyang prompt](medium/docs/ZIYANG_START_PROMPT.md). Zherui owns shard 1; Ziyang owns shard 2. Each has 96,160 primary profiles and 25,000 reserves. Twenty threads share a 3.1-second global request-start gate. Coordinate one exclusive Medium run across the team and refresh the baseline ledger after stopping the old collector before live use.
+
+For Substack's existing workflow, read the [team plan](substack/docs/SUBSTACK_TEAM_SCRAPING_PLAN.md), [compatibility guide](substack/docs/SUBSTACK_COMPATIBILITY.md) and [parallel runbook](substack/docs/SUBSTACK_PARALLEL_RUNBOOK.md). Active batch: `2026-09-28-team-v2`; Zherui has 74,127 publications and Ziyang 74,126. Existing pinned collector code and frozen files are preserved.
+
+Use Python 3.10+ (tested locally with 3.12) on macOS/Linux/WSL. From this repository root:
 
 ```sh
 python3 -m venv .venv
-.venv/bin/python -m pip install -r requirements-medium.txt
-.venv/bin/python -m unittest discover -s tests -p 'test_*.py'
+.venv/bin/python -m pip install -r medium/requirements.txt
+.venv/bin/python -m unittest discover -s medium/tests -p 'test_*.py'
+.venv/bin/python -m unittest discover -s substack/tests -p 'test_*.py'
 ```
 
-Substack-only offline tests require no package installation:
+All behavior checks use offline fixtures. One optional Medium artifact check skips when its private toy corpus is absent. GitHub Actions runs these checks; local PASS does not assert a completed remote CI run or live DCC feasibility.
 
-```sh
-python3 -m unittest discover -s tests -p 'test_substack*.py'
-```
+Compatibility symlinks retain old `scripts/substack`, `scripts/medium`, `docs/SUBSTACK_*`, `tests/test_*`, `tests/fixtures`, `data/substack_assignments`, `data/medium_assignments` and `requirements-medium.txt` paths. Run old commands from the repository root. Keep the exact pinned revision for any existing bound checkpoint; moving folders does not authorize rebinding or restarting it.
 
-One optional Medium delivered-artifact test is skipped when its separately retained toy corpus is absent. All behavioral/unit tests use synthetic or public metadata fixtures. `.cache/` contains durable acquired data and resume checkpoints; do not delete it to restart a run.
+`.cache/` contains durable collection data and resume checkpoints. Preserve it. Keep raw responses, article bodies, databases, secrets and logs outside Git. The checked-in assignment and handoff files contain public profile/publication metadata only. Transfer hash-verified corpus exports privately and preserve incomplete coverage/failure flags.
 
-## Medium
-
-The collector can initialize a fresh checkpoint from the checksum-verified discovery index in `data/seeds/medium/2026-09-24/`; Zherui's private pilot cache is optional. Existing initialized checkpoints retain their original discovery state. An initialization-only command makes no network requests:
-
-```sh
-.venv/bin/python scripts/medium/collect_medium_history.py --init-only --cache-root .cache/medium_init_check --output .cache/medium_init_check/report
-```
-
-The existing Medium production worker is a separate project run. Do not launch a duplicate Medium crawl as part of the Substack team handoff. Its updated entry point is `scripts/medium/collect_medium_history.py`. Diagnostic scripts named `probe_*` may make network requests when invoked; inspect their CLI and the project's access decision before running them. The two `.mjs` package-audit scripts accept explicit package/dependency directories and are optional diagnostics, not dependencies of either production collector. The Medium toy builder requires its documented cached pilot sources, which contain retained article text and are kept separately from the code repository.
-
-## Data and delivery
-
-The checked-in Substack batch contains publication URLs, priority hashes, and baseline success/error inventories. It contains no previous article bodies or original SQLite database. Teammates can start from this checkout alone. Return compressed exports with manifests using the delivery commands in the handoff guide; final sampling is performed after all shards and the original baseline are combined.
-
-The current published branch is maintained by Zherui. Changes here do not merge or overwrite `main`. Each worker should pin the shared handoff commit before running, and should coordinate any subsequent code update across the team.
+The published handoff branch is `zherui-substack-month-pilot`; updates do not merge or overwrite `main`. Pulling this repository installs no monitoring schedule and starts no scraper.

@@ -1,0 +1,17 @@
+{
+  "contract_version": "substack-compatibility-v1",
+  "reference_commit": "4d8d6e577b63176560a971da195830c10730668d",
+  "batch_id": "2026-09-28-team-v1",
+  "batch_manifest_sha256": "6a2b6813ad4f406e4b04df1906427cde74c5f673b3b969c551cfa8c2c654e592",
+  "collector_sha256": {
+    "build_substack_platform_month.py": "a176eae76a3e771cc9ebd49d3940601c50e4c5af25cefce0d4dddcda4d8fc2ec",
+    "collect_substack_history.py": "46454a845661b7a307f1fd0575446185e02c491612ff3b3d285380dd0fe92ecb",
+    "team_collection.py": "46abaee5ff160858cc47cb44a14e32299ae31097df731da950b04c1664c2b824"
+  },
+  "files": {
+    "input.json": "68a72d73ef155ab4318226017b80160a02049923afc256115cb516eeb1d2e573",
+    "expected.json": "aa47d06c787e07c5baf791d86d588889f4354d54d99a7f032742e952134ff9ed"
+  },
+  "expected_normalized_sha256": "2987d6b4406fa38ef2ac7700b726f468afff3c576943465d3505a057b16e3ded",
+  "scope": "Synthetic offline compatibility reference; not evidence of complete historical coverage or final analytic eligibility."
+}
