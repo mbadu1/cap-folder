@@ -1,0 +1,68 @@
+{
+  "at": "2026-10-03T23:11:55.581610+00:00",
+  "status": "PASS",
+  "synthetic_fixture": true,
+  "network_request_starts": 0,
+  "synthetic_http_errors_logged": [
+    403,
+    500,
+    429
+  ],
+  "cooldown_health": "cooldown_auto_resume",
+  "monitor_singleton_verified": true,
+  "monitor_stop_kept_collector_alive": true,
+  "collector_exited": true,
+  "monitor_lock_free": true,
+  "node": "dcc-mism-ferc-u-ab25-4-3",
+  "job": "57438801",
+  "registration": {
+    "version": "medium-dcc-monitor-v1",
+    "at": "2026-10-03T23:11:53.817609+00:00",
+    "pid": 1150135,
+    "node": "dcc-mism-ferc-u-ab25-4-3",
+    "job": "57438801",
+    "interval_seconds": 600.0,
+    "stale_seconds": 1800.0,
+    "binding_sha256": "4dece6dd261ad7372189a5e8fae15d713c3302e2cf16d4ed3abf843748c338a2",
+    "sources": {
+      "medium/scripts/monitor_dcc.py": "f730caed02c63fed8232f661aeab7ef5e6d2ba9eb86dad279b129ea7ac1e4a6d",
+      "medium/scripts/check_run.py": "847821df19ab7f943e7d81119c7e84422f0d00c4805b2e5b21cb64e133550c55"
+    }
+  },
+  "source_hashes": {
+    "medium/scripts/parallel_medium_collection.py": "a393f4fd57fadf3c61e1329dc568036fdf40c44db74041033298b2c1a84df6ac",
+    "medium/scripts/check_run.py": "847821df19ab7f943e7d81119c7e84422f0d00c4805b2e5b21cb64e133550c55",
+    "medium/scripts/monitor_dcc.py": "f730caed02c63fed8232f661aeab7ef5e6d2ba9eb86dad279b129ea7ac1e4a6d",
+    "medium/tests/dcc_monitor_smoke.py": "7e05366429d605a7495f6906c9f00ec530f54da0dd328b44135a8920cb622e25"
+  },
+  "local_all_tests": {
+    "total": 151,
+    "passed": 150,
+    "skipped": 1
+  },
+  "medium_tests": {
+    "local": 80,
+    "dcc": 80,
+    "passed_each": 79,
+    "skipped_each": 1
+  },
+  "v3_offline_replay": {
+    "version": "medium-dcc-validation-v1",
+    "sample_sha256": "f2cd5b860861af3e408c46733138709a5348323b9ee5a5cddab015628616c5bc",
+    "private_reference_sha256": "3b9d1e6b09b0d2ebc837c8309a294f1cc55c30ba70529f619ea8c11fd09bfe3a",
+    "offline_replay_status": "PASS_EXACT",
+    "offline_replay_mismatches": [],
+    "source_hashes": {
+      "medium/scripts/validate_dcc.py": "dde7b141d3d7c961c22599377db13bd6b3aa6211c4ca25a0ea10b3c1589fbb7a",
+      "medium/scripts/parallel_medium_collection.py": "a393f4fd57fadf3c61e1329dc568036fdf40c44db74041033298b2c1a84df6ac",
+      "medium/scripts/collect_medium_history.py": "3689982d7e4902d94af6b494ff65832a083530a73b47e6c135a69ce53900b425",
+      "medium/scripts/build_medium_toy.py": "237ca06f0ada4e3569deaae65918e580ad8459e6d1a94ffbefa338e19bb22cde",
+      "medium/scripts/medium_mirror_adapter.py": "886a3ec2514430fbee3fe6143a6266fcee0ba19c1131e96cdf042da9f17e4df0",
+      "substack/scripts/build_substack_platform_month.py": "a176eae76a3e771cc9ebd49d3940601c50e4c5af25cefce0d4dddcda4d8fc2ec"
+    },
+    "no_network_requests": true,
+    "feeds": 40,
+    "snapshot_last_request_id": 107158
+  },
+  "live_http_validation": "Prior v2 65-request trial remains historical; v3 recovery verified with simulated time and synthetic DCC lifecycle, no new live HTTP trial"
+}

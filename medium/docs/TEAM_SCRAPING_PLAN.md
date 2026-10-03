@@ -19,11 +19,13 @@ One coordinator parses and commits SQLite; up to 20 transport threads each use a
 
 ## Access, retention and recovery
 
-HTTP 401/403, `cf-mitigated: challenge` and recognized HTML challenges halt new starts and preserve `PAUSED.json`. In-flight responses settle. Three consecutive unexpected parser failures also pause, with rollback of each failed parse. Isolated alias/missing-article/date errors remain item failures. HTTP 429 is recorded as an item error with no automatic retry; all threads wait for the later of the existing deadline and Retry-After, with a 60-second minimum/fallback. Three 429s in ten minutes pause. These Medium rules differ from Substack's authorized 429 retry behavior.
+The user authorized v3 automatic HTTP recovery on 2026-10-03. Ordinary non-429 HTTP errors, including 401/403/404/5xx, remain recorded item failures and collection continues. Every 429 attempt is logged; the item remains pending, all workers share at least a 60-second cooldown (longer Retry-After honored), then the item is retried automatically. Repeated 429s renew the cooldown without a permanent three-event pause. Explicit `cf-mitigated: challenge`/recognized challenge HTML, three unexpected parser failures and resource stops still preserve `PAUSED.json`; in-flight requests settle. See [monitoring/recovery](MONITORING.md). These rules supersede v1/v2 for new v3 caches; keep historical failures/bindings unchanged.
 
 Requests follow the existing 32 MiB response bound, public RSS retention and explicit-free mirror retention; paid/unknown mirror bodies are not saved. TLS verification remains enabled, redirects are not followed, and cookies do not persist across tasks. Maintain a 20 GiB free-disk reserve, four CPUs/16 GiB as a modest starting DCC allocation, and no GPU. The default team run allows unlimited total cache growth, as already authorized for Medium, while preserving the free-space guard.
 
 Resume with the exact code/assignment/ledger/configuration binding. Successful and failed tasks remain skipped. Requests cancelled before a start stay pending; tasks left in flight after an unclean exit become explicit interrupted errors and require review rather than automatic refetch. Preserve source hash bindings and stop/pause evidence. Inspect pauses before deliberately archiving them; do not remove them to force progress. No `scancel`, IP rotation, challenge solving or access bypass is part of this workflow.
+
+Before unattended production, start and verify the packaged ten-minute DCC watcher and the operator's own external notification/expiry schedule, following [MONITORING.md](MONITORING.md). The watcher records every new error and distinguishes expected cooldown from stalled progress; it never fetches or restarts the collector.
 
 ## Verification and delivery
 

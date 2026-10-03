@@ -192,23 +192,85 @@ class MediumParallelTests(unittest.TestCase):
 
     def test_access_pause_prevents_further_starts_and_preserves_first_reason(self):
         gate = self.gate()
-        gate.outcome(403, None, None, None)
+        gate.outcome(403, "challenge", None, None)
         original = (self.c.cache / "PAUSED.json").read_bytes()
         gate.pause("later event")
         self.assertEqual(original, (self.c.cache / "PAUSED.json").read_bytes())
         self.assertIsNone(gate.start(dict(kind="feed", item_key="fixture")))
 
-    def test_429_shared_cooldown_persists_without_failed_item_retry(self):
+    def test_429_shared_cooldown_persists_and_retries_without_three_event_pause(self):
         gate = self.gate()
         gate.outcome(429, None, "90", None)
         restored = self.gate()
         self.assertGreater(restored.state["cooldown_until"], time.time() + 89)
         task = self.c.pick()
         self.c.commit_result(self.result(task, status=429, error="HTTP 429"), gate)
-        self.assertEqual("error", self.c.db.execute("SELECT state FROM tasks WHERE item_key=?", (task["item_key"],)).fetchone()[0])
+        self.assertEqual("pending", self.c.db.execute("SELECT state FROM tasks WHERE item_key=?", (task["item_key"],)).fetchone()[0])
+        self.assertEqual((429, "HTTP 429"), tuple(self.c.db.execute("SELECT status,error FROM requests").fetchone()))
+        self.assertEqual(task["item_key"], self.c.pick()["item_key"])
         gate.outcome(429, None, "bad", None)
         gate.outcome(429, None, None, None)
-        self.assertTrue((self.c.cache / "PAUSED.json").exists())
+        self.assertFalse((self.c.cache / "PAUSED.json").exists())
+        self.assertFalse(self.c.blocked("feed"))
+
+    def test_ordinary_http_errors_record_failure_and_continue_other_assignments(self):
+        gate = self.gate()
+        for status in (401, 403, 404, 410, 500, 503):
+            gate.outcome(status, None, None, None)
+        self.assertFalse(gate.stopped())
+        statuses = iter((401, 403, 404, 500))
+        def fake(task, gate):
+            code = next(statuses)
+            return self.result(task, status=code, error=f"HTTP {code}")
+        self.assertEqual("assigned_candidates_exhausted_with_gaps", p.collect(self.c, 1, 10, continuous=True, transport=fake))
+        self.assertEqual(4, self.c.db.execute("SELECT COUNT(*) FROM requests WHERE error IS NOT NULL").fetchone()[0])
+        self.assertEqual(4, self.c.db.execute("SELECT COUNT(*) FROM tasks WHERE state='error'").fetchone()[0])
+        self.assertFalse(self.c.blocked("feed"))
+
+    def test_429_waits_all_workers_then_same_item_succeeds_without_losing_attempt(self):
+        clock = [1000.0]
+        gate = self.gate()
+        with patch("parallel_medium_collection.time.time", side_effect=lambda: clock[0]):
+            gate.outcome(429, None, "1", None)
+            self.assertEqual(1060, gate.state["cooldown_until"])
+            task = self.c.pick()
+            self.c.commit_result(self.result(task, status=429, error="HTTP 429"), gate)
+            waits = []
+            def advance(seconds):
+                waits.append(seconds); clock[0] += seconds
+            with patch.object(gate.stop, "wait", side_effect=advance):
+                self.assertIsNotNone(gate.start(task))
+            self.assertGreaterEqual(sum(waits), 59.999)
+            task2 = self.c.pick()
+            self.assertEqual(task["item_key"], task2["item_key"])
+            self.c.commit_result(self.result(task2, feed(handle=task2["item_key"].split("@")[-1])), gate)
+            self.assertEqual([429, 200], [r[0] for r in self.c.db.execute("SELECT status FROM requests ORDER BY id")])
+            self.assertEqual("done", self.c.db.execute("SELECT state FROM tasks WHERE item_key=?", (task["item_key"],)).fetchone()[0])
+
+    def test_mirror_429_stays_pending_in_both_queues_and_keeps_attempt(self):
+        task = self.c.pick()
+        self.c.commit_result(self.result(task, feed(handle=task["item_key"].split("@")[-1])), self.gate())
+        mirror = dict(self.c.db.execute("SELECT * FROM tasks WHERE kind='mirror'").fetchone())
+        gate = self.gate()
+        gate.outcome(429, None, None, None)
+        self.c.commit_result(self.result(mirror, status=429, error='HTTP 429'), gate)
+        self.assertEqual('pending', self.c.db.execute("SELECT state FROM tasks WHERE kind='mirror'").fetchone()[0])
+        self.assertEqual('pending', self.c.db.execute("SELECT state FROM author_pool_mirrors").fetchone()[0])
+        self.assertEqual(1, self.c.db.execute('SELECT COUNT(*) FROM requests WHERE status=429').fetchone()[0])
+
+    def test_transport_distinguishes_ordinary_forbidden_from_explicit_challenge(self):
+        for prefix, paused in ((b'<html>Access denied for this item</html>', False),
+                               (b'<html>/cdn-cgi/challenge-platform/</html>', True)):
+            with self.subTest(paused=paused):
+                gate = self.gate()
+                response = Mock(status_code=403, headers={})
+                response.iter_content.return_value = iter([prefix])
+                with patch('requests.Session') as session, patch.object(gate, 'start', return_value='fixture-time'):
+                    session.return_value.__enter__.return_value.get.return_value.__enter__.return_value = response
+                    result = p.fetch(dict(url='https://medium.com/feed/@fixture'), gate)
+                self.assertEqual(paused, gate.stopped())
+                self.assertEqual('HTML access challenge response' if paused else 'HTTP 403', result['error'])
+                if paused: self.assertTrue((self.c.cache/'PAUSED.json').exists())
 
     def test_interrupted_tasks_not_retried_and_cancelled_unstarted_remain_pending(self):
         task = self.c.pick()

@@ -1,6 +1,6 @@
 # Medium staged DCC validation
 
-Use the final Substack testing pattern: offline tests, a fixed baseline replay, a small live smoke test, a 10-worker trial, then a 20-worker trial. The Medium timers are **1.5 seconds globally and six seconds per worker**. Medium keeps its own access, 429 and retention rules. Each live stage uses a separate validation cache and only official profile feeds; it requests no mirrors or sitemaps and cannot be exported as a production shard.
+Use the final Substack testing pattern: offline tests, a fixed baseline replay, a small live smoke test, a 10-worker trial, then a 20-worker trial. The Medium timers are **1.5 seconds globally and six seconds per worker**. The v3 runner uses the current [HTTP recovery and monitoring policy](MONITORING.md), preserving explicit challenge and retention guards. Each live stage uses a separate validation cache and only official profile feeds; it requests no mirrors or sitemaps and cannot be exported as a production shard.
 
 | Stage | Workers | Maximum requests | Required evidence |
 | --- | ---: | ---: | --- |
@@ -10,7 +10,7 @@ Use the final Substack testing pattern: offline tests, a fixed baseline replay, 
 | twenty | 20 | 40 | ten PASS with the same bindings |
 | Review | 0 | 0 | Compare live outputs with local reference and replay the exact DCC responses |
 
-The nested stages intentionally repeat the first five/20 feeds in isolated caches. Total live budget is 65 requests. The worker count is the configured transport pool size; record actual worker IDs and observed intervals rather than assuming every thread was exercised. This is a bounded feasibility check, not sustained throughput or complete author histories.
+The nested stages intentionally repeat the first five/20 feeds in isolated caches. Total live budget is 65 request attempts. HTTP 429 recovery counts against a bounded stage budget; any incomplete stage requires review rather than escalation. The worker count is the configured transport pool size; record actual worker IDs and observed intervals rather than assuming every thread was exercised. This is a bounded feasibility check, not sustained throughput or complete author histories.
 
 ## Freeze and replay the local reference — Zherui
 
@@ -19,8 +19,8 @@ From the repository root, using the environment containing the pinned dependenci
 ```sh
 python medium/scripts/validate_dcc.py freeze \
   --checkpoint .cache/medium_history/history_v1/crawl.sqlite3 \
-  --output medium/validation/2026-10-03-baseline-40 \
-  --reference .cache/medium_validation_reference/2026-10-03/baseline.json.gz
+  --output medium/validation/2026-10-03-baseline-40-v3 \
+  --reference .cache/medium_validation_reference/2026-10-03-v3/baseline.json.gz
 ```
 
 The shipped sample is already frozen; do not rerun into these paths. The command reads one consistent SQLite snapshot, selects 40 previously successful pool feeds by a deterministic profile hash, verifies retained response hashes, and reparses the same bytes in a temporary cache. It compares candidate IDs, dates, post counts, titles, tags, normalized text hashes and retention classifications. Public files contain URLs and hashes; the reference and corpus stay private. Existing expected results are immutable. `PASS_EXACT` is required before live requests; code changes require a new sample/reference directory and fresh replay.
@@ -36,7 +36,7 @@ Use `ssh dcc-agent` from the local machine. Commands below execute **inside its 
 ```sh
 .venv/bin/python -m unittest discover -s medium/tests -p 'test_*.py'
 task_ledger=.cache/medium_handoff/final-before-ziyang.json.gz
-task_validation=.cache/medium_validation/2026-10-03-baseline-40
+task_validation=.cache/medium_validation/2026-10-03-baseline-40-v3
 .venv/bin/python medium/scripts/validate_dcc.py run --stage smoke \
   --cache-root "$task_validation/smoke" --handoff-ledger "$task_ledger" \
   --exclusive-team-window
@@ -62,7 +62,7 @@ Zherui retains the private baseline reference. After the DCC process exits, tran
 ```sh
 python medium/scripts/validate_dcc.py compare \
   --cache-root .cache/medium_validation_received/smoke \
-  --reference .cache/medium_validation_reference/2026-10-03/baseline.json.gz
+  --reference .cache/medium_validation_reference/2026-10-03-v3/baseline.json.gz
 python medium/scripts/validate_dcc.py replay \
   --cache-root .cache/medium_validation_received/smoke
 ```

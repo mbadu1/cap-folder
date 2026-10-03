@@ -29,7 +29,9 @@ from collect_medium_history import (Collector, ROOT, START, END, atomic_json,
                                     retry_after_seconds)
 from medium_mirror_adapter import story_id
 
-VERSION = "medium-parallel-team-v2"
+VERSION = "medium-parallel-team-v3"
+HTTP_POLICY = dict(ordinary_errors="record_skip_continue", rate_limits="shared_cooldown_retry",
+                   minimum_cooldown_seconds=60, explicit_access_challenges="pause")
 DEFAULT_BATCH = ROOT / "data/medium_assignments/2026-10-03-team-v1"
 
 
@@ -166,7 +168,7 @@ class Gate:
 
     def outcome(self, status, cf, retry, raw):
         with self.lock:
-            if status in (401, 403) or cf == "challenge" or (raw is not None and is_html_challenge(raw)):
+            if cf == "challenge" or (raw is not None and is_html_challenge(raw)):
                 self.pause("Access safeguard: HTTP " + str(status))
             if status == 429:
                 t = time.time()
@@ -176,8 +178,6 @@ class Gate:
                     delay = 60
                 self.state["cooldown_until"] = max(self.state["cooldown_until"], t + max(60, delay))
                 self.save()
-                if len(self.state["rate_events"]) >= 3:
-                    self.pause("Three 429 responses within ten minutes")
 
 
 def fetch(task, gate):
@@ -206,6 +206,12 @@ def fetch(task, gate):
                         result["error"] = "HTML access challenge response"
                 else:
                     result["error"] = "HTTP " + str(result["status"])
+                    # Inspect a bounded prefix for explicit challenge evidence.
+                    # Ordinary 401/403/404/5xx are item failures, not route stops.
+                    prefix = next(response.iter_content(16384), b"")[:16384]
+                    if is_html_challenge(prefix):
+                        gate.outcome(result["status"], result["cf"], result["retry"], prefix)
+                        result["error"] = "HTML access challenge response"
                 if result["cf"] == "challenge":
                     result["error"] = "Access challenge response"
         except (requests.RequestException, ValueError) as exc:
@@ -259,6 +265,7 @@ class TeamCollector(Collector):
         binding = dict(version=VERSION, shard=shard, batch_sha256=sha_file(Path(batch) / "manifest.json"),
                        reconciliation_sha256=sha_file(ledger_path), delay_seconds=delay,
                        per_worker_gap_seconds=self.per_worker_gap,
+                       http_policy=HTTP_POLICY,
                        min_free_bytes=self.min_free, max_cache_bytes=self.max_cache,
                        sources={p.name: sha_file(p) for p in sources})
         previous = self.get("team_binding")
@@ -344,10 +351,9 @@ class TeamCollector(Collector):
             self.db.execute("UPDATE tasks SET state='pending' WHERE kind=? AND item_key=?", (task["kind"], task["item_key"]))
             self.db.commit()
             return
-        if result["status"] in (401, 403) or result["cf"] == "challenge" or error == "HTML access challenge response":
+        challenge = result["cf"] == "challenge" or error == "HTML access challenge response"
+        if challenge:
             self.block(task["kind"], error or "Access challenge")
-        if result["status"] == 429 and len(gate.state["rate_events"]) >= 3:
-            self.block(task["kind"], "Three 429 responses within ten minutes")
         if result["raw"] is not None and error is None:
             self.db.execute("SAVEPOINT parse_response")
             try:
@@ -364,9 +370,13 @@ class TeamCollector(Collector):
                     gate.pause("Persistent parser schema failure")
         else:
             self.schema_outcome(task["kind"])
-        state = "done" if error is None else "error"
+        rate_retry = result["status"] == 429 and not challenge
+        state = "pending" if rate_retry else ("done" if error is None else "error")
+        # The request row keeps every HTTP 429 attempt. The work item stays
+        # pending and returns to scheduling after the shared cooldown expires.
+        task_error = None if rate_retry else error
         self.db.execute("UPDATE tasks SET state=?,error=?,observed_at=?,response_hash=? WHERE kind=? AND item_key=?",
-                        (state, error, stamp, sha, task["kind"], task["item_key"]))
+                        (state, task_error, stamp, sha, task["kind"], task["item_key"]))
         if task["kind"] == "mirror":
             self.db.execute("UPDATE author_pool_mirrors SET state=? WHERE post_id=?", (state, task["item_key"]))
         self.db.execute("INSERT INTO requests(url,kind,item_key,started_at,status,bytes,response_hash,cf_mitigated,retry_after,error) VALUES(?,?,?,?,?,?,?,?,?,?)",

@@ -1,5 +1,15 @@
 # Handoff validation — 2026-10-03
 
+## V3 HTTP recovery and real DCC monitor
+
+At the user's subsequent request, v3 records/skips ordinary HTTP errors and keeps scraping. Every 429 attempt remains in the ledger, while its work item stays pending for automatic retry after a shared cooldown of at least 60 seconds (longer Retry-After honored). Repeated 429s no longer permanently pause. Explicit access challenges, schema and resource stops retain their review guards. The active local legacy collector was unchanged. Old v1/v2 bindings and the earlier live trial below remain historical; new v3 caches and the [fresh v3 sample](../validation/2026-10-03-baseline-40-v3/manifest.json) are required.
+
+The full local suite ran **151 tests: 150 passed/one expected skip**. The current Medium suite ran **80 tests: 79 passed/one expected skip** locally and on DCC Python 3.13.5. New coverage verifies ordinary 401/403/404/5xx continuation, preserved 429 attempts, shared 60-second wait and successful retry with simulated time, mirror retry queues, explicit challenge detection, every-error monitoring, cooldown versus stall, changed bindings, process/node/job checks and inspection recovery. Fresh v3 local baseline replay matched 40/40 records without network requests, snapshot watermark 107158; the original reference/sample were preserved separately.
+
+The real watcher passed a private lifecycle fixture on compute job 57438801, node `dcc-mism-ferc-u-ab25-4-3`: verified detached PID/command/lock, first observation, configured ten-minute interval, singleton reuse, synthetic 403/500/429 error logging, expected cooldown classification and monitor-only stop while its fixture collector stayed alive. Both fixture processes then exited, with the watcher lock free. **Zero HTTP starts** occurred; the fixture gated transport for an hour and deliberately stopped it after seconds. Source hashes match the local implementation. This verifies runtime monitor mechanics, not actual live rate-limit behavior or a production monitor registration. No notification schedule was created on Ziyang's behalf; his prompt requires registering/verifying his own watcher and external schedule before unattended production.
+
+See [v3 verification receipt](../validation/2026-10-03-v3-monitor-results.json), [monitor commands/recovery policy](MONITORING.md) and [repeatable DCC fixture](../tests/dcc_monitor_smoke.py). The previous 65-request v2 trial is not presented as a live validation of this changed v3 policy.
+
 ## Live staged DCC results
 
 Executed pinned code commit `53e42a791fd968da11552bfc066c6f44264a3644` through `dcc-agent` on `dcc-mism-ferc-u-ab25-4-3`, job 57438801: four CPUs, 16 GiB, no GPU, Python 3.13.5. The original local worker stopped gracefully with its final report/lock verified; the refreshed ledger pinned baseline request 106475. The local checkpoint did not advance during DCC work. The full local compatibility suite ran 141 tests (140 passed/one expected skip); DCC reproduced Medium's 70 tests (69 passed/one expected skip).

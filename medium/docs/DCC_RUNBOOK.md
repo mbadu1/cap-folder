@@ -48,12 +48,12 @@ Save the received ledger at the following example location in your own checkout 
 
 ```sh
 task_ledger=.cache/medium_handoff/final-before-ziyang.json.gz
-task_cache=.cache/medium_shards/2026-10-03-team-v1/shard-2-v2
+task_cache=.cache/medium_shards/2026-10-03-team-v1/shard-2-v3
 .venv/bin/python medium/scripts/parallel_medium_collection.py prepare \
   --shard 2 --reconciliation "$task_ledger" --cache-root "$task_cache"
 ```
 
-The command verifies all assignment hashes, ownership, dates, URLs and source bindings, imports completed/failed metadata exclusions and writes the pinned cache binding. It makes no HTTP requests. A new source/ledger/configuration cannot overwrite an existing cache binding. The v2 runner uses a 1.5-second global gap and a six-second per-worker gap, as explicitly requested on 2026-10-03. Both are pinned in the binding; caches prepared with v1 remain preserved and require their original revision. Use the new v2 cache path for this rollout.
+The command verifies all assignment hashes, ownership, dates, URLs and source bindings, imports completed/failed metadata exclusions and writes the pinned cache binding. It makes no HTTP requests. A new source/ledger/configuration cannot overwrite an existing cache binding. The v3 runner keeps the 1.5-second global/six-second worker timers and pins the user's updated HTTP policy: ordinary errors are skipped, 429 attempts stay pending and automatically retry after the shared cooldown. Keep v1/v2 caches with their original revision; use a fresh v3 path. Do not requeue old failures or reopen prior blocked routes. See [MONITORING.md](MONITORING.md).
 
 ## Pilot, inspect and continue
 
@@ -77,6 +77,15 @@ bash medium/scripts/run_dcc.sh production --shard 2 \
 ```
 
 For a detached run, use your established DCC process-launch procedure or `nohup` on the compute node, direct stdout/stderr to the private cache and record the resulting PID. Do not leave it unattended until your own persistent monitor is registered and verified. Observe the pilot about once per minute; for production check about every ten minutes. The checker verifies the local recorded PID, command, lock, code hashes, cooldown and markers; compare request IDs/start times across checks. If it is on another node, process liveness is unknown and must be checked on the registered node. Telemetry files alone do not establish that monitoring or scraping is alive. Pulling this repository installs no scheduler and transfers no existing Codex automation.
+
+After verifying the current live production process, start the actual watcher and verify its registration:
+
+```sh
+.venv/bin/python medium/scripts/monitor_dcc.py start --cache-root "$task_cache"
+.venv/bin/python medium/scripts/monitor_dcc.py status --cache-root "$task_cache"
+```
+
+It checks immediately and every ten minutes, records every newly observed error, and labels 429 cooldown as expected automatic recovery. It never fetches/restarts for the scraper. Register your own external notification/expiry scheduler as described in [MONITORING.md](MONITORING.md); the compute watcher ends with its allocation and disk logs do not send notifications.
 
 To stop gracefully, `touch "$task_cache/STOP"`; active requests settle before exit. Preserve markers and inspect the final report. Walltime/preemption interrupts the process, so return through `dcc-agent`, verify no previous worker/lock is active, inspect interrupted tasks and resume the exact bound checkpoint deliberately. Never run `scancel` or clear a pause automatically. The next owner must wait until this run has exited and its latest data are merged/reconciled.
 

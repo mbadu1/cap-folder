@@ -20,7 +20,7 @@ from parallel_medium_collection import ROOT, TeamCollector, collect, sha_file
 
 VERSION = "medium-dcc-validation-v1"
 STAGES = {"smoke": (1, 5), "ten": (10, 20), "twenty": (20, 40)}
-DEFAULT_SAMPLE = ROOT / "medium/validation/2026-10-03-baseline-40/feeds.json"
+DEFAULT_SAMPLE = ROOT / "medium/validation/2026-10-03-baseline-40-v3/feeds.json"
 
 
 def source_hashes():
