@@ -1,0 +1,44 @@
+{
+  "version": "medium-primary-only-verification-v1",
+  "verified_at": "2026-10-04T04:57:31.657864+00:00",
+  "user_scope": "Defer 25000 reserves per owner until later sampling review; collect primary profiles only",
+  "active_primary_profiles_per_shard": 96160,
+  "reserves_deferred_per_shard": 25000,
+  "medium_tests": {
+    "run": 90,
+    "passed": 89,
+    "skipped": 1,
+    "failed": 0
+  },
+  "substack_tests": {
+    "run": 71,
+    "passed": 71,
+    "failed": 0
+  },
+  "zherui": {
+    "original_collector_pid": 1286257,
+    "workers": 20,
+    "collector_and_monitor_alive": true,
+    "binding_unchanged": true,
+    "reserve_requests": 0,
+    "reserve_pending": 0,
+    "reserve_deferred": 25000,
+    "latest_request": 11146,
+    "latest_http": 200,
+    "no_stop_restart_or_source_rebinding": true,
+    "helper_sha256": "136ed8632c0f5bcf2ec555a7fbfab99b490b7876dbbb1a4f8f1b3e5342ae9bc3",
+    "audit_in_sqlite": true
+  },
+  "ziyang_preflight": {
+    "no_network_requests": true,
+    "primary_pending": 95194,
+    "primary_done": 937,
+    "primary_error": 29,
+    "reserves_deferred": 25000,
+    "actual_ziyang_runtime_not_accessed": true
+  },
+  "frozen_assignment_csvs_and_manifest_unchanged": true,
+  "collector_and_validator_source_pins_unchanged": true,
+  "external_monitor": "Existing ACTIVE schedule updated for primary-only scope",
+  "reactivation": "Later explicit user decision after sampling review; no automatic fallback"
+}

@@ -1,5 +1,8 @@
 # Full prompt for Ziyang
 
+**2026-10-04 scope:** Collect only the 96,160 primary profiles per owner. The 25,000 reserves per shard are deferred until the user reviews sampling problems and explicitly reauthorizes them. Preserve the frozen reserve files and any prior results; do not auto-activate them.
+
+
 > **2026-10-03 user decision:** Zherui shard 1 and Ziyang shard 2 may scrape concurrently in separate accounts/caches. No exclusive window, stopped-owner receipt or wait for Zherui is required. Keep Zherui’s existing collector and monitor running. See `medium/handoff/CURRENT_WINDOW.json`.
 
 Paste the complete block into Ziyang's coding agent. The repository contains all assignment, ledger and validation inputs. Zherui continues shard 1 while Ziyang starts shard 2. Existing personal DCC/GitHub authentication is required; no files or stopped-owner release are needed from Zherui.
@@ -11,7 +14,7 @@ Repository: git@github.com:mbadu1/cap-folder.git (HTTPS alternative: https://git
 Branch: zherui-substack-month-pilot.
 Platform: Medium only.
 Assignment batch: 2026-10-03-team-v1.
-My assignment: shard 2, with 96,160 primary profiles and 25,000 ordered reserves. Zherui owns shard 1.
+My active assignment: shard 2, with 96,160 primary profiles only. Preserve but defer my 25,000 reserve profiles until the user explicitly reauthorizes them after sampling review. Zherui owns shard 1.
 Validation sample: medium/validation/2026-10-03-baseline-40-parallel/feeds.json.
 Expected reference: medium/validation/2026-10-03-baseline-40-parallel/reference-metadata.json.gz.
 Expected reference SHA-256: 3b9d1e6b09b0d2ebc837c8309a294f1cc55c30ba70529f619ea8c11fd09bfe3a.
@@ -39,8 +42,9 @@ Keep one collector per private cache. The 1.5-second gate, six-second worker int
 Choose fresh private validation and production caches. Set task_ledger to medium/handoff/2026-10-03-ziyang-shard-2/final-ledger.json.gz and task_cache to my fresh durable shard-2-parallel cache. Prepare without network requests:
 
 .venv/bin/python medium/scripts/parallel_medium_collection.py prepare --shard 2 --reconciliation "$task_ledger" --cache-root "$task_cache"
+.venv/bin/python medium/scripts/defer_reserves.py --cache-root "$task_cache"
 
-Never rebind an existing cache to changed code, configuration or reconciliation metadata.
+Never rebind an existing cache to changed code, configuration or reconciliation metadata. Verify reserve_policy.json and the SQLite reserve_execution_policy receipt: pending reserve feeds must be deferred, with zero reserve requests in flight. The helper modifies only pending reserve task states, retains historical results and immutable bindings, and the run wrapper reapplies this policy idempotently before pilot/production. If I already have a running compatible collector, apply the current helper to that cache while primary work is pending; no restart is needed. Obtain the helper in a separate tools directory and import its dependencies from my original pinned checkout with PYTHONPATH, instead of pulling changes into the active checkout. If the helper refuses an in-flight reserve or unknown cache writer, report the exact condition and preserve the run/evidence. Never enable reserves merely because collection yield is low or the primary list ends.
 
 3. Repeat the Substack-style staged validation on my own DCC.
 
@@ -65,7 +69,7 @@ After a healthy reviewed pilot, continue in the same pinned cache:
 
 bash medium/scripts/run_dcc.sh production --shard 2 --reconciliation "$task_ledger" --cache-root "$task_cache"
 
-Use the established detached launch procedure on the compute node, retain private stdout/stderr and record the actual PID. Do not start 20 separate collectors or run shard 1. Maintain my baseline-plus-local 250,000 in-window RSS candidate stopping rule, reporting that final team totals require deduplicated reconciliation, known-ID deduplication, primary-before-reserve order and study dates 2020-01-01 through 2026-09-17. Fetch only assigned profiles and in-window RSS-linked story tasks. Do not launch sitemap discovery or unscoped mirrors. Retain mirror bodies only when explicitly free; preserve the 20 GiB free-space reserve.
+Use the established detached launch procedure on the compute node, retain private stdout/stderr and record the actual PID. Do not start 20 separate collectors or run shard 1. Maintain my baseline-plus-local 250,000 in-window RSS candidate stopping rule, reporting that final team totals require deduplicated reconciliation, known-ID deduplication, primary-only scope with all reserve feeds deferred and study dates 2020-01-01 through 2026-09-17. Fetch only assigned profiles and in-window RSS-linked story tasks. Do not launch sitemap discovery or unscoped mirrors. Retain mirror bodies only when explicitly free; preserve the 20 GiB free-space reserve.
 
 5. Apply the HTTP recovery policy and start real monitoring.
 

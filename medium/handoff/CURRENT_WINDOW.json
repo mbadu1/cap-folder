@@ -2,7 +2,7 @@
   "version": "medium-current-window-v2",
   "status": "PARALLEL_AUTHORIZED",
   "batch": "2026-10-03-team-v1",
-  "updated_at": "2026-10-04T01:17:30.616837+00:00",
+  "updated_at": "2026-10-04T04:54:30.970152+00:00",
   "user_confirmed_no_conflict": true,
   "collector_pid": 1286257,
   "job": "57438801",
@@ -16,7 +16,11 @@
   },
   "requires_exclusive_team_window": false,
   "parallel_authorization_path": "medium/handoff/PARALLEL_AUTHORIZATION.json",
-  "parallel_authorization_sha256": "7295fec761a0c1c751baa0c4f3b3c4ffbab89395d95809207e460cbef3f83c23",
+  "parallel_authorization_sha256": "3dc505147b1a242280a3fce5da695f30918552405810c9b91dff891a01da5c5e",
   "zherui_runtime_status": "RUNNING_VERIFIED_AT_LAST_CHECK",
-  "ziyang_runtime_status": "NOT_STARTED_OR_VERIFIED_HERE"
+  "ziyang_runtime_status": "NOT_STARTED_OR_VERIFIED_HERE",
+  "collection_scope": "primary_only_until_sampling_review",
+  "active_primary_profiles_per_shard": 96160,
+  "deferred_reserve_profiles_per_shard": 25000,
+  "reserve_reactivation_requires_explicit_user_decision": true
 }

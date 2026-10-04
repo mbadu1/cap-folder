@@ -1,5 +1,8 @@
 # Medium DCC runbook — 2026-10-03
 
+**2026-10-04 scope:** Collect only the 96,160 primary profiles per owner. The 25,000 reserves per shard are deferred until the user reviews sampling problems and explicitly reauthorizes them. Preserve the frozen reserve files and any prior results; do not auto-activate them.
+
+
 > **2026-10-03 user decision:** Zherui shard 1 and Ziyang shard 2 may scrape concurrently in separate accounts/caches. No exclusive window, stopped-owner receipt or wait for Zherui is required. Keep Zherui’s existing collector and monitor running. See `medium/handoff/CURRENT_WINDOW.json`.
 
 Run commands from the repository root. Use your own checkout, DCC account, designated work directory and configured `dcc-agent` alias. Never run project commands directly on a DCC login node. If Codex is already attached through `dcc-agent` to a compute allocation, use that remote shell without nested SSH.
@@ -47,11 +50,21 @@ task_cache=.cache/medium_shards/2026-10-03-team-v1/shard-2-parallel
   --shard 2 --reconciliation "$task_ledger" --cache-root "$task_cache"
 ```
 
+After prepare, hold the reserves before any production-cache requests:
+
+```sh
+.venv/bin/python medium/scripts/defer_reserves.py --cache-root "$task_cache"
+```
+
+The wrapper also applies this action idempotently before pilot/production. It records an audit in SQLite and `reserve_policy.json`, marks only pending reserve feed tasks `deferred`, and preserves the frozen assignments, binding, counters, completed/failed results and admitted story queue. Primary work and its mirrors continue; reserve activation requires a later explicit sampling review.
+
+For an already-running original checkout, place the helper alone in a separate tools directory. Run it with that checkout's Python and `PYTHONPATH` pointing to its original `medium/scripts`; do not upgrade the active source or rewrite its binding. The helper validates the actual live collector/source/cache and serializes a short transaction with SQLite. It refuses in-flight reserves or a live cache with no pending primary work to avoid a dispatch race. Keep its receipt and verify continuing primary requests and watcher liveness afterward. Do not stop a healthy collector just to defer reserves.
+
 The command verifies all assignment hashes, ownership, dates, URLs and source bindings, imports completed/failed metadata exclusions and writes the pinned cache binding. It makes no HTTP requests. A new source/ledger/configuration cannot overwrite an existing cache binding. The v3 runner keeps the 1.5-second global/six-second worker timers and pins the user's updated HTTP policy: ordinary errors are skipped, 429 attempts stay pending and automatically retry after the shared cooldown. Keep v1/v2 caches with their original revision; use a fresh v3 path. Do not requeue old failures or reopen prior blocked routes. See [MONITORING.md](MONITORING.md).
 
 ## Pilot, inspect and continue
 
-First complete [DCC_VALIDATION_PLAN.md](DCC_VALIDATION_PLAN.md): the frozen 40-feed same-response baseline replay, five requests with one worker, 20 with ten workers, and 40 with twenty workers in separate validation caches. Review their timing/access/integrity assessments, compare against the shipped immutable `medium/validation/2026-10-03-baseline-40-v3/reference-metadata.json.gz` and replay the exact DCC responses locally. Preserve source changes for review. A failed stage blocks escalation. These feed-only validation caches are separate from the assigned-shard cache below and must never enter production exports/merges. Repeat this verification on Ziyang's own account/node before his production pilot.
+First complete [DCC_VALIDATION_PLAN.md](DCC_VALIDATION_PLAN.md): the frozen 40-feed same-response baseline replay, five requests with one worker, 20 with ten workers, and 40 with twenty workers in separate validation caches. Review their timing/access/integrity assessments, compare against the shipped immutable `medium/validation/2026-10-03-baseline-40-parallel/reference-metadata.json.gz` and replay the exact DCC responses locally. Preserve source changes for review. A failed stage blocks escalation. These feed-only validation caches are separate from the assigned-shard cache below and must never enter production exports/merges. Repeat this verification on Ziyang's own account/node before his production pilot.
 
 After confirming Zherui's previous Medium process and every other Medium shard are stopped, run a 40-request pilot inside the active allocation:
 

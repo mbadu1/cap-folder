@@ -1,5 +1,8 @@
 # Medium scraping
 
+**2026-10-04 scope:** Collect only the 96,160 primary profiles per owner. The 25,000 reserves per shard are deferred until the user reviews sampling problems and explicitly reauthorizes them. Preserve the frozen reserve files and any prior results; do not auto-activate them.
+
+
 > **2026-10-03 user decision:** Zherui shard 1 and Ziyang shard 2 may scrape concurrently in separate accounts/caches. No exclusive window, stopped-owner receipt or wait for Zherui is required. Keep Zherui’s existing collector and monitor running. See `medium/handoff/CURRENT_WINDOW.json`.
 
 Read the [team plan](docs/TEAM_SCRAPING_PLAN.md), [DCC runbook](docs/DCC_RUNBOOK.md) and [Ziyang starter prompt](docs/ZIYANG_START_PROMPT.md).

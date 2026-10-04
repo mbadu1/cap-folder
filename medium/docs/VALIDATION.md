@@ -1,5 +1,12 @@
 # Handoff validation — 2026-10-03
 
+## Primary-only scope verification — 2026-10-04
+
+The user deferred reserves until sampling review. The standalone scope helper passed tests for preserved in-flight primary tasks/bindings, no reserve starts after primary exhaustion, continued primary story scheduling, idempotence, historical failures, assignment mismatch, in-flight reserve refusal and live-writer race refusal. Medium ran 90 tests (89 pass/one expected skip), and Substack 71 passed. No collector/validator source pins or frozen assignment hashes changed.
+
+Applied the audited short transaction to the original live DCC shard-1 cache: all 25,000 pending reserve feeds became deferred. The original PID 1286257 and monitor stayed active, with matching bindings and fresh request 11146/HTTP200; zero reserve requests were recorded. Fresh shard-2 local preflight holds its 25,000 reserves, preserving 937 done/29 failed primary feeds and 95,194 pending. This does not claim control or verification of Ziyang’s live account. The updated wrapper/prompt applies primary-only scope before collection, and the existing external monitor is ACTIVE with the new policy. [Public verification](../validation/2026-10-04-primary-only-results.json), [operator tool](../scripts/defer_reserves.py).
+
+
 ## Concurrent-shard policy verification — 2026-10-03
 
 The user removed the exclusive-window requirement. Both production and validation CLI paths accept runs without the old flag; it is retained only as a no-op for older commands. A regression check still rejects a second writer to the same cache. Current platform tests passed: Medium 84 tests (83 pass, one expected private-artifact skip), Substack 71 pass. All 40 historical response bytes replayed exactly into 166 normalized posts under the changed source, with unchanged sample/reference bytes and a new source-bound bundle.

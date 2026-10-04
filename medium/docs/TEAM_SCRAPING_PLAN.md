@@ -1,8 +1,11 @@
 # Medium two-owner, 20-worker plan — 2026-10-03
 
+**2026-10-04 scope:** Collect only the 96,160 primary profiles per owner. The 25,000 reserves per shard are deferred until the user reviews sampling problems and explicitly reauthorizes them. Preserve the frozen reserve files and any prior results; do not auto-activate them.
+
+
 > **2026-10-03 user decision:** Zherui shard 1 and Ziyang shard 2 may scrape concurrently in separate accounts/caches. No exclusive window, stopped-owner receipt or wait for Zherui is required. Keep Zherui’s existing collector and monitor running. See `medium/handoff/CURRENT_WINDOW.json`.
 
-Zherui owns shard 1; Ziyang owns shard 2. Each shard has 96,160 primary profiles and 25,000 ordered reserves. The frozen frame also includes 57,680 previously collected in-window candidate identities. Preserve all v1 CSVs/manifests; their `execution_ready=false` fields describe the original planning snapshot. The new runtime binding lives in each separate team cache, with a separately hashed reconciliation ledger.
+Zherui owns shard 1; Ziyang owns shard 2. Each shard collects 96,160 primary profiles; its 25,000 ordered reserves are held for possible later sampling problems. The frozen frame also includes 57,680 previously collected in-window candidate identities. Preserve all v1 CSVs/manifests; their `execution_ready=false` fields describe the original planning snapshot. The new runtime binding lives in each separate team cache, with a separately hashed reconciliation ledger.
 
 ## Scheduling and limits
 
@@ -16,7 +19,7 @@ One coordinator parses and commits SQLite; up to 20 transport threads each use a
 2. Initialize a fresh team cache from the frozen files and latest ledger. Existing attempted profiles and story tasks remain done/error, including failed items. They are not requested again. The baseline's bodies remain in the baseline store rather than being copied into Ziyang's cache.
 3. Resolve new RSS candidate IDs against the known registry and within the shard. An already-known identity does not advance the counter or trigger new mirror work. Profile aliases that redirect remain explicit reconciliation failures. Final merges deduplicate keys and story IDs; candidate IDs are not certified people.
 4. Only assigned profiles can become feed tasks. Mirrors are scheduled only for in-window RSS-linked stories of newly admitted identities. No sitemap discovery, direct-profile/GraphQL work or unscoped mirror crawl is scheduled. Out-of-window RSS metadata remains source labeled; only in-window bodies are retained.
-5. Finish primary feed attempts before starting reserves, including primary requests still in flight. Each collector stops new feeds when its own baseline-plus-local candidate counter reaches 250,000 and drains admitted story tasks. Independent counters do not enforce an exact team-wide cap. The final merge deduplicates keys from both shards and reports the unique count against the approximate 250,000 acquisition target; cross-shard aliases may duplicate fetches before reconciliation. A shard can exhaust its candidates below target. That is a reported shortfall, never a complete-history claim.
+5. Finish primary feed attempts and drain their admitted story tasks, then report results and sampling gaps. Do not start reserve feeds automatically. The scope helper keeps pending reserve tasks in `deferred` state, not failed/deleted state. Each collector stops new feeds when its own baseline-plus-local candidate counter reaches 250,000 and drains admitted story tasks. Independent counters do not enforce an exact team-wide cap. The final merge deduplicates keys from both shards and reports the unique count against the approximate 250,000 acquisition target; cross-shard aliases may duplicate fetches before reconciliation. A shard can exhaust its candidates below target. That is a reported shortfall, never a complete-history claim.
 6. Export each shard privately after its own collector exits. Merge both completed exports into a **new** baseline copy and reconcile unique keys/story IDs. This does not require the other owner to stop just to begin collection; final merging waits for completed source exports. Never silently rebind an old cache to a new ledger. New ledger/code/configuration requires a new team cache after merging prior results.
 
 ## Access, retention and recovery

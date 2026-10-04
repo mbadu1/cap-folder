@@ -45,5 +45,13 @@
     "medium/handoff/2026-10-03-ziyang-shard-2/release.json",
     "medium/handoff/2026-10-03-ziyang-shard-2/withdrawal.json"
   ],
-  "candidate_count_policy": "Independent baseline-plus-local counters; deduplicate final team keys/story IDs at merge against the approximate 250000 target"
+  "candidate_count_policy": "Independent baseline-plus-local counters; deduplicate final team keys/story IDs at merge against the approximate 250000 target",
+  "updated_at": "2026-10-04T04:54:30.969287+00:00",
+  "collection_scope": "primary_only_until_sampling_review",
+  "active_primary_profiles_per_shard": 96160,
+  "deferred_reserve_profiles_per_shard": 25000,
+  "reserve_reactivation_requires_explicit_user_decision": true,
+  "operator_tools": {
+    "medium/scripts/defer_reserves.py": "136ed8632c0f5bcf2ec555a7fbfab99b490b7876dbbb1a4f8f1b3e5342ae9bc3"
+  }
 }

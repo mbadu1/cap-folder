@@ -1,5 +1,8 @@
 # Medium candidate worklists — 2026-10-03 team v1
 
+**2026-10-04 scope:** Collect only the 96,160 primary profiles per owner. The 25,000 reserves per shard are deferred until the user reviews sampling problems and explicitly reauthorizes them. Preserve the frozen reserve files and any prior results; do not auto-activate them.
+
+
 These frozen local files prepare division between Zherui and Ziyang, using the same two owners as Substack. They contain profile/feed URLs and priorities, not article text. No additional worker was launched, and the active collector has not been bound to these planning files.
 
 ## Frame and assignments
