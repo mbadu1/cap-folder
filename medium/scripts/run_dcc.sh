@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Invoke on a compute node reached through dcc-agent; never on a login node.
 # All runner options after the phase are passed as separate, quoted arguments.
-phase=${1:?Usage: bash medium/scripts/run_dcc.sh pilot|production --shard N --reconciliation FILE --cache-root DIR --exclusive-team-window}
+phase=${1:?Usage: bash medium/scripts/run_dcc.sh pilot|production --shard N --reconciliation FILE --cache-root DIR}
 shift
 case "$phase" in
   pilot) phase_options=(--max-requests 40) ;;

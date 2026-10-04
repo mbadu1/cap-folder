@@ -1,6 +1,6 @@
 # Medium staged DCC validation
 
-> **2026-10-03 correction:** The shard-2 live release is withdrawn by the user's instruction to keep Zherui's scraping running. Read the latest `medium/handoff/CURRENT_WINDOW.json` and the preserved `withdrawal.json`; do not launch Ziyang's live tests or collector from the historical release. Offline preparation remains available.
+> **2026-10-03 user decision:** Zherui shard 1 and Ziyang shard 2 may scrape concurrently in separate accounts/caches. No exclusive window, stopped-owner receipt or wait for Zherui is required. Keep Zherui’s existing collector and monitor running. See `medium/handoff/CURRENT_WINDOW.json`.
 
 Use the final Substack testing pattern: offline tests, a fixed baseline replay, a small live smoke test, a 10-worker trial, then a 20-worker trial. The Medium timers are **1.5 seconds globally and six seconds per worker**. The v3 runner uses the current [HTTP recovery and monitoring policy](MONITORING.md), preserving explicit challenge and retention guards. Each live stage uses a separate validation cache and only official profile feeds; it requests no mirrors or sitemaps and cannot be exported as a production shard.
 
@@ -8,7 +8,7 @@ Use the final Substack testing pattern: offline tests, a fixed baseline replay, 
 | --- | ---: | ---: | --- |
 | Offline | 0 | 0 | Platform tests; exact replay of 40 retained local feeds |
 | smoke | 1 | 5 | All five feeds committed, spacing and integrity pass |
-| ten | 10 | 20 | smoke PASS with matching sample, code and stopped ledger |
+| ten | 10 | 20 | smoke PASS with matching sample, code and metadata ledger |
 | twenty | 20 | 40 | ten PASS with the same bindings |
 | Review | 0 | 0 | Compare live outputs with local reference and replay the exact DCC responses |
 
@@ -21,15 +21,15 @@ From the repository root, using the environment containing the pinned dependenci
 ```sh
 python medium/scripts/validate_dcc.py freeze \
   --checkpoint .cache/medium_history/history_v1/crawl.sqlite3 \
-  --output medium/validation/2026-10-03-baseline-40-v3 \
+  --output medium/validation/2026-10-03-baseline-40-parallel \
   --reference .cache/medium_validation_reference/2026-10-03-v3/baseline.json.gz
 ```
 
-The shipped sample is already frozen; do not rerun into these paths. The command reads one consistent SQLite snapshot, selects 40 previously successful pool feeds by a deterministic profile hash, verifies retained response hashes, and reparses the same bytes in a temporary cache. It compares candidate IDs, dates, post counts, titles, tags, normalized text hashes and retention classifications. The v3 directory now also ships `reference-metadata.json.gz`, containing the exact expected public RSS metadata, classifications, word counts and text hashes. Article bodies, raw responses and caches stay private. The manifest retains its original `private_reference_sha256` field; verify the shipped reference against it. Existing expected results are immutable. `PASS_EXACT` is required before live requests; code changes require a new sample/reference directory and fresh replay.
+The shipped sample is already frozen; do not rerun into these paths. This parallel-policy bundle preserves the exact v3 sample and reference bytes, with a new verified same-response replay and current code hashes. Earlier bundles remain immutable. The command reads one consistent SQLite snapshot, selects 40 previously successful pool feeds by a deterministic profile hash, verifies retained response hashes, and reparses the same bytes in a temporary cache. It compares candidate IDs, dates, post counts, titles, tags, normalized text hashes and retention classifications. The v3 directory now also ships `reference-metadata.json.gz`, containing the exact expected public RSS metadata, classifications, word counts and text hashes. Article bodies, raw responses and caches stay private. The manifest retains its original `private_reference_sha256` field; verify the shipped reference against it. Existing expected results are immutable. `PASS_EXACT` is required before live requests; code changes require a new sample/reference directory and fresh replay.
 
-## Stop and reconcile before live work
+## Parallel authorization and metadata exclusions
 
-Follow [DCC_RUNBOOK.md](DCC_RUNBOOK.md): stop the old collector deliberately, wait for final reporting, verify PID exit and the free lock, keep stop evidence and refresh the metadata ledger. The monitor must honor the deliberate stop. Confirm one exclusive Medium window across owners. The current shard-2 release, stop evidence, refreshed merged ledger and checksums are shipped under `medium/handoff/2026-10-03-ziyang-shard-2/`; verify `release.json` and ensure no later release supersedes it. The preparation ledger in Git is insufficient for live validation. Verify the shipped final ledger against its SHA-256 receipt and the current release pins. Carry its cooldown/access state into each stage.
+Use the current `medium/handoff/PARALLEL_AUTHORIZATION.json` and the hash-checked ledger/receipt under `medium/handoff/2026-10-03-ziyang-shard-2/`. Carry the snapshot's cooldown/route state into each validation stage. Zherui's shard-1 run may continue during Ziyang's stages and pilot. Do not request exclusive access, stop Zherui or wait for refreshed stop evidence. Each operator runs their own stages sequentially with separate caches; per-collector gates do not coordinate between accounts.
 
 ## Run on a verified compute allocation
 
@@ -38,10 +38,9 @@ Use `ssh dcc-agent` from the local machine. Commands below execute **inside its 
 ```sh
 .venv/bin/python -m unittest discover -s medium/tests -p 'test_*.py'
 task_ledger=medium/handoff/2026-10-03-ziyang-shard-2/final-ledger.json.gz
-task_validation=.cache/medium_validation/2026-10-03-baseline-40-v3
+task_validation=.cache/medium_validation/2026-10-03-baseline-40-parallel
 .venv/bin/python medium/scripts/validate_dcc.py run --stage smoke \
-  --cache-root "$task_validation/smoke" --handoff-ledger "$task_ledger" \
-  --exclusive-team-window
+  --cache-root "$task_validation/smoke" --handoff-ledger "$task_ledger"
 ```
 
 Inspect `assessment.json`, `run_receipt.json`, `request_starts.jsonl`, `report/heartbeat.json` and retained responses. `PASS` requires the exact stage request count, all selected feeds HTTP 200 and successfully parsed/committed, a healthy database, original code hashes and both pacing intervals. Record errors and stop evidence; do not retry an error or clear markers automatically. If smoke passes, inspect its outputs and proceed:
@@ -49,10 +48,10 @@ Inspect `assessment.json`, `run_receipt.json`, `request_starts.jsonl`, `report/h
 ```sh
 .venv/bin/python medium/scripts/validate_dcc.py run --stage ten \
   --cache-root "$task_validation/ten" --handoff-ledger "$task_ledger" \
-  --previous-assessment "$task_validation/smoke/assessment.json" --exclusive-team-window
+  --previous-assessment "$task_validation/smoke/assessment.json"
 .venv/bin/python medium/scripts/validate_dcc.py run --stage twenty \
   --cache-root "$task_validation/twenty" --handoff-ledger "$task_ledger" \
-  --previous-assessment "$task_validation/ten/assessment.json" --exclusive-team-window
+  --previous-assessment "$task_validation/ten/assessment.json"
 ```
 
 Execute the second command only after reviewing ten's PASS. Wait at least six seconds after a stage exits before launching the next stage or assigned-shard pilot, so process changes cannot compress the request spacing; gates in separate caches do not coordinate with one another. Any HTTP/access/parser/resource/pacing failure ends escalation. Active requests settle and their outcomes remain recorded. Preserve failed caches for diagnosis. Observe live stages about once a minute and retain the exact job/node/PID and revision. Do not start production from this validator.
@@ -64,7 +63,7 @@ The exact v3 metadata reference is shipped, so each operator can compare and rep
 ```sh
 python medium/scripts/validate_dcc.py compare \
   --cache-root "$task_validation/smoke" \
-  --reference medium/validation/2026-10-03-baseline-40-v3/reference-metadata.json.gz
+  --reference medium/validation/2026-10-03-baseline-40-parallel/reference-metadata.json.gz
 python medium/scripts/validate_dcc.py replay \
   --cache-root "$task_validation/smoke"
 ```

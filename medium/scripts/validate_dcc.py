@@ -20,7 +20,7 @@ from parallel_medium_collection import ROOT, TeamCollector, collect, sha_file
 
 VERSION = "medium-dcc-validation-v1"
 STAGES = {"smoke": (1, 5), "ten": (10, 20), "twenty": (20, 40)}
-DEFAULT_SAMPLE = ROOT / "medium/validation/2026-10-03-baseline-40-v3/feeds.json"
+DEFAULT_SAMPLE = ROOT / "medium/validation/2026-10-03-baseline-40-parallel/feeds.json"
 
 
 def source_hashes():
@@ -88,7 +88,7 @@ class ValidationCollector(TeamCollector):
                        source_hashes=source_hashes(), handoff_sha256=sha_file(ledger_path) if ledger_path else None,
                        offline_replay=replay)
         if not replay and not ledger_path:
-            raise ValueError("Live validation needs the refreshed stopped-baseline handoff ledger")
+            raise ValueError("Live validation needs the metadata reconciliation ledger")
         previous = self.get("validation_binding")
         if previous:
             if previous != binding:
@@ -318,7 +318,7 @@ def main():
             p.add_argument("--stage", choices=STAGES, required=True)
             p.add_argument("--handoff-ledger", type=Path, required=True)
             p.add_argument("--previous-assessment", type=Path)
-            p.add_argument("--exclusive-team-window", action="store_true")
+            p.add_argument("--exclusive-team-window", action="store_true", help=argparse.SUPPRESS)  # Legacy no-op.
     args = parser.parse_args()
     if args.command == "freeze":
         result = freeze(args.checkpoint, args.output, args.reference)
@@ -326,7 +326,6 @@ def main():
     elif args.command == "compare": result = compare(args.cache_root, args.sample, args.reference)
     elif args.command == "replay": result = replay(args.cache_root, args.sample)
     else:
-        if not args.exclusive_team_window: parser.error("Confirm no other Medium collector is active before live validation")
         if not os.environ.get("SLURM_JOB_ID") or "login" in os.uname().nodename.lower(): parser.error("Use dcc-agent on a verified compute allocation")
         manifest = json.loads((args.sample.parent / "manifest.json").read_text())
         if (manifest["offline_replay_status"] != "PASS_EXACT" or manifest["sample_sha256"] != sha_file(args.sample)

@@ -1,5 +1,8 @@
 """Offline tests for shard scope, pacing, checkpoints, exports and handoffs."""
 import csv
+import contextlib
+import fcntl
+import io
 from concurrent.futures import ThreadPoolExecutor
 import gzip
 import json
@@ -80,6 +83,28 @@ class MediumParallelTests(unittest.TestCase):
         self.c.per_worker_gap = 7.0
         with self.assertRaisesRegex(ValueError, "binding differs"):
             self.c.prepare(self.batch, 2, self.ledger)
+
+    def test_run_accepts_parallel_policy_and_legacy_flag_without_http(self):
+        for extra in ([], ["--exclusive-team-window"]):
+            cache = self.root / ("cli-legacy" if extra else "cli-parallel")
+            args = ["collector", "run", "--batch", str(self.batch), "--shard", "2",
+                    "--reconciliation", str(self.ledger), "--cache-root", str(cache)] + extra
+            with patch.object(sys, "argv", args), patch.object(p, "collect", return_value="complete") as collect, \
+                    patch.object(p.signal, "signal"), contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(0, p.main())
+                collect.assert_called_once()
+            self.assertTrue((cache / "binding.json").exists())
+        # A distinct shard cache is permitted; two writers to one cache are not.
+        with (cache / "collector.lock").open("a") as lock:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            with patch.object(sys, "argv", args), patch.object(p, "collect") as collect, \
+                    contextlib.redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
+                p.main()
+            collect.assert_not_called()
+
+    def test_new_reconciliation_does_not_require_exclusive_window(self):
+        ledger = json.loads(gzip.decompress(self.ledger.read_bytes()))
+        self.assertFalse(ledger["requires_exclusive_team_window"])
 
     def test_shared_gate_also_enforces_each_workers_gap(self):
         gate = self.gate(delay=0.005, per_worker_gap=0.025)

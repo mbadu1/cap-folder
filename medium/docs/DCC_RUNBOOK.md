@@ -1,6 +1,6 @@
 # Medium DCC runbook — 2026-10-03
 
-> **2026-10-03 correction:** The shard-2 live release is withdrawn by the user's instruction to keep Zherui's scraping running. Read the latest `medium/handoff/CURRENT_WINDOW.json` and the preserved `withdrawal.json`; do not launch Ziyang's live tests or collector from the historical release. Offline preparation remains available.
+> **2026-10-03 user decision:** Zherui shard 1 and Ziyang shard 2 may scrape concurrently in separate accounts/caches. No exclusive window, stopped-owner receipt or wait for Zherui is required. Keep Zherui’s existing collector and monitor running. See `medium/handoff/CURRENT_WINDOW.json`.
 
 Run commands from the repository root. Use your own checkout, DCC account, designated work directory and configured `dcc-agent` alias. Never run project commands directly on a DCC login node. If Codex is already attached through `dcc-agent` to a compute allocation, use that remote shell without nested SSH.
 
@@ -30,29 +30,19 @@ python3 -m venv .venv
 
 If the checkout exists, inspect `git status` before pulling; preserve local changes and checkpoints. Use Python 3.10+. Save the exact HEAD for every run and keep that revision throughout resume. Do not run the standalone old collector for either assigned shard.
 
-## Refresh the baseline ledger — Zherui
+## Metadata ledger and parallel ownership
 
-Before a live handoff, Zherui gracefully stops the prior local Medium worker, waits for its report to finish, verifies its exact PID has exited and the lock is free, and ensures its existing monitor respects the deliberate stop. Keep the baseline and STOP evidence. The preparation ledger checked into this repository was captured while the old worker was running; it is suitable for offline setup only until refreshed.
+Zherui shard 1 and Ziyang shard 2 are authorized to run concurrently. Leave Zherui's running collector and monitor untouched. Read `medium/handoff/CURRENT_WINDOW.json` and `PARALLEL_AUTHORIZATION.json`; verify their batch/source pins and ledger/receipt hashes. The shipped `2026-10-03-ziyang-shard-2/final-ledger.json.gz` is a metadata exclusion snapshot, not a live distributed counter. Its historical exclusive-window fields and old release/withdrawal are superseded. No stopped-owner proof or additional release is required.
 
-From Zherui's checkout, generate a new immutable metadata ledger after the stop:
-
-```sh
-.venv/bin/python medium/scripts/parallel_medium_collection.py reconcile \
-  --checkpoint .cache/medium_history/history_v1/crawl.sqlite3 \
-  --output .cache/medium_handoff/final-before-ziyang.json.gz
-```
-
-Use the enclosing workspace's Python environment if that is where dependencies are installed. Publish the metadata-only ledger, its `.receipt.json` and a current exclusive-window release for the next owner in `medium/handoff/`, or use the agreed private channel. A self-service clone requires the published option; article bodies, raw responses and databases remain private. If another shard has started since the local stop, that old receipt is insufficient: wait for the current owner to stop and refresh from the merged state. Verify the receipt's SHA-256 on Ziyang's machine. Do not replace the checked-in preparation snapshot, assignment CSVs or a previously used ledger. Coordinate the exclusive team window explicitly; a timestamp alone does not prove the other process stopped.
+When a later reconciliation is needed, `parallel_medium_collection.py reconcile --checkpoint PATH --output NEW_PATH` reads a consistent metadata snapshot without copying bodies. Never overwrite a used ledger or rebind an existing cache. Final private exports/merges reconcile ongoing cross-shard aliases and candidate counts.
 
 ## No-network preflight — Ziyang
-
-The historical self-service release is `medium/handoff/2026-10-03-ziyang-shard-2/release.json`, withdrawn by the later user correction. Read the latest `CURRENT_WINDOW.json` and `withdrawal.json`; Ziyang live work requires a new explicit release. Verify its status/owner/batch/source pins and hashes for `final-ledger.json.gz`, its receipt and `stop-verification.json`. This release follows the stopped shard-1 export, a new-copy baseline merge and reconciliation. The user requested continuing Zherui's DCC run; restoration and monitoring must be verified under the original binding. The preserved shard-2 snapshot does not authorize concurrent live work.
 
 Use the verified shipped ledger in your own checkout and choose a fresh durable cache:
 
 ```sh
 task_ledger=medium/handoff/2026-10-03-ziyang-shard-2/final-ledger.json.gz
-task_cache=.cache/medium_shards/2026-10-03-team-v1/shard-2-v3
+task_cache=.cache/medium_shards/2026-10-03-team-v1/shard-2-parallel
 .venv/bin/python medium/scripts/parallel_medium_collection.py prepare \
   --shard 2 --reconciliation "$task_ledger" --cache-root "$task_cache"
 ```
@@ -67,7 +57,7 @@ After confirming Zherui's previous Medium process and every other Medium shard a
 
 ```sh
 bash medium/scripts/run_dcc.sh pilot --shard 2 \
-  --reconciliation "$task_ledger" --cache-root "$task_cache" --exclusive-team-window
+  --reconciliation "$task_ledger" --cache-root "$task_cache"
 .venv/bin/python medium/scripts/check_run.py --cache-root "$task_cache"
 ```
 
@@ -77,7 +67,7 @@ After a healthy reviewed pilot, continue the same revision, ledger and cache:
 
 ```sh
 bash medium/scripts/run_dcc.sh production --shard 2 \
-  --reconciliation "$task_ledger" --cache-root "$task_cache" --exclusive-team-window
+  --reconciliation "$task_ledger" --cache-root "$task_cache"
 ```
 
 For a detached run, use your established DCC process-launch procedure or `nohup` on the compute node, direct stdout/stderr to the private cache and record the resulting PID. Do not leave it unattended until your own persistent monitor is registered and verified. Observe the pilot about once per minute; for production check about every ten minutes. The checker verifies the local recorded PID, command, lock, code hashes, cooldown and markers; compare request IDs/start times across checks. If it is on another node, process liveness is unknown and must be checked on the registered node. Telemetry files alone do not establish that monitoring or scraping is alive. Pulling this repository installs no scheduler and transfers no existing Codex automation.
@@ -91,7 +81,7 @@ After verifying the current live production process, start the actual watcher an
 
 It checks immediately and every ten minutes, records every newly observed error, and labels 429 cooldown as expected automatic recovery. It never fetches/restarts for the scraper. Register your own external notification/expiry scheduler as described in [MONITORING.md](MONITORING.md); the compute watcher ends with its allocation and disk logs do not send notifications.
 
-To stop gracefully, `touch "$task_cache/STOP"`; active requests settle before exit. Preserve markers and inspect the final report. Walltime/preemption interrupts the process, so return through `dcc-agent`, verify no previous worker/lock is active, inspect interrupted tasks and resume the exact bound checkpoint deliberately. Never run `scancel` or clear a pause automatically. The next owner must wait until this run has exited and its latest data are merged/reconciled.
+To stop gracefully, `touch "$task_cache/STOP"`; active requests settle before exit. Preserve markers and inspect the final report. Walltime/preemption interrupts the process, so return through `dcc-agent`, verify no previous worker/lock is active, inspect interrupted tasks and resume the exact bound checkpoint deliberately. Never run `scancel` or clear a pause automatically. Another assigned shard may continue or start in its separate cache/account; only exports and a writer to this same cache wait for its collector to exit.
 
 ## Export, verify and return
 
@@ -118,4 +108,4 @@ Zherui merges into a new baseline copy, preserving the stopped original:
   --output .cache/medium_handoff/after-ziyang-v1.json.gz
 ```
 
-The merge requires space for a full baseline copy plus raw blobs and export data, and no exclusive baseline collector writer. A shared read lock permits a concurrent verified baseline backup/transfer while excluding collector writes. A failed merge retains `MERGE_INCOMPLETE.json` and cannot be reconciled. Existing pause/stop evidence is preserved for review. Initialize a **new** shard-1 cache using the updated ledger and the same frozen worklists; never rewrite shard-2's binding or resume the autonomous legacy collector to process the divided queues. Final candidate/coverage reconciliation is separate from monthly sampling.
+The merge requires space for a full baseline copy plus raw blobs and export data, and no exclusive baseline collector writer. A shared read lock permits a concurrent verified baseline backup/transfer while excluding collector writes. A failed merge retains `MERGE_INCOMPLETE.json` and cannot be reconciled. Existing pause/stop evidence is preserved for review. Any later run with updated code/ledger needs a **new** cache and the same frozen worklists. Never rewrite either existing binding or resume the autonomous legacy collector to process divided queues. Keep running sources untouched; merge completed exports only into a new copy. Final candidate/coverage reconciliation is separate from monthly sampling.

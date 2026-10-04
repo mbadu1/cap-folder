@@ -108,7 +108,7 @@ def freeze(checkpoint, output, target=250000, reserve=50000):
                                  "RSS histories and bodies may be truncated; no full-history or final eligibility claim.",
                                  "Existing collector is still autonomous and is not bound to these planning worklists.",
                                  "Reconcile post-snapshot collection and bind a shard-aware runner before execution.",
-                                 "Use one worker or a verified shared global request gate; do not start independent concurrent collectors.",
+                                 "Assigned shards may run concurrently in separate caches/accounts, with one paced transport pool per cache; reconcile unique keys at merge.",
                                  "Preserve failures and prior cache; no automatic retry of failed items."])
     (output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     return manifest

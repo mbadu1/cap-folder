@@ -1,0 +1,288 @@
+{
+  "version": "medium-dcc-validation-v1",
+  "generated_at": "2026-10-03T23:08:50.886450+00:00",
+  "snapshot_last_request_id": 107158,
+  "selection": "SHA256(medium-dcc-validation-v1|profile_url), first 40 successful retained pool feeds",
+  "feeds": [
+    {
+      "profile_url": "https://medium.com/@jacquelinenaupari",
+      "feed_url": "https://medium.com/feed/@jacquelinenaupari",
+      "source_hash": "19e6019510514000b84822563253ffbe0afcec137421dd6484c111065aa77fc1",
+      "candidate_id": "2dae4bc8a0f6",
+      "feed_count": 2
+    },
+    {
+      "profile_url": "https://medium.com/@sarthak-jain-55675",
+      "feed_url": "https://medium.com/feed/@sarthak-jain-55675",
+      "source_hash": "6856b1ad91b805045874d9fb6504df99da5b73b0ef72a557d763d9344a5069d0",
+      "candidate_id": "f3dd83691c5d",
+      "feed_count": 3
+    },
+    {
+      "profile_url": "https://medium.com/@avinash__matta",
+      "feed_url": "https://medium.com/feed/@avinash__matta",
+      "source_hash": "52c47806ef393a2c46d485db9a9eee32fa9b465b6724dd69c2f1b77ca6ff80de",
+      "candidate_id": "cec3b1d10eff",
+      "feed_count": 9
+    },
+    {
+      "profile_url": "https://medium.com/@wpsouf",
+      "feed_url": "https://medium.com/feed/@wpsouf",
+      "source_hash": "c3a5bb473a637e3f3bec2ce18b1f9158fcb4efc87e6e16f15e32d5f61eab4232",
+      "candidate_id": "85c004ed1ac8",
+      "feed_count": 10
+    },
+    {
+      "profile_url": "https://medium.com/@bintanganandhiya23",
+      "feed_url": "https://medium.com/feed/@bintanganandhiya23",
+      "source_hash": "68b527710978289e1277b0d7b998efd9b84c4fa1a0219dfea2ea18cf9346045f",
+      "candidate_id": "5daea4254c32",
+      "feed_count": 2
+    },
+    {
+      "profile_url": "https://medium.com/@mcyeekyun",
+      "feed_url": "https://medium.com/feed/@mcyeekyun",
+      "source_hash": "58dda4c84bbd86de4727c84674386a105d903d132bd6dc4e34b31094d0aacbb2",
+      "candidate_id": "c535cf911628",
+      "feed_count": 1
+    },
+    {
+      "profile_url": "https://medium.com/@larryfromIT",
+      "feed_url": "https://medium.com/feed/@larryfromIT",
+      "source_hash": "cd7db1cc5056616de98d64d28d798025a8656baccebd85947ea76c65165d56fa",
+      "candidate_id": "66403ae7f551",
+      "feed_count": 10
+    },
+    {
+      "profile_url": "https://medium.com/@nifahad",
+      "feed_url": "https://medium.com/feed/@nifahad",
+      "source_hash": "f47d8eefdf7c26eec1e20680306c48203fa1bacb502cc0a103baf9151d791f08",
+      "candidate_id": "28a16c92fbbc",
+      "feed_count": 2
+    },
+    {
+      "profile_url": "https://medium.com/@sneha9111",
+      "feed_url": "https://medium.com/feed/@sneha9111",
+      "source_hash": "659c115f91095268531f736091bea27f6cd1eed3be4007abd1c054ff407cbc34",
+      "candidate_id": "d349f372d694",
+      "feed_count": 4
+    },
+    {
+      "profile_url": "https://medium.com/@2019.chughes",
+      "feed_url": "https://medium.com/feed/@2019.chughes",
+      "source_hash": "84040ef846975183359001b15f16410524a858e1d2b48afa40e57f98ca10c4f3",
+      "candidate_id": "5ed05f07eea2",
+      "feed_count": 1
+    },
+    {
+      "profile_url": "https://medium.com/@igorroitburg53",
+      "feed_url": "https://medium.com/feed/@igorroitburg53",
+      "source_hash": "9b80a9011070c7bf69d2d336a18733efc9dc71b05a3d0b1d2b317bd23d80e116",
+      "candidate_id": "9d8d3d395842",
+      "feed_count": 10
+    },
+    {
+      "profile_url": "https://medium.com/@bedrenamrata2411",
+      "feed_url": "https://medium.com/feed/@bedrenamrata2411",
+      "source_hash": "849a6abcad41b45de83b2c2c1bae631cb3924852c0976733e282c00c5265f98a",
+      "candidate_id": "9445a3c07c3b",
+      "feed_count": 1
+    },
+    {
+      "profile_url": "https://medium.com/@yvonnekariebu",
+      "feed_url": "https://medium.com/feed/@yvonnekariebu",
+      "source_hash": "873fa5aaa52389e73d80c18a9f1a55ea00dbb803c425c13b694bb159f547d769",
+      "candidate_id": "825715ff0374",
+      "feed_count": 1
+    },
+    {
+      "profile_url": "https://medium.com/@gwenisme",
+      "feed_url": "https://medium.com/feed/@gwenisme",
+      "source_hash": "3545b8f24af4223e0ec0ec297489ede4c362dd21fd9e82d7af3fe9abca142f9d",
+      "candidate_id": "95595ca514d2",
+      "feed_count": 1
+    },
+    {
+      "profile_url": "https://medium.com/@kashishpamnani33",
+      "feed_url": "https://medium.com/feed/@kashishpamnani33",
+      "source_hash": "3e0192b535e4d54e10b0770347281e322f3b6bf7341986de5f915e18fc3dc984",
+      "candidate_id": "6b282a81259a",
+      "feed_count": 4
+    },
+    {
+      "profile_url": "https://medium.com/@zezetteepousex75",
+      "feed_url": "https://medium.com/feed/@zezetteepousex75",
+      "source_hash": "7a292f1d1b8af6a574223c8deac264c4117b5939a60ed72bdec21ff2ad72d7c2",
+      "candidate_id": "2a196bfef0af",
+      "feed_count": 10
+    },
+    {
+      "profile_url": "https://medium.com/@ffmlambo7",
+      "feed_url": "https://medium.com/feed/@ffmlambo7",
+      "source_hash": "615e491a839ba7c39ed6365f6a7e9d8c67907a59a950bd935a0da45682d40c7b",
+      "candidate_id": "caac0fae6dd5",
+      "feed_count": 2
+    },
+    {
+      "profile_url": "https://medium.com/@robertpowell_22813",
+      "feed_url": "https://medium.com/feed/@robertpowell_22813",
+      "source_hash": "0f99727cffcf3f992d70c7e487441d246aaeeb5af3d95d4f4f21c73a1496f8fa",
+      "candidate_id": "ca21c9de29fd",
+      "feed_count": 1
+    },
+    {
+      "profile_url": "https://medium.com/@thamalumaliththa",
+      "feed_url": "https://medium.com/feed/@thamalumaliththa",
+      "source_hash": "06e1d90afd220486f5feb43dff98863356007999f887c709a4e5555aab65f349",
+      "candidate_id": "71e5b76d7a3d",
+      "feed_count": 9
+    },
+    {
+      "profile_url": "https://medium.com/@gladswit",
+      "feed_url": "https://medium.com/feed/@gladswit",
+      "source_hash": "83a364f2bf0bd9cec50c658d4df149044587da6f580f44d5229e1c826a117d81",
+      "candidate_id": "2c9396f16c3b",
+      "feed_count": 1
+    },
+    {
+      "profile_url": "https://medium.com/@forlanceyea",
+      "feed_url": "https://medium.com/feed/@forlanceyea",
+      "source_hash": "1168f589c22b73b1d0c3415abba60063d82cdad629efcae30e939e4891febe0f",
+      "candidate_id": "7d3487f4892b",
+      "feed_count": 1
+    },
+    {
+      "profile_url": "https://medium.com/@jalalramdani",
+      "feed_url": "https://medium.com/feed/@jalalramdani",
+      "source_hash": "d5b8c4b8b9cc0952efdba590a62bcdb0dc124a30a395c52095ba5e21c70335bc",
+      "candidate_id": "a510cca097f7",
+      "feed_count": 10
+    },
+    {
+      "profile_url": "https://medium.com/@mjwalkerr",
+      "feed_url": "https://medium.com/feed/@mjwalkerr",
+      "source_hash": "7161a2fce2e4520d40c2989aa63d44c5ffdbc5b3c37f6ad09bcfbd294a7e236e",
+      "candidate_id": "1f14bcd87b1e",
+      "feed_count": 2
+    },
+    {
+      "profile_url": "https://medium.com/@cyruscsc",
+      "feed_url": "https://medium.com/feed/@cyruscsc",
+      "source_hash": "2d95478c11b02178d3a5ce643a88bdc459d65481c3da9b75b751b69bb5888336",
+      "candidate_id": "b968e1a94658",
+      "feed_count": 3
+    },
+    {
+      "profile_url": "https://medium.com/@sudhirsingh9763",
+      "feed_url": "https://medium.com/feed/@sudhirsingh9763",
+      "source_hash": "c560c8235b8714ecfe477f8ea795b616bf8a86876dfb9866c065ae1facaf8118",
+      "candidate_id": "34b0900b5d6a",
+      "feed_count": 5
+    },
+    {
+      "profile_url": "https://medium.com/@abewbinnie",
+      "feed_url": "https://medium.com/feed/@abewbinnie",
+      "source_hash": "3e65e4a9d47852300a7f04853b73cdccb8b18d4de589db051ee5831390086ae6",
+      "candidate_id": "6b176609a96f",
+      "feed_count": 10
+    },
+    {
+      "profile_url": "https://medium.com/@paran-chandrasekaran",
+      "feed_url": "https://medium.com/feed/@paran-chandrasekaran",
+      "source_hash": "fdc40301b0baf52389cc3ef7c1118e1f182af6a0d43ab3c46f064e1fe8766832",
+      "candidate_id": "cc268d8e077e",
+      "feed_count": 8
+    },
+    {
+      "profile_url": "https://medium.com/@mhosein13830419",
+      "feed_url": "https://medium.com/feed/@mhosein13830419",
+      "source_hash": "9302489dbd5d17232d8c3cbbfe3592735611fe23ef3a9f0b079c80d5df3d45a8",
+      "candidate_id": "290ca5462706",
+      "feed_count": 1
+    },
+    {
+      "profile_url": "https://medium.com/@kkitty",
+      "feed_url": "https://medium.com/feed/@kkitty",
+      "source_hash": "dc35cf162f919e401853ff4cc80481f745a5eb408821d70302f649f3b3e37a94",
+      "candidate_id": "4f7c3fa34dc6",
+      "feed_count": 3
+    },
+    {
+      "profile_url": "https://medium.com/@carlroxas",
+      "feed_url": "https://medium.com/feed/@carlroxas",
+      "source_hash": "9f6e5fd6f2536886647a3d1c5a78a4fb67bd083144058963bfbbb3e9abb124e7",
+      "candidate_id": "cce7da219e1c",
+      "feed_count": 1
+    },
+    {
+      "profile_url": "https://medium.com/@a.efemena",
+      "feed_url": "https://medium.com/feed/@a.efemena",
+      "source_hash": "8046521ea7bc83b853405502fc93d7a9a7a3a8f7635aea9f33a8c51853b44f09",
+      "candidate_id": "b75094370d1a",
+      "feed_count": 2
+    },
+    {
+      "profile_url": "https://medium.com/@mj.coralde30",
+      "feed_url": "https://medium.com/feed/@mj.coralde30",
+      "source_hash": "88803483224de6afd1372480d71cefe0fc4759f3d1fbaa1390925eebd80c959d",
+      "candidate_id": "853433355b7e",
+      "feed_count": 3
+    },
+    {
+      "profile_url": "https://medium.com/@macaulaypraise37",
+      "feed_url": "https://medium.com/feed/@macaulaypraise37",
+      "source_hash": "c76bf461167a7a8b4d22ec9c757f873debd79f1d1065f36f93543c50bb2e71f0",
+      "candidate_id": "f35055f77ade",
+      "feed_count": 1
+    },
+    {
+      "profile_url": "https://medium.com/@anferiro",
+      "feed_url": "https://medium.com/feed/@anferiro",
+      "source_hash": "0af4ea447397f88fc67674a9b33c23913e66c1408f8ed3d6455af636c7cd6913",
+      "candidate_id": "eb5ccf3180cc",
+      "feed_count": 7
+    },
+    {
+      "profile_url": "https://medium.com/@harshitgiri8230",
+      "feed_url": "https://medium.com/feed/@harshitgiri8230",
+      "source_hash": "d5beacf388d5be4cb8f614a63c4990d634cbbb8cb36f2a8a164882d028c4c3b6",
+      "candidate_id": "c77ab1eec9d2",
+      "feed_count": 1
+    },
+    {
+      "profile_url": "https://medium.com/@1000startupdigital",
+      "feed_url": "https://medium.com/feed/@1000startupdigital",
+      "source_hash": "e7ecfff736676cd6431f99eeb82c95ce8506a554932ada834201ba09d5a9f363",
+      "candidate_id": "e1b4b3e5f5c7",
+      "feed_count": 10
+    },
+    {
+      "profile_url": "https://medium.com/@rachitharajendran",
+      "feed_url": "https://medium.com/feed/@rachitharajendran",
+      "source_hash": "7abebba1546ffccb2c1d8510a85abb1acb116ee5ce95449598c466b5a21b1191",
+      "candidate_id": "7444c7db88e0",
+      "feed_count": 2
+    },
+    {
+      "profile_url": "https://medium.com/@forward2saikiran",
+      "feed_url": "https://medium.com/feed/@forward2saikiran",
+      "source_hash": "ccbde6faf7c387cd6567ddcb3c3878e3769cab1daf5041a38b7e3b81bf67d171",
+      "candidate_id": "b06381dcd121",
+      "feed_count": 1
+    },
+    {
+      "profile_url": "https://medium.com/@omid-lak",
+      "feed_url": "https://medium.com/feed/@omid-lak",
+      "source_hash": "cef3879809125bd31a8dd99fcc4b849f72edb482ada2ec5eba4e6be261bbfcd4",
+      "candidate_id": "a1f7f9682be6",
+      "feed_count": 1
+    },
+    {
+      "profile_url": "https://medium.com/@merementor",
+      "feed_url": "https://medium.com/feed/@merementor",
+      "source_hash": "089f7294cf1d7546f31c7a1eaf8fd58296abee87b46f4b95e636509335304afd",
+      "candidate_id": "ece10f66ed9c",
+      "feed_count": 10
+    }
+  ]
+}

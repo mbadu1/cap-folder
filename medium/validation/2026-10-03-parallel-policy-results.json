@@ -1,0 +1,50 @@
+{
+  "version": "medium-parallel-policy-verification-v1",
+  "verified_at": "2026-10-04T01:20:26.808702+00:00",
+  "medium_tests": {
+    "run": 84,
+    "passed": 83,
+    "skipped": 1,
+    "failed": 0
+  },
+  "substack_tests": {
+    "run": 71,
+    "passed": 71,
+    "failed": 0
+  },
+  "no_new_live_scraping_requests": true,
+  "offline_replay": {
+    "status": "PASS_EXACT",
+    "profiles": 40,
+    "posts": 166
+  },
+  "shard_2_preflight": {
+    "state": "prepared",
+    "requests": 0,
+    "done_feeds": 937,
+    "error_feeds": 29,
+    "pending_feeds": 120194
+  },
+  "zherui_read_only_live_check": {
+    "state": "running",
+    "pid": 1286257,
+    "workers": 20,
+    "request_id": 2498,
+    "http_status": 200,
+    "collector_alive": true,
+    "held_lock": true,
+    "bindings_match": true,
+    "watcher_alive": true,
+    "stop": false,
+    "pause": null,
+    "source_commit": "b40e1a25c3d6a19e45b7d30392b011b367e4cfec"
+  },
+  "external_monitor": {
+    "id": "monitor-and-resume-medium-scraping",
+    "status": "ACTIVE",
+    "exclusive_window_policy_removed": true
+  },
+  "ziyang_runtime": "NOT_STARTED_OR_VERIFIED_HERE",
+  "frozen_assignment_csvs_and_manifest_unchanged": true,
+  "caveats": "Per-collector gates/cooldowns/counters; final team identities/counts reconcile at private merge."
+}

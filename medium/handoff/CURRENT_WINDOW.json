@@ -1,16 +1,22 @@
 {
-  "version": "medium-current-window-v1",
-  "status": "RUNNING_VERIFIED",
-  "owner": "Zherui",
-  "shard": 1,
+  "version": "medium-current-window-v2",
+  "status": "PARALLEL_AUTHORIZED",
   "batch": "2026-10-03-team-v1",
-  "updated_at": "2026-10-04T01:11:09.511338+00:00",
-  "ziyang_release_status": "WITHDRAWN",
-  "withdrawal_path": "medium/handoff/2026-10-03-ziyang-shard-2/withdrawal.json",
+  "updated_at": "2026-10-04T01:17:30.616837+00:00",
   "user_confirmed_no_conflict": true,
   "collector_pid": 1286257,
   "job": "57438801",
   "node": "dcc-mism-ferc-u-ab25-4-3",
   "resume_code_commit": "b40e1a25c3d6a19e45b7d30392b011b367e4cfec",
-  "restore_cache_binding_unchanged": true
+  "restore_cache_binding_unchanged": true,
+  "policy": "concurrent_assigned_shards",
+  "owners": {
+    "shard-1": "Zherui",
+    "shard-2": "Ziyang"
+  },
+  "requires_exclusive_team_window": false,
+  "parallel_authorization_path": "medium/handoff/PARALLEL_AUTHORIZATION.json",
+  "parallel_authorization_sha256": "7295fec761a0c1c751baa0c4f3b3c4ffbab89395d95809207e460cbef3f83c23",
+  "zherui_runtime_status": "RUNNING_VERIFIED_AT_LAST_CHECK",
+  "ziyang_runtime_status": "NOT_STARTED_OR_VERIFIED_HERE"
 }

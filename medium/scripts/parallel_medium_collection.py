@@ -2,7 +2,8 @@
 """Frozen Medium shards: offline preparation, one paced transport pool, private export.
 
 Only the coordinator owns SQLite and parses responses. Worker threads own their
-HTTP sessions and share one request-start gate. Run only one team shard at a time.
+HTTP sessions and share one request-start gate per collector. Separate assigned
+shards may run concurrently in separate caches and accounts.
 """
 from __future__ import annotations
 
@@ -104,8 +105,8 @@ def reconcile(checkpoint, output, batch):
                       routes=[dict(r) for r in db.execute("SELECT * FROM routes")],
                       cooldown_until=json.loads((db.execute("SELECT value FROM meta WHERE key='cooldown_until'").fetchone() or ["0"])[0]),
                       rate_events=json.loads((db.execute("SELECT value FROM meta WHERE key='rate_events'").fetchone() or ["[]"])[0]),
-                      requires_exclusive_team_window=True,
-                      note="Snapshot only; refresh after stopping prior owner. Existing bodies remain in the prior checkpoint.")
+                      requires_exclusive_team_window=False,
+                      note="Metadata snapshot for shard exclusions; concurrent shards reconcile identities at merge. Existing bodies remain in the prior checkpoint.")
     finally:
         db.close()
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -503,7 +504,7 @@ def main():
             p.add_argument("--workers", type=int, default=20)
             p.add_argument("--max-requests", type=int, default=40)
             p.add_argument("--continuous", action="store_true")
-            p.add_argument("--exclusive-team-window", action="store_true", help="Attest that all other Medium collectors are stopped for this run")
+            p.add_argument("--exclusive-team-window", action="store_true", help=argparse.SUPPRESS)  # Legacy no-op; separate shards may overlap.
             p.add_argument("--require-dcc", action="store_true")
     exp = sub.add_parser("export")
     exp.add_argument("--cache-root", type=Path, required=True)
@@ -516,8 +517,6 @@ def main():
         print(json.dumps(export_cache(args.cache_root, args.output), indent=2))
         return 0
     if args.command == "run":
-        if not args.exclusive_team_window:
-            parser.error("Coordinate one exclusive Medium team window; stop the legacy collector and other shards first")
         if args.workers not in range(1, 21) or args.max_requests <= 0:
             parser.error("Require 1–20 workers and positive max-requests")
         if args.require_dcc and (not os.environ.get("SLURM_JOB_ID") or "login" in os.uname().nodename.lower()):

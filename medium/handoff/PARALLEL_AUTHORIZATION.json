@@ -1,0 +1,49 @@
+{
+  "version": "medium-parallel-authorization-v1",
+  "status": "AUTHORIZED",
+  "authorized_at": "2026-10-04T01:17:30.616837+00:00",
+  "authorized_by": "User: stop enforcing the exlusive window, we need to work in parallel",
+  "policy": "concurrent_assigned_shards",
+  "batch": "2026-10-03-team-v1",
+  "batch_manifest_sha256": "29c9f78a0e1d73437cadb3df50a4edba467f82ea7ee81b3159992a26cdeca3f7",
+  "owners": {
+    "shard-1": "Zherui",
+    "shard-2": "Ziyang"
+  },
+  "requires_exclusive_team_window": false,
+  "other_medium_collectors_must_remain_stopped": false,
+  "keep_zherui_collector_running": true,
+  "allowed_phases": [
+    "staged_validation_smoke_ten_twenty",
+    "assigned_40_attempt_pilot",
+    "continuous_after_required_checks"
+  ],
+  "workers_per_collector": 20,
+  "request_start_gap_seconds_per_collector": 1.5,
+  "per_worker_gap_seconds": 6,
+  "minimum_429_cooldown_seconds_per_collector": 60,
+  "distributed_gate": false,
+  "distributed_candidate_counter": false,
+  "ledger": "medium/handoff/2026-10-03-ziyang-shard-2/final-ledger.json.gz",
+  "ledger_sha256": "a897f8a274aa3d02b3ebd5a4dbc6d54cf9696a0366fbb58e0fda00b0a7aa3299",
+  "ledger_receipt": "medium/handoff/2026-10-03-ziyang-shard-2/final-ledger.json.gz.receipt.json",
+  "ledger_receipt_sha256": "814024571bd629bc4be39dcb6d8d2e2532d00a578425c25dca89d74382e615b8",
+  "validation_sample": "medium/validation/2026-10-03-baseline-40-parallel/feeds.json",
+  "validation_reference": "medium/validation/2026-10-03-baseline-40-parallel/reference-metadata.json.gz",
+  "validation_manifest_sha256": "75fc55ce8df42dd3d4beaee6e90714f67fe003dd723b0c76ac31952941e5d5e4",
+  "source_hashes": {
+    "medium/scripts/validate_dcc.py": "49c0317344d76ab4ea1dbc35327d8faea569d345684bf392e79a2c3c0c553956",
+    "medium/scripts/parallel_medium_collection.py": "290614986ab23c3b31f989bc46f306b9d34fb1e2541400dae9eb38931709f30f",
+    "medium/scripts/collect_medium_history.py": "3689982d7e4902d94af6b494ff65832a083530a73b47e6c135a69ce53900b425",
+    "medium/scripts/build_medium_toy.py": "237ca06f0ada4e3569deaae65918e580ad8459e6d1a94ffbefa338e19bb22cde",
+    "medium/scripts/medium_mirror_adapter.py": "886a3ec2514430fbee3fe6143a6266fcee0ba19c1131e96cdf042da9f17e4df0",
+    "substack/scripts/build_substack_platform_month.py": "a176eae76a3e771cc9ebd49d3940601c50e4c5af25cefce0d4dddcda4d8fc2ec"
+  },
+  "preserved_zherui_source_commit": "b40e1a25c3d6a19e45b7d30392b011b367e4cfec",
+  "ziyang_runtime_status": "NOT_STARTED_OR_VERIFIED_HERE",
+  "supersedes": [
+    "medium/handoff/2026-10-03-ziyang-shard-2/release.json",
+    "medium/handoff/2026-10-03-ziyang-shard-2/withdrawal.json"
+  ],
+  "candidate_count_policy": "Independent baseline-plus-local counters; deduplicate final team keys/story IDs at merge against the approximate 250000 target"
+}

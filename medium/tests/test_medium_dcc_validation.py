@@ -1,10 +1,13 @@
 """Offline checks for fixed baseline replay, isolated trials and review gates."""
 import gzip
+import contextlib
+import io
 import json
 from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "medium/scripts"))
 import validate_dcc as v
@@ -61,6 +64,23 @@ class MediumDCCValidationTests(unittest.TestCase):
         with self.assertRaises(FileExistsError):
             v.freeze(self.base.cache / "crawl.sqlite3", self.sample_dir, self.reference)
 
+    def test_validation_cli_allows_parallel_shard_run_without_http(self):
+        ledger = self.root / "ledger.json.gz"
+        ledger.write_bytes(gzip.compress(json.dumps(dict(version="medium-team-reconciliation-v1",
+            routes=[], cooldown_until=0, rate_events=[])).encode()))
+        for extra in ([], ["--exclusive-team-window"]):
+            cache = self.root / ("cli-legacy" if extra else "cli-parallel")
+            args = ["validator", "run", "--stage", "smoke", "--sample", str(self.sample_path),
+                    "--handoff-ledger", str(ledger), "--cache-root", str(cache)] + extra
+            with patch.object(sys, "argv", args), patch.dict(v.os.environ, SLURM_JOB_ID="fixture"), \
+                    patch.object(v.os, "uname", return_value=type("Node", (), {"nodename": "dcc-compute-fixture"})()), \
+                    patch.object(v, "collect", return_value="complete") as collect, \
+                    patch.object(v, "assess", return_value={"status": "PASS"}), \
+                    patch.object(v.signal, "signal"), contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(0, v.main())
+                collect.assert_called_once()
+            self.assertTrue((cache / "validation_binding.json").exists())
+
     def test_validation_requests_only_selected_feeds_not_mirrors(self):
         self.complete_smoke()
         self.assertIsNone(self.c.pick())
@@ -113,7 +133,7 @@ class MediumDCCValidationTests(unittest.TestCase):
     def test_live_prepare_requires_ledger_and_honors_feed_access_blocks(self):
         other = v.ValidationCollector(self.root / "live", self.root / "live/report", min_free_gb=0, max_cache_gb=0)
         self.addCleanup(other.db.close)
-        with self.assertRaisesRegex(ValueError, "refreshed"):
+        with self.assertRaisesRegex(ValueError, "metadata reconciliation ledger"):
             other.prepare_validation(self.sample_path, "smoke")
         ledger = self.root / "ledger.gz"
         ledger.write_bytes(gzip.compress(json.dumps(dict(version="medium-team-reconciliation-v1",

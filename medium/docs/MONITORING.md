@@ -1,6 +1,6 @@
 # Medium monitoring and HTTP recovery (v3)
 
-The user requested Substack-style automatic rate-limit recovery on 2026-10-03. This applies to `medium/scripts/parallel_medium_collection.py` v3. It does not change the separate active legacy local collector. Keep previous code/cache bindings and use a fresh v3 production cache with a refreshed stopped-owner ledger. Do not rewrite bindings or retry historical failed items.
+The user requested Substack-style automatic rate-limit recovery on 2026-10-03. This applies to `medium/scripts/parallel_medium_collection.py` v3. It does not change the separate active legacy local collector. Keep previous code/cache bindings and use a fresh v3 production cache with the shipped hash-checked metadata ledger; both assigned shards may run concurrently, with their own gates/cooldowns and monitors. Do not rewrite bindings or retry historical failed items.
 
 | Outcome | Recorded evidence | Collector action |
 | --- | --- | --- |

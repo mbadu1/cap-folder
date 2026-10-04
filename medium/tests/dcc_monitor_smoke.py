@@ -48,7 +48,7 @@ def smoke(output):
     command = [sys.executable, "-u", str(ROOT / "medium/scripts/parallel_medium_collection.py"), "run",
                "--batch", str(case.batch), "--shard", "2", "--reconciliation", str(case.ledger),
                "--cache-root", str(cache), "--workers", "2", "--continuous", "--min-free-gb", "20",
-               "--max-cache-gb", "0", "--exclusive-team-window", "--require-dcc"]
+               "--max-cache-gb", "0", "--require-dcc"]
     registered = None
     with (cache / "fixture_collector.log").open("ab") as log:
         child = subprocess.Popen(command, cwd=ROOT, stdin=subprocess.DEVNULL, stdout=log, stderr=subprocess.STDOUT,
