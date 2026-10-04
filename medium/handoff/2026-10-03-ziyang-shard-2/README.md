@@ -2,7 +2,7 @@
 
 > **2026-10-03 correction:** The shard-2 live release is withdrawn by the user's instruction to keep Zherui's scraping running. Read the latest `medium/handoff/CURRENT_WINDOW.json` and the preserved `withdrawal.json`; do not launch Ziyang's live tests or collector from the historical release. Offline preparation remains available.
 
-The user explicitly authorized transferring the exclusive Medium scraping window to **Ziyang Qin, shard 2**, for frozen batch `2026-10-03-team-v1`. `release.json` and `../CURRENT_WINDOW.json` record the current reservation. Verify them against the latest branch before live work.
+The user previously authorized the shard-2 release for frozen batch `2026-10-03-team-v1`, then withdrew it with “dont stop.” `release.json` preserves that historical grant; `withdrawal.json` and the latest `../CURRENT_WINDOW.json` supersede it. Ziyang must prepare offline and wait for a new live release while Zherui's DCC run is restored.
 
 Zherui's local legacy collector and DCC shard-1 collector/watcher have been deliberately stopped, their process/lock state verified, and their STOP/MONITOR_STOP evidence preserved. The stopped shard-1 export was hash checked and merged into a **new** baseline checkpoint; the original caches are unchanged. `final-ledger.json.gz` is reconciled from that merged state. Its receipt and `stop-verification.json` are pinned in the release. Only public task metadata, candidate keys and operational receipts are shipped; article bodies, raw responses, databases and private logs stay outside Git.
 
@@ -10,9 +10,9 @@ The window covers Ziyang's staged 1/10/20-worker validation, assigned 40-attempt
 
 Use the full [startup prompt](../../docs/ZIYANG_START_PROMPT.md). All baseline-comparison metadata are already shipped in the [v3 validation directory](../../validation/2026-10-03-baseline-40-v3/README.md). Personal authenticated GitHub/DCC access is still required.
 
-## Verify the published release
+## Historical release verification (not current live authorization)
 
-Run from the repository root with the prepared Python environment:
+The historical verification example below intentionally fails after withdrawal because the current pointer no longer grants shard 2. Do not edit its assertions or the old release to force a pass. A future live handoff must provide a new release and refreshed ledger. Run comparison/replay metadata checks separately for offline setup. Original verification example:
 
 ```sh
 .venv/bin/python - <<'PY'

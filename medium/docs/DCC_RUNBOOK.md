@@ -46,7 +46,7 @@ Use the enclosing workspace's Python environment if that is where dependencies a
 
 ## No-network preflight — Ziyang
 
-The current self-service release is `medium/handoff/2026-10-03-ziyang-shard-2/release.json`. Verify its status/owner/batch/source pins and hashes for `final-ledger.json.gz`, its receipt and `stop-verification.json`. This release follows the stopped shard-1 export, a new-copy baseline merge and reconciliation. Zherui remains intentionally stopped and the external automation monitors only the separate baseline transfer. The window stays reserved for Ziyang until an explicit later handoff; it does not expire when a compute allocation ends.
+The historical self-service release is `medium/handoff/2026-10-03-ziyang-shard-2/release.json`, withdrawn by the later user correction. Read the latest `CURRENT_WINDOW.json` and `withdrawal.json`; Ziyang live work requires a new explicit release. Verify its status/owner/batch/source pins and hashes for `final-ledger.json.gz`, its receipt and `stop-verification.json`. This release follows the stopped shard-1 export, a new-copy baseline merge and reconciliation. The user requested continuing Zherui's DCC run; restoration and monitoring must be verified under the original binding. The preserved shard-2 snapshot does not authorize concurrent live work.
 
 Use the verified shipped ledger in your own checkout and choose a fresh durable cache:
 

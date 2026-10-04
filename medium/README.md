@@ -4,7 +4,7 @@
 
 Read the [team plan](docs/TEAM_SCRAPING_PLAN.md), [DCC runbook](docs/DCC_RUNBOOK.md) and [Ziyang starter prompt](docs/ZIYANG_START_PROMPT.md).
 
-The exclusive Medium window is released to **Ziyang, shard 2** in [the current handoff](handoff/2026-10-03-ziyang-shard-2/README.md); verify the latest `handoff/CURRENT_WINDOW.json` before requests. Zherui remains deliberately stopped until a later explicit handoff.
+The shard-2 live release was withdrawn when the user requested continued Zherui scraping. Verify the latest `handoff/CURRENT_WINDOW.json`; the [historical handoff](handoff/2026-10-03-ziyang-shard-2/README.md) remains preserved for provenance and offline setup. A new explicit owner release is required for Ziyang live work.
 
 Before sustained scraping, use the [staged validation plan](docs/DCC_VALIDATION_PLAN.md): fixed local replay, 1/10/20-worker trials, baseline comparison and replay of identical DCC responses.
 
