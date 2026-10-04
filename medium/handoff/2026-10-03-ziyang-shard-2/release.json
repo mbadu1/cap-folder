@@ -1,0 +1,48 @@
+{
+  "version": "medium-exclusive-window-release-v1",
+  "status": "RELEASED",
+  "released_at": "2026-10-04T00:58:53.586151+00:00",
+  "owner": "Ziyang",
+  "owner_full_name": "Ziyang Qin",
+  "shard": 2,
+  "batch": "2026-10-03-team-v1",
+  "batch_manifest_sha256": "29c9f78a0e1d73437cadb3df50a4edba467f82ea7ee81b3159992a26cdeca3f7",
+  "authorized_by": "Zherui user instruction: give ziyang a released Medium scraping window",
+  "previous_owner": "Zherui",
+  "allowed_phases": [
+    "staged_validation_smoke_ten_twenty",
+    "assigned_40_attempt_pilot",
+    "continuous_shard_2_after_required_checks"
+  ],
+  "expires_at": null,
+  "valid_until": "An explicit later release after Ziyang stops and results are reconciled; allocation expiry never transfers ownership",
+  "other_medium_collectors_must_remain_stopped": true,
+  "scraping_started_for_ziyang": false,
+  "runner_version": "medium-parallel-team-v3",
+  "global_gap_seconds": 1.5,
+  "per_worker_gap_seconds": 6.0,
+  "workers": 20,
+  "minimum_rate_limit_cooldown_seconds": 60,
+  "target_candidate_keys": 250000,
+  "known_candidate_keys": 60642,
+  "completed_or_failed_tasks": 102298,
+  "merged_request_watermark": 109911,
+  "validation_sample": "medium/validation/2026-10-03-baseline-40-v3/feeds.json",
+  "validation_reference": "medium/validation/2026-10-03-baseline-40-v3/reference-metadata.json.gz",
+  "source_hashes": {
+    "medium/scripts/validate_dcc.py": "dde7b141d3d7c961c22599377db13bd6b3aa6211c4ca25a0ea10b3c1589fbb7a",
+    "medium/scripts/parallel_medium_collection.py": "a393f4fd57fadf3c61e1329dc568036fdf40c44db74041033298b2c1a84df6ac",
+    "medium/scripts/collect_medium_history.py": "3689982d7e4902d94af6b494ff65832a083530a73b47e6c135a69ce53900b425",
+    "medium/scripts/build_medium_toy.py": "237ca06f0ada4e3569deaae65918e580ad8459e6d1a94ffbefa338e19bb22cde",
+    "medium/scripts/medium_mirror_adapter.py": "886a3ec2514430fbee3fe6143a6266fcee0ba19c1131e96cdf042da9f17e4df0",
+    "substack/scripts/build_substack_platform_month.py": "a176eae76a3e771cc9ebd49d3940601c50e4c5af25cefce0d4dddcda4d8fc2ec"
+  },
+  "files": {
+    "final-ledger.json.gz": "a897f8a274aa3d02b3ebd5a4dbc6d54cf9696a0366fbb58e0fda00b0a7aa3299",
+    "final-ledger.json.gz.receipt.json": "814024571bd629bc4be39dcb6d8d2e2532d00a578425c25dca89d74382e615b8",
+    "stop-verification.json": "7e1016d052a0599ac966341a86988cbba0b4338dcebf9dcf4a5d81560b823cc7",
+    "merge-receipt.json": "1245246b0b9fdf9d82b51dec99255d0a861c0a9a7406ee2364fb3ba215d79339"
+  },
+  "corpus_bodies_and_databases_published": false,
+  "limitations": "Exclusive operational permission, not proof of network access, complete histories, verified people or final sample eligibility"
+}

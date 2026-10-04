@@ -1,0 +1,38 @@
+{
+  "version": "medium-stopped-owner-verification-v1",
+  "verified_at": "2026-10-04T00:58:53.586151+00:00",
+  "local_baseline": {
+    "previous_pid": 62959,
+    "pid_alive": false,
+    "STOP_preserved": true,
+    "no_exclusive_collector_writer": true,
+    "compatible_reader": "stopped-baseline transfer only",
+    "request_watermark": 107793
+  },
+  "dcc_shard_1": {
+    "at": "2026-10-04T00:58:10.693862+00:00",
+    "node": "dcc-mism-ferc-u-ab25-4-3",
+    "job": "57438801",
+    "request_watermark": 2118,
+    "collector_pid": 1156481,
+    "watcher_pid": 1157280,
+    "collector_alive": false,
+    "collector_lock_held": false,
+    "watcher_alive": false,
+    "watcher_lock_held": false,
+    "STOP_preserved": true,
+    "MONITOR_STOP_preserved": true,
+    "code_and_cache_binding_verified": true
+  },
+  "external_automation": {
+    "id": "monitor-and-resume-medium-scraping",
+    "status": "ACTIVE",
+    "scope": "baseline_transfer_only",
+    "collector_restart_authorized": false
+  },
+  "other_known_medium_collectors": "none observed on local host or registered DCC node at stop verification",
+  "original_caches_preserved": true,
+  "merged_checkpoint_integrity": "PASS (merge quick_check completed)",
+  "merged_checkpoint_request_watermark": 109911,
+  "merged_checkpoint_candidate_keys": 60642
+}

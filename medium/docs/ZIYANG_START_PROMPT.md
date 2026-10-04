@@ -1,6 +1,6 @@
 # Full prompt for Ziyang
 
-Paste the complete block into Ziyang's coding agent. Setup and baseline comparison need no files from Zherui. Existing personal DCC/GitHub access is required. Live work also requires a current stopped-owner ledger and exclusive-window release; the earlier preparation snapshot cannot authorize it. The separately authorized shard-1 operation currently owns the next window. This prompt does not promise simultaneous collection across two machines.
+Paste the complete block into Ziyang's coding agent. Setup and baseline comparison need no files from Zherui. Existing personal DCC/GitHub access is required. Live work also requires a current stopped-owner ledger and exclusive-window release; the earlier preparation snapshot cannot authorize it. The current shard-2 release and final ledger are in `medium/handoff/2026-10-03-ziyang-shard-2/`. Verify `release.json` and its pinned receipt before live requests. This prompt does not promise simultaneous collection across two machines.
 
 ```text
 I am Ziyang Qin. Set up, test, start and monitor my assigned Medium scraping on my own Duke DCC account. Carry out the work, including creating any necessary setup scripts, logs, run receipts and documentation. Do not stop at giving me commands or a plan, and do not require me to prepare files or obtain a baseline database from Zherui. I authorize the bounded tests, assigned pilot, continuous collection after passing checks, and my own persistent monitoring schedule. Ask only for authentication or information that genuinely cannot be discovered. Preserve unrelated files and existing work.
@@ -13,6 +13,11 @@ My assignment: shard 2, with 96,160 primary profiles and 25,000 ordered reserves
 Validation sample: medium/validation/2026-10-03-baseline-40-v3/feeds.json.
 Expected reference: medium/validation/2026-10-03-baseline-40-v3/reference-metadata.json.gz.
 Expected reference SHA-256: 3b9d1e6b09b0d2ebc837c8309a294f1cc55c30ba70529f619ea8c11fd09bfe3a.
+Current-window pointer: medium/handoff/CURRENT_WINDOW.json.
+Exclusive-window release: medium/handoff/2026-10-03-ziyang-shard-2/release.json.
+Final ledger: medium/handoff/2026-10-03-ziyang-shard-2/final-ledger.json.gz.
+Ledger receipt: medium/handoff/2026-10-03-ziyang-shard-2/final-ledger.json.gz.receipt.json.
+Stop verification: medium/handoff/2026-10-03-ziyang-shard-2/stop-verification.json.
 
 1. Set up my own environment automatically.
 
@@ -26,7 +31,7 @@ Verify the frozen assignment hashes, sample/manifest/source hashes and shipped r
 
 2. Acquire the live handoff automatically, without assuming another owner is stopped.
 
-Inspect the latest published medium/handoff/ files and documentation for a final metadata ledger, matching SHA-256 receipt and an explicit current release of the Medium window to shard 2. Verify the release covers the most recent owner, its process exit/free lock, monitor behavior and reconciled results. The file 2026-10-03-preparation.json.gz is for offline preparation only. A historical local stop does not release a later DCC run. The shard-1 DCC handoff was authorized after the earlier tests; do not overlap it.
+Inspect the latest published medium/handoff/ files and documentation for a final metadata ledger, matching SHA-256 receipt and an explicit current release of the Medium window to shard 2. Verify the release covers the most recent owner, its process exit/free lock, monitor behavior and reconciled results. The file 2026-10-03-preparation.json.gz is for offline preparation only. A historical local stop does not release a later DCC run. The current release records the intentional stop of that newer shard-1 DCC run, its watcher and the local legacy collector, followed by an exact new-copy merge and reconciliation. Read the latest `CURRENT_WINDOW.json` and `release.json`, verify status RELEASED, owner Ziyang/shard 2, the pointer's release hash, batch/source hashes, ledger/receipt/stop-certificate hashes, and check that no newer handoff revokes or supersedes it. The release has no automatic expiry: Zherui must remain stopped until Ziyang stops and a new handoff is explicitly issued. It authorizes my staged validation, assigned pilot and continuous shard-2 collection subject to their checks. Earlier shard-1 startup records are historical, not a reason to keep waiting after this valid release.
 
 Only one Medium collector, validation stage or shard may make requests across the team at a time: the request gate coordinates threads inside one process, not two machines. Do not use --exclusive-team-window unless the actual release supports it. Do not access another account's private paths, stop its collector, or send messages to team members.
 

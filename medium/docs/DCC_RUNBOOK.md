@@ -44,10 +44,12 @@ Use the enclosing workspace's Python environment if that is where dependencies a
 
 ## No-network preflight — Ziyang
 
-Save the received ledger at the following example location in your own checkout and choose a fresh durable cache:
+The current self-service release is `medium/handoff/2026-10-03-ziyang-shard-2/release.json`. Verify its status/owner/batch/source pins and hashes for `final-ledger.json.gz`, its receipt and `stop-verification.json`. This release follows the stopped shard-1 export, a new-copy baseline merge and reconciliation. Zherui remains intentionally stopped and the external automation monitors only the separate baseline transfer. The window stays reserved for Ziyang until an explicit later handoff; it does not expire when a compute allocation ends.
+
+Use the verified shipped ledger in your own checkout and choose a fresh durable cache:
 
 ```sh
-task_ledger=.cache/medium_handoff/final-before-ziyang.json.gz
+task_ledger=medium/handoff/2026-10-03-ziyang-shard-2/final-ledger.json.gz
 task_cache=.cache/medium_shards/2026-10-03-team-v1/shard-2-v3
 .venv/bin/python medium/scripts/parallel_medium_collection.py prepare \
   --shard 2 --reconciliation "$task_ledger" --cache-root "$task_cache"
@@ -114,4 +116,4 @@ Zherui merges into a new baseline copy, preserving the stopped original:
   --output .cache/medium_handoff/after-ziyang-v1.json.gz
 ```
 
-The merge requires space for a full baseline copy plus raw blobs and export data, and a free baseline collector lock. A failed merge retains `MERGE_INCOMPLETE.json` and cannot be reconciled. Existing pause/stop evidence is preserved for review. Initialize a **new** shard-1 cache using the updated ledger and the same frozen worklists; never rewrite shard-2's binding or resume the autonomous legacy collector to process the divided queues. Final candidate/coverage reconciliation is separate from monthly sampling.
+The merge requires space for a full baseline copy plus raw blobs and export data, and no exclusive baseline collector writer. A shared read lock permits a concurrent verified baseline backup/transfer while excluding collector writes. A failed merge retains `MERGE_INCOMPLETE.json` and cannot be reconciled. Existing pause/stop evidence is preserved for review. Initialize a **new** shard-1 cache using the updated ledger and the same frozen worklists; never rewrite shard-2's binding or resume the autonomous legacy collector to process the divided queues. Final candidate/coverage reconciliation is separate from monthly sampling.

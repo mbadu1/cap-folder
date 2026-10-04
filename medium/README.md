@@ -2,6 +2,8 @@
 
 Read the [team plan](docs/TEAM_SCRAPING_PLAN.md), [DCC runbook](docs/DCC_RUNBOOK.md) and [Ziyang starter prompt](docs/ZIYANG_START_PROMPT.md).
 
+The exclusive Medium window is released to **Ziyang, shard 2** in [the current handoff](handoff/2026-10-03-ziyang-shard-2/README.md); verify the latest `handoff/CURRENT_WINDOW.json` before requests. Zherui remains deliberately stopped until a later explicit handoff.
+
 Before sustained scraping, use the [staged validation plan](docs/DCC_VALIDATION_PLAN.md): fixed local replay, 1/10/20-worker trials, baseline comparison and replay of identical DCC responses.
 
 | Folder | Contents |
@@ -10,7 +12,7 @@ Before sustained scraping, use the [staged validation plan](docs/DCC_VALIDATION_
 | docs/ | Ownership, execution, pacing, checkpoint handoff, tests and teammate prompt |
 | tests/ | Offline parser, identity, retention, scope, transport and export/merge tests |
 | assignments/2026-10-03-team-v1/ | Frozen public profile worklists, hashes and snapshot documentation |
-| handoff/ | Metadata-only preparation snapshot and receipt; refresh after stopping the old owner before live use |
+| handoff/ | Current exclusive shard-2 release, stopped/merged metadata ledger, hash receipts and preserved historical preparation snapshot |
 | validation/ | Frozen 40-feed sample, replay manifest and expected public metadata/text hashes; article bodies and caches stay private |
 | requirements.txt | Pinned Python dependencies |
 

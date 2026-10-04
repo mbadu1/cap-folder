@@ -27,7 +27,7 @@ The shipped sample is already frozen; do not rerun into these paths. The command
 
 ## Stop and reconcile before live work
 
-Follow [DCC_RUNBOOK.md](DCC_RUNBOOK.md): stop the old collector deliberately, wait for final reporting, verify PID exit and the free lock, keep stop evidence and refresh the metadata ledger. The monitor must honor the deliberate stop. Confirm one exclusive Medium window across owners. The preparation ledger in Git is insufficient for live validation. Verify the received final ledger against its private SHA-256 receipt. Carry its cooldown/access state into each stage.
+Follow [DCC_RUNBOOK.md](DCC_RUNBOOK.md): stop the old collector deliberately, wait for final reporting, verify PID exit and the free lock, keep stop evidence and refresh the metadata ledger. The monitor must honor the deliberate stop. Confirm one exclusive Medium window across owners. The current shard-2 release, stop evidence, refreshed merged ledger and checksums are shipped under `medium/handoff/2026-10-03-ziyang-shard-2/`; verify `release.json` and ensure no later release supersedes it. The preparation ledger in Git is insufficient for live validation. Verify the shipped final ledger against its SHA-256 receipt and the current release pins. Carry its cooldown/access state into each stage.
 
 ## Run on a verified compute allocation
 
@@ -35,7 +35,7 @@ Use `ssh dcc-agent` from the local machine. Commands below execute **inside its 
 
 ```sh
 .venv/bin/python -m unittest discover -s medium/tests -p 'test_*.py'
-task_ledger=.cache/medium_handoff/final-before-ziyang.json.gz
+task_ledger=medium/handoff/2026-10-03-ziyang-shard-2/final-ledger.json.gz
 task_validation=.cache/medium_validation/2026-10-03-baseline-40-v3
 .venv/bin/python medium/scripts/validate_dcc.py run --stage smoke \
   --cache-root "$task_validation/smoke" --handoff-ledger "$task_ledger" \

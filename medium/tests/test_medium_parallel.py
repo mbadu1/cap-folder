@@ -312,6 +312,21 @@ class MediumParallelTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "hash mismatch"):
             merge(self.base.cache, [export], self.root / "tampered")
 
+    def test_merge_allows_baseline_backup_reader_but_refuses_live_writer(self):
+        import fcntl
+        export = self.root / "lock-test-export"
+        p.export_cache(self.c.cache, export)
+        with (self.base.cache / "collector.lock").open("a") as lock:
+            fcntl.flock(lock, fcntl.LOCK_SH | fcntl.LOCK_NB)
+            receipt = merge(self.base.cache, [export], self.root / "reader-merge")
+            self.assertEqual(1, receipt["known_candidate_ids"])
+            self.assertEqual(1, self.base.db.execute("SELECT COUNT(*) FROM author_pool_creators").fetchone()[0])
+        with (self.base.cache / "collector.lock").open("a") as lock:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            with self.assertRaises(BlockingIOError):
+                merge(self.base.cache, [export], self.root / "writer-merge")
+        self.assertFalse((self.root / "writer-merge").exists())
+
     def test_resource_and_lock_guards(self):
         gate = p.Gate(self.c.cache, 0.001, threading.Event(), 20 * 1024**3, enforce_minimum=False)
         with patch("parallel_medium_collection.shutil.disk_usage", return_value=Mock(free=19 * 1024**3)):

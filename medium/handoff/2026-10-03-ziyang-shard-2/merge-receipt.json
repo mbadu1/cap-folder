@@ -1,0 +1,39 @@
+{
+  "at": "2026-10-04T00:56:56.540329+00:00",
+  "imported": [
+    {
+      "export_sha256": "eac360ee4c43b367a6e363d336c6163b76563327b4d836c7094cf18a2a0d629f",
+      "binding": {
+        "version": "medium-parallel-team-v3",
+        "shard": 1,
+        "batch_sha256": "29c9f78a0e1d73437cadb3df50a4edba467f82ea7ee81b3159992a26cdeca3f7",
+        "reconciliation_sha256": "c01f49e9f78d925a95b03c44993f24a099211aa4f1e018b21f9b14f1390526ba",
+        "delay_seconds": 1.5,
+        "per_worker_gap_seconds": 6.0,
+        "http_policy": {
+          "ordinary_errors": "record_skip_continue",
+          "rate_limits": "shared_cooldown_retry",
+          "minimum_cooldown_seconds": 60,
+          "explicit_access_challenges": "pause"
+        },
+        "min_free_bytes": 21474836480,
+        "max_cache_bytes": null,
+        "sources": {
+          "parallel_medium_collection.py": "a393f4fd57fadf3c61e1329dc568036fdf40c44db74041033298b2c1a84df6ac",
+          "collect_medium_history.py": "3689982d7e4902d94af6b494ff65832a083530a73b47e6c135a69ce53900b425",
+          "build_medium_toy.py": "237ca06f0ada4e3569deaae65918e580ad8459e6d1a94ffbefa338e19bb22cde",
+          "medium_mirror_adapter.py": "886a3ec2514430fbee3fe6143a6266fcee0ba19c1131e96cdf042da9f17e4df0",
+          "build_substack_platform_month.py": "a176eae76a3e771cc9ebd49d3940601c50e4c5af25cefce0d4dddcda4d8fc2ec"
+        }
+      },
+      "imported_at": "2026-10-04T00:49:44.555128+00:00"
+    }
+  ],
+  "known_candidate_ids": 60642,
+  "preserved_markers": [
+    "handoff_evidence/source-0-STOP",
+    "handoff_evidence/source-1-STOP"
+  ],
+  "complete_historical_archive": false,
+  "primary_sample_records": 0
+}

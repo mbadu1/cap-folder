@@ -33,7 +33,9 @@ def merge(baseline, exports, output):
             raise ValueError("Export has unsettled requests")
         checked.append((directory, manifest))
     with (baseline / "collector.lock").open("a") as lock:
-        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        # The baseline is read-only; share its lock with verified backup readers
+        # while still excluding the collector's exclusive writer lock.
+        fcntl.flock(lock, fcntl.LOCK_SH | fcntl.LOCK_NB)
         output.mkdir(parents=True)
         atomic_json(output / "MERGE_INCOMPLETE.json", dict(at=now()))
         src = sqlite3.connect((baseline / "crawl.sqlite3").resolve().as_uri() + "?mode=ro", uri=True)
