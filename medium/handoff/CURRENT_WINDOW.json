@@ -1,11 +1,16 @@
 {
   "version": "medium-current-window-v1",
-  "status": "RESERVED_FOR_RESTORE",
+  "status": "RUNNING_VERIFIED",
   "owner": "Zherui",
   "shard": 1,
   "batch": "2026-10-03-team-v1",
-  "updated_at": "2026-10-04T01:01:52.561615+00:00",
+  "updated_at": "2026-10-04T01:11:09.511338+00:00",
   "ziyang_release_status": "WITHDRAWN",
   "withdrawal_path": "medium/handoff/2026-10-03-ziyang-shard-2/withdrawal.json",
-  "requires_no_other_live_medium_owner": true
+  "user_confirmed_no_conflict": true,
+  "collector_pid": 1286257,
+  "job": "57438801",
+  "node": "dcc-mism-ferc-u-ab25-4-3",
+  "resume_code_commit": "b40e1a25c3d6a19e45b7d30392b011b367e4cfec",
+  "restore_cache_binding_unchanged": true
 }
