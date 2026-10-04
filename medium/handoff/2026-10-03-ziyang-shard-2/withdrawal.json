@@ -1,0 +1,15 @@
+{
+  "version": "medium-window-withdrawal-v1",
+  "at": "2026-10-04T01:01:52.561615+00:00",
+  "status": "WITHDRAWN",
+  "withdrawn_owner": "Ziyang",
+  "withdrawn_shard": 2,
+  "previous_release_path": "medium/handoff/2026-10-03-ziyang-shard-2/release.json",
+  "previous_release_sha256": "97163b26a2f50f02cfbd4bbea44364d9eaff8f7ff9ae832cd44fa7091a6d9816",
+  "reason": "User corrected the handoff: nononon dont stop. Restore Zherui shard 1; no concurrent two-machine gate exists.",
+  "next_owner": "Zherui",
+  "next_shard": 1,
+  "ziyang_live_launch_authorized": false,
+  "historical_ledger_and_release_preserved": true,
+  "restart_verified": false
+}

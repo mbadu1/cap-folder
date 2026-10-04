@@ -1,5 +1,7 @@
 # Preparation reconciliation — 2026-10-03
 
+> **2026-10-03 correction:** The shard-2 live release is withdrawn by the user's instruction to keep Zherui's scraping running. Read the latest `medium/handoff/CURRENT_WINDOW.json` and the preserved `withdrawal.json`; do not launch Ziyang's live tests or collector from the historical release. Offline preparation remains available.
+
 `2026-10-03-preparation.json.gz` contains public profile/story task metadata and RSS candidate keys only, with no article bodies, raw responses, database, credentials or access tokens. Its companion receipt pins SHA-256 `6cf39af86f796f3554359b96425edee89a3edd382fbb84e501d3c05e9ef660c3`.
 
 The read-only snapshot ended at request **106,092**, with **58,385 known in-window RSS candidate keys** and **98,479 completed/failed feed/mirror task records**. It preserves existing direct-profile/GraphQL access blocks. It was generated while the original local Medium collector was still running. It is an **offline preparation input**, not a final stopped-baseline handoff or evidence that another owner can safely start live requests.

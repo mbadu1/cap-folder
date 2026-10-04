@@ -1,11 +1,11 @@
 {
   "version": "medium-current-window-v1",
-  "status": "RELEASED",
-  "owner": "Ziyang",
-  "shard": 2,
+  "status": "RESERVED_FOR_RESTORE",
+  "owner": "Zherui",
+  "shard": 1,
   "batch": "2026-10-03-team-v1",
-  "updated_at": "2026-10-04T00:58:53.586151+00:00",
-  "release_path": "medium/handoff/2026-10-03-ziyang-shard-2/release.json",
-  "release_sha256": "97163b26a2f50f02cfbd4bbea44364d9eaff8f7ff9ae832cd44fa7091a6d9816",
-  "expires_at": null
+  "updated_at": "2026-10-04T01:01:52.561615+00:00",
+  "ziyang_release_status": "WITHDRAWN",
+  "withdrawal_path": "medium/handoff/2026-10-03-ziyang-shard-2/withdrawal.json",
+  "requires_no_other_live_medium_owner": true
 }

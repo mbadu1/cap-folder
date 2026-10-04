@@ -1,5 +1,7 @@
 # Released Medium window — Ziyang shard 2
 
+> **2026-10-03 correction:** The shard-2 live release is withdrawn by the user's instruction to keep Zherui's scraping running. Read the latest `medium/handoff/CURRENT_WINDOW.json` and the preserved `withdrawal.json`; do not launch Ziyang's live tests or collector from the historical release. Offline preparation remains available.
+
 The user explicitly authorized transferring the exclusive Medium scraping window to **Ziyang Qin, shard 2**, for frozen batch `2026-10-03-team-v1`. `release.json` and `../CURRENT_WINDOW.json` record the current reservation. Verify them against the latest branch before live work.
 
 Zherui's local legacy collector and DCC shard-1 collector/watcher have been deliberately stopped, their process/lock state verified, and their STOP/MONITOR_STOP evidence preserved. The stopped shard-1 export was hash checked and merged into a **new** baseline checkpoint; the original caches are unchanged. `final-ledger.json.gz` is reconciled from that merged state. Its receipt and `stop-verification.json` are pinned in the release. Only public task metadata, candidate keys and operational receipts are shipped; article bodies, raw responses, databases and private logs stay outside Git.

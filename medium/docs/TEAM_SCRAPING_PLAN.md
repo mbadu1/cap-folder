@@ -1,5 +1,7 @@
 # Medium two-owner, 20-worker plan — 2026-10-03
 
+> **2026-10-03 correction:** The shard-2 live release is withdrawn by the user's instruction to keep Zherui's scraping running. Read the latest `medium/handoff/CURRENT_WINDOW.json` and the preserved `withdrawal.json`; do not launch Ziyang's live tests or collector from the historical release. Offline preparation remains available.
+
 Zherui owns shard 1; Ziyang owns shard 2. Each shard has 96,160 primary profiles and 25,000 ordered reserves. The frozen frame also includes 57,680 previously collected in-window candidate identities. Preserve all v1 CSVs/manifests; their `execution_ready=false` fields describe the original planning snapshot. The new runtime binding lives in each separate team cache, with a separately hashed reconciliation ledger.
 
 ## Scheduling and limits

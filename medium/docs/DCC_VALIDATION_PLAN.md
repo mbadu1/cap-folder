@@ -1,5 +1,7 @@
 # Medium staged DCC validation
 
+> **2026-10-03 correction:** The shard-2 live release is withdrawn by the user's instruction to keep Zherui's scraping running. Read the latest `medium/handoff/CURRENT_WINDOW.json` and the preserved `withdrawal.json`; do not launch Ziyang's live tests or collector from the historical release. Offline preparation remains available.
+
 Use the final Substack testing pattern: offline tests, a fixed baseline replay, a small live smoke test, a 10-worker trial, then a 20-worker trial. The Medium timers are **1.5 seconds globally and six seconds per worker**. The v3 runner uses the current [HTTP recovery and monitoring policy](MONITORING.md), preserving explicit challenge and retention guards. Each live stage uses a separate validation cache and only official profile feeds; it requests no mirrors or sitemaps and cannot be exported as a production shard.
 
 | Stage | Workers | Maximum requests | Required evidence |

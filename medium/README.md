@@ -1,5 +1,7 @@
 # Medium scraping
 
+> **2026-10-03 correction:** The shard-2 live release is withdrawn by the user's instruction to keep Zherui's scraping running. Read the latest `medium/handoff/CURRENT_WINDOW.json` and the preserved `withdrawal.json`; do not launch Ziyang's live tests or collector from the historical release. Offline preparation remains available.
+
 Read the [team plan](docs/TEAM_SCRAPING_PLAN.md), [DCC runbook](docs/DCC_RUNBOOK.md) and [Ziyang starter prompt](docs/ZIYANG_START_PROMPT.md).
 
 The exclusive Medium window is released to **Ziyang, shard 2** in [the current handoff](handoff/2026-10-03-ziyang-shard-2/README.md); verify the latest `handoff/CURRENT_WINDOW.json` before requests. Zherui remains deliberately stopped until a later explicit handoff.

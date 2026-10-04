@@ -1,5 +1,7 @@
 # Full prompt for Ziyang
 
+> **2026-10-03 correction:** The shard-2 live release is withdrawn by the user's instruction to keep Zherui's scraping running. Read the latest `medium/handoff/CURRENT_WINDOW.json` and the preserved `withdrawal.json`; do not launch Ziyang's live tests or collector from the historical release. Offline preparation remains available.
+
 Paste the complete block into Ziyang's coding agent. Setup and baseline comparison need no files from Zherui. Existing personal DCC/GitHub access is required. Live work also requires a current stopped-owner ledger and exclusive-window release; the earlier preparation snapshot cannot authorize it. The current shard-2 release and final ledger are in `medium/handoff/2026-10-03-ziyang-shard-2/`. Verify `release.json` and its pinned receipt before live requests. This prompt does not promise simultaneous collection across two machines.
 
 ```text
