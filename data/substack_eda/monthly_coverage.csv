@@ -1,0 +1,649 @@
+platform,year_month,topic_family,eligible_candidate_creators,sampled_creators,topic_floor_target,topic_floor_shortfall,provisional,final_sampling_ready,frame_status,pending_publications
+substack,2020-01,Politics and current affairs,230,230,150,0,True,False,pilot_incomplete,37314
+substack,2020-01,"Society, history and ideas",976,976,150,0,True,False,pilot_incomplete,37314
+substack,2020-01,"Business, finance and economics",198,198,150,0,True,False,pilot_incomplete,37314
+substack,2020-01,"Technology, science, education and environment",179,179,150,0,True,False,pilot_incomplete,37314
+substack,2020-01,Literature and creative writing,194,194,150,0,True,False,pilot_incomplete,37314
+substack,2020-01,"Arts, culture, media and design",211,211,150,0,True,False,pilot_incomplete,37314
+substack,2020-01,"Health, family and personal life",55,55,150,95,True,False,pilot_incomplete,37314
+substack,2020-01,"Lifestyle, food, travel, home and leisure",85,85,150,65,True,False,pilot_incomplete,37314
+substack,2020-02,Politics and current affairs,257,257,150,0,True,False,pilot_incomplete,37314
+substack,2020-02,"Society, history and ideas",1007,1007,150,0,True,False,pilot_incomplete,37314
+substack,2020-02,"Business, finance and economics",190,190,150,0,True,False,pilot_incomplete,37314
+substack,2020-02,"Technology, science, education and environment",184,184,150,0,True,False,pilot_incomplete,37314
+substack,2020-02,Literature and creative writing,202,202,150,0,True,False,pilot_incomplete,37314
+substack,2020-02,"Arts, culture, media and design",210,210,150,0,True,False,pilot_incomplete,37314
+substack,2020-02,"Health, family and personal life",54,54,150,96,True,False,pilot_incomplete,37314
+substack,2020-02,"Lifestyle, food, travel, home and leisure",78,78,150,72,True,False,pilot_incomplete,37314
+substack,2020-03,Politics and current affairs,301,290,150,0,True,False,pilot_incomplete,37314
+substack,2020-03,"Society, history and ideas",1226,1147,150,0,True,False,pilot_incomplete,37314
+substack,2020-03,"Business, finance and economics",231,225,150,0,True,False,pilot_incomplete,37314
+substack,2020-03,"Technology, science, education and environment",217,212,150,0,True,False,pilot_incomplete,37314
+substack,2020-03,Literature and creative writing,240,234,150,0,True,False,pilot_incomplete,37314
+substack,2020-03,"Arts, culture, media and design",240,233,150,0,True,False,pilot_incomplete,37314
+substack,2020-03,"Health, family and personal life",63,63,150,87,True,False,pilot_incomplete,37314
+substack,2020-03,"Lifestyle, food, travel, home and leisure",96,96,150,54,True,False,pilot_incomplete,37314
+substack,2020-04,Politics and current affairs,332,291,150,0,True,False,pilot_incomplete,37314
+substack,2020-04,"Society, history and ideas",1361,1088,150,0,True,False,pilot_incomplete,37314
+substack,2020-04,"Business, finance and economics",273,245,150,0,True,False,pilot_incomplete,37314
+substack,2020-04,"Technology, science, education and environment",243,222,150,0,True,False,pilot_incomplete,37314
+substack,2020-04,Literature and creative writing,261,236,150,0,True,False,pilot_incomplete,37314
+substack,2020-04,"Arts, culture, media and design",255,232,150,0,True,False,pilot_incomplete,37314
+substack,2020-04,"Health, family and personal life",83,83,150,67,True,False,pilot_incomplete,37314
+substack,2020-04,"Lifestyle, food, travel, home and leisure",103,103,150,47,True,False,pilot_incomplete,37314
+substack,2020-05,Politics and current affairs,346,286,150,0,True,False,pilot_incomplete,37314
+substack,2020-05,"Society, history and ideas",1467,1067,150,0,True,False,pilot_incomplete,37314
+substack,2020-05,"Business, finance and economics",314,264,150,0,True,False,pilot_incomplete,37314
+substack,2020-05,"Technology, science, education and environment",259,226,150,0,True,False,pilot_incomplete,37314
+substack,2020-05,Literature and creative writing,265,230,150,0,True,False,pilot_incomplete,37314
+substack,2020-05,"Arts, culture, media and design",285,244,150,0,True,False,pilot_incomplete,37314
+substack,2020-05,"Health, family and personal life",71,71,150,79,True,False,pilot_incomplete,37314
+substack,2020-05,"Lifestyle, food, travel, home and leisure",112,112,150,38,True,False,pilot_incomplete,37314
+substack,2020-06,Politics and current affairs,374,298,150,0,True,False,pilot_incomplete,37314
+substack,2020-06,"Society, history and ideas",1504,1043,150,0,True,False,pilot_incomplete,37314
+substack,2020-06,"Business, finance and economics",336,273,150,0,True,False,pilot_incomplete,37314
+substack,2020-06,"Technology, science, education and environment",281,236,150,0,True,False,pilot_incomplete,37314
+substack,2020-06,Literature and creative writing,246,213,150,0,True,False,pilot_incomplete,37314
+substack,2020-06,"Arts, culture, media and design",292,244,150,0,True,False,pilot_incomplete,37314
+substack,2020-06,"Health, family and personal life",90,90,150,60,True,False,pilot_incomplete,37314
+substack,2020-06,"Lifestyle, food, travel, home and leisure",103,103,150,47,True,False,pilot_incomplete,37314
+substack,2020-07,Politics and current affairs,424,306,150,0,True,False,pilot_incomplete,37314
+substack,2020-07,"Society, history and ideas",1666,1012,150,0,True,False,pilot_incomplete,37314
+substack,2020-07,"Business, finance and economics",362,271,150,0,True,False,pilot_incomplete,37314
+substack,2020-07,"Technology, science, education and environment",317,245,150,0,True,False,pilot_incomplete,37314
+substack,2020-07,Literature and creative writing,269,218,150,0,True,False,pilot_incomplete,37314
+substack,2020-07,"Arts, culture, media and design",293,231,150,0,True,False,pilot_incomplete,37314
+substack,2020-07,"Health, family and personal life",102,102,150,48,True,False,pilot_incomplete,37314
+substack,2020-07,"Lifestyle, food, travel, home and leisure",115,115,150,35,True,False,pilot_incomplete,37314
+substack,2020-08,Politics and current affairs,455,308,150,0,True,False,pilot_incomplete,37314
+substack,2020-08,"Society, history and ideas",1757,985,150,0,True,False,pilot_incomplete,37314
+substack,2020-08,"Business, finance and economics",407,284,150,0,True,False,pilot_incomplete,37314
+substack,2020-08,"Technology, science, education and environment",331,244,150,0,True,False,pilot_incomplete,37314
+substack,2020-08,Literature and creative writing,274,214,150,0,True,False,pilot_incomplete,37314
+substack,2020-08,"Arts, culture, media and design",315,236,150,0,True,False,pilot_incomplete,37314
+substack,2020-08,"Health, family and personal life",99,99,150,51,True,False,pilot_incomplete,37314
+substack,2020-08,"Lifestyle, food, travel, home and leisure",130,130,150,20,True,False,pilot_incomplete,37314
+substack,2020-09,Politics and current affairs,513,312,150,0,True,False,pilot_incomplete,37314
+substack,2020-09,"Society, history and ideas",1916,937,150,0,True,False,pilot_incomplete,37314
+substack,2020-09,"Business, finance and economics",431,275,150,0,True,False,pilot_incomplete,37314
+substack,2020-09,"Technology, science, education and environment",366,246,150,0,True,False,pilot_incomplete,37314
+substack,2020-09,Literature and creative writing,315,224,150,0,True,False,pilot_incomplete,37314
+substack,2020-09,"Arts, culture, media and design",351,240,150,0,True,False,pilot_incomplete,37314
+substack,2020-09,"Health, family and personal life",116,116,150,34,True,False,pilot_incomplete,37314
+substack,2020-09,"Lifestyle, food, travel, home and leisure",151,150,150,0,True,False,pilot_incomplete,37314
+substack,2020-10,Politics and current affairs,562,318,150,0,True,False,pilot_incomplete,37314
+substack,2020-10,"Society, history and ideas",2066,932,150,0,True,False,pilot_incomplete,37314
+substack,2020-10,"Business, finance and economics",455,275,150,0,True,False,pilot_incomplete,37314
+substack,2020-10,"Technology, science, education and environment",372,241,150,0,True,False,pilot_incomplete,37314
+substack,2020-10,Literature and creative writing,329,223,150,0,True,False,pilot_incomplete,37314
+substack,2020-10,"Arts, culture, media and design",372,241,150,0,True,False,pilot_incomplete,37314
+substack,2020-10,"Health, family and personal life",116,116,150,34,True,False,pilot_incomplete,37314
+substack,2020-10,"Lifestyle, food, travel, home and leisure",161,154,150,0,True,False,pilot_incomplete,37314
+substack,2020-11,Politics and current affairs,611,324,150,0,True,False,pilot_incomplete,37314
+substack,2020-11,"Society, history and ideas",2187,918,150,0,True,False,pilot_incomplete,37314
+substack,2020-11,"Business, finance and economics",472,272,150,0,True,False,pilot_incomplete,37314
+substack,2020-11,"Technology, science, education and environment",384,238,150,0,True,False,pilot_incomplete,37314
+substack,2020-11,Literature and creative writing,342,222,150,0,True,False,pilot_incomplete,37314
+substack,2020-11,"Arts, culture, media and design",383,238,150,0,True,False,pilot_incomplete,37314
+substack,2020-11,"Health, family and personal life",131,131,150,19,True,False,pilot_incomplete,37314
+substack,2020-11,"Lifestyle, food, travel, home and leisure",169,157,150,0,True,False,pilot_incomplete,37314
+substack,2020-12,Politics and current affairs,608,307,150,0,True,False,pilot_incomplete,37314
+substack,2020-12,"Society, history and ideas",2298,887,150,0,True,False,pilot_incomplete,37314
+substack,2020-12,"Business, finance and economics",522,278,150,0,True,False,pilot_incomplete,37314
+substack,2020-12,"Technology, science, education and environment",417,242,150,0,True,False,pilot_incomplete,37314
+substack,2020-12,Literature and creative writing,398,235,150,0,True,False,pilot_incomplete,37314
+substack,2020-12,"Arts, culture, media and design",443,250,150,0,True,False,pilot_incomplete,37314
+substack,2020-12,"Health, family and personal life",138,138,150,12,True,False,pilot_incomplete,37314
+substack,2020-12,"Lifestyle, food, travel, home and leisure",187,163,150,0,True,False,pilot_incomplete,37314
+substack,2021-01,Politics and current affairs,706,308,150,0,True,False,pilot_incomplete,37314
+substack,2021-01,"Society, history and ideas",2672,867,150,0,True,False,pilot_incomplete,37314
+substack,2021-01,"Business, finance and economics",626,285,150,0,True,False,pilot_incomplete,37314
+substack,2021-01,"Technology, science, education and environment",478,243,150,0,True,False,pilot_incomplete,37314
+substack,2021-01,Literature and creative writing,433,231,150,0,True,False,pilot_incomplete,37314
+substack,2021-01,"Arts, culture, media and design",478,243,150,0,True,False,pilot_incomplete,37314
+substack,2021-01,"Health, family and personal life",167,155,150,0,True,False,pilot_incomplete,37314
+substack,2021-01,"Lifestyle, food, travel, home and leisure",212,168,150,0,True,False,pilot_incomplete,37314
+substack,2021-02,Politics and current affairs,753,313,150,0,True,False,pilot_incomplete,37314
+substack,2021-02,"Society, history and ideas",2777,861,150,0,True,False,pilot_incomplete,37314
+substack,2021-02,"Business, finance and economics",614,276,150,0,True,False,pilot_incomplete,37314
+substack,2021-02,"Technology, science, education and environment",482,240,150,0,True,False,pilot_incomplete,37314
+substack,2021-02,Literature and creative writing,468,236,150,0,True,False,pilot_incomplete,37314
+substack,2021-02,"Arts, culture, media and design",521,250,150,0,True,False,pilot_incomplete,37314
+substack,2021-02,"Health, family and personal life",165,154,150,0,True,False,pilot_incomplete,37314
+substack,2021-02,"Lifestyle, food, travel, home and leisure",223,170,150,0,True,False,pilot_incomplete,37314
+substack,2021-03,Politics and current affairs,800,312,150,0,True,False,pilot_incomplete,37314
+substack,2021-03,"Society, history and ideas",2963,850,150,0,True,False,pilot_incomplete,37314
+substack,2021-03,"Business, finance and economics",648,274,150,0,True,False,pilot_incomplete,37314
+substack,2021-03,"Technology, science, education and environment",542,248,150,0,True,False,pilot_incomplete,37314
+substack,2021-03,Literature and creative writing,535,246,150,0,True,False,pilot_incomplete,37314
+substack,2021-03,"Arts, culture, media and design",532,245,150,0,True,False,pilot_incomplete,37314
+substack,2021-03,"Health, family and personal life",176,156,150,0,True,False,pilot_incomplete,37314
+substack,2021-03,"Lifestyle, food, travel, home and leisure",227,169,150,0,True,False,pilot_incomplete,37314
+substack,2021-04,Politics and current affairs,827,316,150,0,True,False,pilot_incomplete,37314
+substack,2021-04,"Society, history and ideas",2941,835,150,0,True,False,pilot_incomplete,37314
+substack,2021-04,"Business, finance and economics",704,286,150,0,True,False,pilot_incomplete,37314
+substack,2021-04,"Technology, science, education and environment",574,254,150,0,True,False,pilot_incomplete,37314
+substack,2021-04,Literature and creative writing,513,239,150,0,True,False,pilot_incomplete,37314
+substack,2021-04,"Arts, culture, media and design",537,245,150,0,True,False,pilot_incomplete,37314
+substack,2021-04,"Health, family and personal life",166,154,150,0,True,False,pilot_incomplete,37314
+substack,2021-04,"Lifestyle, food, travel, home and leisure",236,171,150,0,True,False,pilot_incomplete,37314
+substack,2021-05,Politics and current affairs,835,313,150,0,True,False,pilot_incomplete,37314
+substack,2021-05,"Society, history and ideas",3087,850,150,0,True,False,pilot_incomplete,37314
+substack,2021-05,"Business, finance and economics",685,278,150,0,True,False,pilot_incomplete,37314
+substack,2021-05,"Technology, science, education and environment",557,247,150,0,True,False,pilot_incomplete,37314
+substack,2021-05,Literature and creative writing,523,239,150,0,True,False,pilot_incomplete,37314
+substack,2021-05,"Arts, culture, media and design",546,244,150,0,True,False,pilot_incomplete,37314
+substack,2021-05,"Health, family and personal life",177,157,150,0,True,False,pilot_incomplete,37314
+substack,2021-05,"Lifestyle, food, travel, home and leisure",244,172,150,0,True,False,pilot_incomplete,37314
+substack,2021-06,Politics and current affairs,870,320,150,0,True,False,pilot_incomplete,37314
+substack,2021-06,"Society, history and ideas",3074,841,150,0,True,False,pilot_incomplete,37314
+substack,2021-06,"Business, finance and economics",703,281,150,0,True,False,pilot_incomplete,37314
+substack,2021-06,"Technology, science, education and environment",555,246,150,0,True,False,pilot_incomplete,37314
+substack,2021-06,Literature and creative writing,527,239,150,0,True,False,pilot_incomplete,37314
+substack,2021-06,"Arts, culture, media and design",539,242,150,0,True,False,pilot_incomplete,37314
+substack,2021-06,"Health, family and personal life",182,157,150,0,True,False,pilot_incomplete,37314
+substack,2021-06,"Lifestyle, food, travel, home and leisure",254,174,150,0,True,False,pilot_incomplete,37314
+substack,2021-07,Politics and current affairs,881,322,150,0,True,False,pilot_incomplete,37314
+substack,2021-07,"Society, history and ideas",3103,847,150,0,True,False,pilot_incomplete,37314
+substack,2021-07,"Business, finance and economics",699,280,150,0,True,False,pilot_incomplete,37314
+substack,2021-07,"Technology, science, education and environment",538,242,150,0,True,False,pilot_incomplete,37314
+substack,2021-07,Literature and creative writing,535,241,150,0,True,False,pilot_incomplete,37314
+substack,2021-07,"Arts, culture, media and design",542,242,150,0,True,False,pilot_incomplete,37314
+substack,2021-07,"Health, family and personal life",179,157,150,0,True,False,pilot_incomplete,37314
+substack,2021-07,"Lifestyle, food, travel, home and leisure",231,169,150,0,True,False,pilot_incomplete,37314
+substack,2021-08,Politics and current affairs,946,330,150,0,True,False,pilot_incomplete,37314
+substack,2021-08,"Society, history and ideas",3174,835,150,0,True,False,pilot_incomplete,37314
+substack,2021-08,"Business, finance and economics",688,272,150,0,True,False,pilot_incomplete,37314
+substack,2021-08,"Technology, science, education and environment",576,247,150,0,True,False,pilot_incomplete,37314
+substack,2021-08,Literature and creative writing,546,240,150,0,True,False,pilot_incomplete,37314
+substack,2021-08,"Arts, culture, media and design",566,244,150,0,True,False,pilot_incomplete,37314
+substack,2021-08,"Health, family and personal life",193,160,150,0,True,False,pilot_incomplete,37314
+substack,2021-08,"Lifestyle, food, travel, home and leisure",247,172,150,0,True,False,pilot_incomplete,37314
+substack,2021-09,Politics and current affairs,1024,334,150,0,True,False,pilot_incomplete,37314
+substack,2021-09,"Society, history and ideas",3371,828,150,0,True,False,pilot_incomplete,37314
+substack,2021-09,"Business, finance and economics",743,275,150,0,True,False,pilot_incomplete,37314
+substack,2021-09,"Technology, science, education and environment",585,242,150,0,True,False,pilot_incomplete,37314
+substack,2021-09,Literature and creative writing,584,241,150,0,True,False,pilot_incomplete,37314
+substack,2021-09,"Arts, culture, media and design",605,246,150,0,True,False,pilot_incomplete,37314
+substack,2021-09,"Health, family and personal life",197,160,150,0,True,False,pilot_incomplete,37314
+substack,2021-09,"Lifestyle, food, travel, home and leisure",266,174,150,0,True,False,pilot_incomplete,37314
+substack,2021-10,Politics and current affairs,1052,329,150,0,True,False,pilot_incomplete,37314
+substack,2021-10,"Society, history and ideas",3554,825,150,0,True,False,pilot_incomplete,37314
+substack,2021-10,"Business, finance and economics",782,275,150,0,True,False,pilot_incomplete,37314
+substack,2021-10,"Technology, science, education and environment",634,246,150,0,True,False,pilot_incomplete,37314
+substack,2021-10,Literature and creative writing,648,249,150,0,True,False,pilot_incomplete,37314
+substack,2021-10,"Arts, culture, media and design",605,240,150,0,True,False,pilot_incomplete,37314
+substack,2021-10,"Health, family and personal life",216,163,150,0,True,False,pilot_incomplete,37314
+substack,2021-10,"Lifestyle, food, travel, home and leisure",268,173,150,0,True,False,pilot_incomplete,37314
+substack,2021-11,Politics and current affairs,1067,326,150,0,True,False,pilot_incomplete,37314
+substack,2021-11,"Society, history and ideas",3635,821,150,0,True,False,pilot_incomplete,37314
+substack,2021-11,"Business, finance and economics",814,278,150,0,True,False,pilot_incomplete,37314
+substack,2021-11,"Technology, science, education and environment",671,250,150,0,True,False,pilot_incomplete,37314
+substack,2021-11,Literature and creative writing,642,245,150,0,True,False,pilot_incomplete,37314
+substack,2021-11,"Arts, culture, media and design",626,242,150,0,True,False,pilot_incomplete,37314
+substack,2021-11,"Health, family and personal life",220,163,150,0,True,False,pilot_incomplete,37314
+substack,2021-11,"Lifestyle, food, travel, home and leisure",280,175,150,0,True,False,pilot_incomplete,37314
+substack,2021-12,Politics and current affairs,1112,327,150,0,True,False,pilot_incomplete,37314
+substack,2021-12,"Society, history and ideas",3769,816,150,0,True,False,pilot_incomplete,37314
+substack,2021-12,"Business, finance and economics",844,278,150,0,True,False,pilot_incomplete,37314
+substack,2021-12,"Technology, science, education and environment",629,238,150,0,True,False,pilot_incomplete,37314
+substack,2021-12,Literature and creative writing,688,249,150,0,True,False,pilot_incomplete,37314
+substack,2021-12,"Arts, culture, media and design",666,245,150,0,True,False,pilot_incomplete,37314
+substack,2021-12,"Health, family and personal life",241,167,150,0,True,False,pilot_incomplete,37314
+substack,2021-12,"Lifestyle, food, travel, home and leisure",314,180,150,0,True,False,pilot_incomplete,37314
+substack,2022-01,Politics and current affairs,1259,326,150,0,True,False,pilot_incomplete,37314
+substack,2022-01,"Society, history and ideas",4328,813,150,0,True,False,pilot_incomplete,37314
+substack,2022-01,"Business, finance and economics",927,273,150,0,True,False,pilot_incomplete,37314
+substack,2022-01,"Technology, science, education and environment",714,240,150,0,True,False,pilot_incomplete,37314
+substack,2022-01,Literature and creative writing,787,251,150,0,True,False,pilot_incomplete,37314
+substack,2022-01,"Arts, culture, media and design",751,245,150,0,True,False,pilot_incomplete,37314
+substack,2022-01,"Health, family and personal life",278,170,150,0,True,False,pilot_incomplete,37314
+substack,2022-01,"Lifestyle, food, travel, home and leisure",352,182,150,0,True,False,pilot_incomplete,37314
+substack,2022-02,Politics and current affairs,1287,327,150,0,True,False,pilot_incomplete,37314
+substack,2022-02,"Society, history and ideas",4393,811,150,0,True,False,pilot_incomplete,37314
+substack,2022-02,"Business, finance and economics",909,268,150,0,True,False,pilot_incomplete,37314
+substack,2022-02,"Technology, science, education and environment",725,240,150,0,True,False,pilot_incomplete,37314
+substack,2022-02,Literature and creative writing,828,256,150,0,True,False,pilot_incomplete,37314
+substack,2022-02,"Arts, culture, media and design",741,242,150,0,True,False,pilot_incomplete,37314
+substack,2022-02,"Health, family and personal life",292,172,150,0,True,False,pilot_incomplete,37314
+substack,2022-02,"Lifestyle, food, travel, home and leisure",368,184,150,0,True,False,pilot_incomplete,37314
+substack,2022-03,Politics and current affairs,1366,324,150,0,True,False,pilot_incomplete,37314
+substack,2022-03,"Society, history and ideas",4757,810,150,0,True,False,pilot_incomplete,37314
+substack,2022-03,"Business, finance and economics",966,267,150,0,True,False,pilot_incomplete,37314
+substack,2022-03,"Technology, science, education and environment",763,238,150,0,True,False,pilot_incomplete,37314
+substack,2022-03,Literature and creative writing,866,253,150,0,True,False,pilot_incomplete,37314
+substack,2022-03,"Arts, culture, media and design",831,248,150,0,True,False,pilot_incomplete,37314
+substack,2022-03,"Health, family and personal life",329,176,150,0,True,False,pilot_incomplete,37314
+substack,2022-03,"Lifestyle, food, travel, home and leisure",390,184,150,0,True,False,pilot_incomplete,37314
+substack,2022-04,Politics and current affairs,1388,326,150,0,True,False,pilot_incomplete,37314
+substack,2022-04,"Society, history and ideas",4803,814,150,0,True,False,pilot_incomplete,37314
+substack,2022-04,"Business, finance and economics",957,265,150,0,True,False,pilot_incomplete,37314
+substack,2022-04,"Technology, science, education and environment",772,239,150,0,True,False,pilot_incomplete,37314
+substack,2022-04,Literature and creative writing,851,250,150,0,True,False,pilot_incomplete,37314
+substack,2022-04,"Arts, culture, media and design",829,247,150,0,True,False,pilot_incomplete,37314
+substack,2022-04,"Health, family and personal life",324,175,150,0,True,False,pilot_incomplete,37314
+substack,2022-04,"Lifestyle, food, travel, home and leisure",391,184,150,0,True,False,pilot_incomplete,37314
+substack,2022-05,Politics and current affairs,1403,322,150,0,True,False,pilot_incomplete,37314
+substack,2022-05,"Society, history and ideas",4948,809,150,0,True,False,pilot_incomplete,37314
+substack,2022-05,"Business, finance and economics",969,263,150,0,True,False,pilot_incomplete,37314
+substack,2022-05,"Technology, science, education and environment",812,241,150,0,True,False,pilot_incomplete,37314
+substack,2022-05,Literature and creative writing,917,255,150,0,True,False,pilot_incomplete,37314
+substack,2022-05,"Arts, culture, media and design",881,250,150,0,True,False,pilot_incomplete,37314
+substack,2022-05,"Health, family and personal life",330,175,150,0,True,False,pilot_incomplete,37314
+substack,2022-05,"Lifestyle, food, travel, home and leisure",401,185,150,0,True,False,pilot_incomplete,37314
+substack,2022-06,Politics and current affairs,1456,322,150,0,True,False,pilot_incomplete,37314
+substack,2022-06,"Society, history and ideas",5178,812,150,0,True,False,pilot_incomplete,37314
+substack,2022-06,"Business, finance and economics",1001,262,150,0,True,False,pilot_incomplete,37314
+substack,2022-06,"Technology, science, education and environment",787,234,150,0,True,False,pilot_incomplete,37314
+substack,2022-06,Literature and creative writing,954,256,150,0,True,False,pilot_incomplete,37314
+substack,2022-06,"Arts, culture, media and design",904,249,150,0,True,False,pilot_incomplete,37314
+substack,2022-06,"Health, family and personal life",364,178,150,0,True,False,pilot_incomplete,37314
+substack,2022-06,"Lifestyle, food, travel, home and leisure",432,187,150,0,True,False,pilot_incomplete,37314
+substack,2022-07,Politics and current affairs,1492,321,150,0,True,False,pilot_incomplete,37314
+substack,2022-07,"Society, history and ideas",5354,811,150,0,True,False,pilot_incomplete,37314
+substack,2022-07,"Business, finance and economics",1048,264,150,0,True,False,pilot_incomplete,37314
+substack,2022-07,"Technology, science, education and environment",790,231,150,0,True,False,pilot_incomplete,37314
+substack,2022-07,Literature and creative writing,1013,260,150,0,True,False,pilot_incomplete,37314
+substack,2022-07,"Arts, culture, media and design",922,248,150,0,True,False,pilot_incomplete,37314
+substack,2022-07,"Health, family and personal life",379,179,150,0,True,False,pilot_incomplete,37314
+substack,2022-07,"Lifestyle, food, travel, home and leisure",433,186,150,0,True,False,pilot_incomplete,37314
+substack,2022-08,Politics and current affairs,1546,317,150,0,True,False,pilot_incomplete,37314
+substack,2022-08,"Society, history and ideas",5690,812,150,0,True,False,pilot_incomplete,37314
+substack,2022-08,"Business, finance and economics",1033,255,150,0,True,False,pilot_incomplete,37314
+substack,2022-08,"Technology, science, education and environment",897,239,150,0,True,False,pilot_incomplete,37314
+substack,2022-08,Literature and creative writing,1076,261,150,0,True,False,pilot_incomplete,37314
+substack,2022-08,"Arts, culture, media and design",968,248,150,0,True,False,pilot_incomplete,37314
+substack,2022-08,"Health, family and personal life",406,181,150,0,True,False,pilot_incomplete,37314
+substack,2022-08,"Lifestyle, food, travel, home and leisure",461,187,150,0,True,False,pilot_incomplete,37314
+substack,2022-09,Politics and current affairs,1598,313,150,0,True,False,pilot_incomplete,37314
+substack,2022-09,"Society, history and ideas",6037,813,150,0,True,False,pilot_incomplete,37314
+substack,2022-09,"Business, finance and economics",1088,256,150,0,True,False,pilot_incomplete,37314
+substack,2022-09,"Technology, science, education and environment",945,240,150,0,True,False,pilot_incomplete,37314
+substack,2022-09,Literature and creative writing,1145,262,150,0,True,False,pilot_incomplete,37314
+substack,2022-09,"Arts, culture, media and design",1006,246,150,0,True,False,pilot_incomplete,37314
+substack,2022-09,"Health, family and personal life",424,181,150,0,True,False,pilot_incomplete,37314
+substack,2022-09,"Lifestyle, food, travel, home and leisure",496,189,150,0,True,False,pilot_incomplete,37314
+substack,2022-10,Politics and current affairs,1648,309,150,0,True,False,pilot_incomplete,37314
+substack,2022-10,"Society, history and ideas",6425,816,150,0,True,False,pilot_incomplete,37314
+substack,2022-10,"Business, finance and economics",1163,257,150,0,True,False,pilot_incomplete,37314
+substack,2022-10,"Technology, science, education and environment",969,237,150,0,True,False,pilot_incomplete,37314
+substack,2022-10,Literature and creative writing,1197,261,150,0,True,False,pilot_incomplete,37314
+substack,2022-10,"Arts, culture, media and design",1091,250,150,0,True,False,pilot_incomplete,37314
+substack,2022-10,"Health, family and personal life",447,181,150,0,True,False,pilot_incomplete,37314
+substack,2022-10,"Lifestyle, food, travel, home and leisure",514,189,150,0,True,False,pilot_incomplete,37314
+substack,2022-11,Politics and current affairs,1758,310,150,0,True,False,pilot_incomplete,37314
+substack,2022-11,"Society, history and ideas",6716,805,150,0,True,False,pilot_incomplete,37314
+substack,2022-11,"Business, finance and economics",1221,257,150,0,True,False,pilot_incomplete,37314
+substack,2022-11,"Technology, science, education and environment",1060,241,150,0,True,False,pilot_incomplete,37314
+substack,2022-11,Literature and creative writing,1262,261,150,0,True,False,pilot_incomplete,37314
+substack,2022-11,"Arts, culture, media and design",1156,250,150,0,True,False,pilot_incomplete,37314
+substack,2022-11,"Health, family and personal life",494,184,150,0,True,False,pilot_incomplete,37314
+substack,2022-11,"Lifestyle, food, travel, home and leisure",570,192,150,0,True,False,pilot_incomplete,37314
+substack,2022-12,Politics and current affairs,1785,306,150,0,True,False,pilot_incomplete,37314
+substack,2022-12,"Society, history and ideas",6976,802,150,0,True,False,pilot_incomplete,37314
+substack,2022-12,"Business, finance and economics",1232,254,150,0,True,False,pilot_incomplete,37314
+substack,2022-12,"Technology, science, education and environment",1094,240,150,0,True,False,pilot_incomplete,37314
+substack,2022-12,Literature and creative writing,1419,271,150,0,True,False,pilot_incomplete,37314
+substack,2022-12,"Arts, culture, media and design",1238,254,150,0,True,False,pilot_incomplete,37314
+substack,2022-12,"Health, family and personal life",485,182,150,0,True,False,pilot_incomplete,37314
+substack,2022-12,"Lifestyle, food, travel, home and leisure",573,191,150,0,True,False,pilot_incomplete,37314
+substack,2023-01,Politics and current affairs,1910,298,150,0,True,False,pilot_incomplete,37314
+substack,2023-01,"Society, history and ideas",7800,794,150,0,True,False,pilot_incomplete,37314
+substack,2023-01,"Business, finance and economics",1379,253,150,0,True,False,pilot_incomplete,37314
+substack,2023-01,"Technology, science, education and environment",1282,245,150,0,True,False,pilot_incomplete,37314
+substack,2023-01,Literature and creative writing,1647,276,150,0,True,False,pilot_incomplete,37314
+substack,2023-01,"Arts, culture, media and design",1406,256,150,0,True,False,pilot_incomplete,37314
+substack,2023-01,"Health, family and personal life",580,186,150,0,True,False,pilot_incomplete,37314
+substack,2023-01,"Lifestyle, food, travel, home and leisure",652,192,150,0,True,False,pilot_incomplete,37314
+substack,2023-02,Politics and current affairs,1977,299,150,0,True,False,pilot_incomplete,37314
+substack,2023-02,"Society, history and ideas",8124,800,150,0,True,False,pilot_incomplete,37314
+substack,2023-02,"Business, finance and economics",1358,249,150,0,True,False,pilot_incomplete,37314
+substack,2023-02,"Technology, science, education and environment",1332,246,150,0,True,False,pilot_incomplete,37314
+substack,2023-02,Literature and creative writing,1628,271,150,0,True,False,pilot_incomplete,37314
+substack,2023-02,"Arts, culture, media and design",1448,256,150,0,True,False,pilot_incomplete,37314
+substack,2023-02,"Health, family and personal life",596,186,150,0,True,False,pilot_incomplete,37314
+substack,2023-02,"Lifestyle, food, travel, home and leisure",674,193,150,0,True,False,pilot_incomplete,37314
+substack,2023-03,Politics and current affairs,2121,295,150,0,True,False,pilot_incomplete,37314
+substack,2023-03,"Society, history and ideas",8956,797,150,0,True,False,pilot_incomplete,37314
+substack,2023-03,"Business, finance and economics",1506,250,150,0,True,False,pilot_incomplete,37314
+substack,2023-03,"Technology, science, education and environment",1462,246,150,0,True,False,pilot_incomplete,37314
+substack,2023-03,Literature and creative writing,1808,272,150,0,True,False,pilot_incomplete,37314
+substack,2023-03,"Arts, culture, media and design",1583,255,150,0,True,False,pilot_incomplete,37314
+substack,2023-03,"Health, family and personal life",674,189,150,0,True,False,pilot_incomplete,37314
+substack,2023-03,"Lifestyle, food, travel, home and leisure",782,196,150,0,True,False,pilot_incomplete,37314
+substack,2023-04,Politics and current affairs,2159,296,150,0,True,False,pilot_incomplete,37314
+substack,2023-04,"Society, history and ideas",8923,789,150,0,True,False,pilot_incomplete,37314
+substack,2023-04,"Business, finance and economics",1516,249,150,0,True,False,pilot_incomplete,37314
+substack,2023-04,"Technology, science, education and environment",1445,244,150,0,True,False,pilot_incomplete,37314
+substack,2023-04,Literature and creative writing,1928,279,150,0,True,False,pilot_incomplete,37314
+substack,2023-04,"Arts, culture, media and design",1602,256,150,0,True,False,pilot_incomplete,37314
+substack,2023-04,"Health, family and personal life",696,190,150,0,True,False,pilot_incomplete,37314
+substack,2023-04,"Lifestyle, food, travel, home and leisure",795,197,150,0,True,False,pilot_incomplete,37314
+substack,2023-05,Politics and current affairs,2240,298,150,0,True,False,pilot_incomplete,37314
+substack,2023-05,"Society, history and ideas",9115,784,150,0,True,False,pilot_incomplete,37314
+substack,2023-05,"Business, finance and economics",1551,249,150,0,True,False,pilot_incomplete,37314
+substack,2023-05,"Technology, science, education and environment",1518,247,150,0,True,False,pilot_incomplete,37314
+substack,2023-05,Literature and creative writing,1961,278,150,0,True,False,pilot_incomplete,37314
+substack,2023-05,"Arts, culture, media and design",1645,256,150,0,True,False,pilot_incomplete,37314
+substack,2023-05,"Health, family and personal life",719,190,150,0,True,False,pilot_incomplete,37314
+substack,2023-05,"Lifestyle, food, travel, home and leisure",824,198,150,0,True,False,pilot_incomplete,37314
+substack,2023-06,Politics and current affairs,2214,295,150,0,True,False,pilot_incomplete,37314
+substack,2023-06,"Society, history and ideas",9203,786,150,0,True,False,pilot_incomplete,37314
+substack,2023-06,"Business, finance and economics",1477,243,150,0,True,False,pilot_incomplete,37314
+substack,2023-06,"Technology, science, education and environment",1519,246,150,0,True,False,pilot_incomplete,37314
+substack,2023-06,Literature and creative writing,2038,283,150,0,True,False,pilot_incomplete,37314
+substack,2023-06,"Arts, culture, media and design",1697,259,150,0,True,False,pilot_incomplete,37314
+substack,2023-06,"Health, family and personal life",725,190,150,0,True,False,pilot_incomplete,37314
+substack,2023-06,"Lifestyle, food, travel, home and leisure",835,198,150,0,True,False,pilot_incomplete,37314
+substack,2023-07,Politics and current affairs,2283,296,150,0,True,False,pilot_incomplete,37314
+substack,2023-07,"Society, history and ideas",9533,790,150,0,True,False,pilot_incomplete,37314
+substack,2023-07,"Business, finance and economics",1514,243,150,0,True,False,pilot_incomplete,37314
+substack,2023-07,"Technology, science, education and environment",1508,243,150,0,True,False,pilot_incomplete,37314
+substack,2023-07,Literature and creative writing,2093,283,150,0,True,False,pilot_incomplete,37314
+substack,2023-07,"Arts, culture, media and design",1751,259,150,0,True,False,pilot_incomplete,37314
+substack,2023-07,"Health, family and personal life",737,190,150,0,True,False,pilot_incomplete,37314
+substack,2023-07,"Lifestyle, food, travel, home and leisure",826,196,150,0,True,False,pilot_incomplete,37314
+substack,2023-08,Politics and current affairs,2239,287,150,0,True,False,pilot_incomplete,37314
+substack,2023-08,"Society, history and ideas",9910,791,150,0,True,False,pilot_incomplete,37314
+substack,2023-08,"Business, finance and economics",1535,241,150,0,True,False,pilot_incomplete,37314
+substack,2023-08,"Technology, science, education and environment",1607,246,150,0,True,False,pilot_incomplete,37314
+substack,2023-08,Literature and creative writing,2225,286,150,0,True,False,pilot_incomplete,37314
+substack,2023-08,"Arts, culture, media and design",1823,260,150,0,True,False,pilot_incomplete,37314
+substack,2023-08,"Health, family and personal life",791,192,150,0,True,False,pilot_incomplete,37314
+substack,2023-08,"Lifestyle, food, travel, home and leisure",864,197,150,0,True,False,pilot_incomplete,37314
+substack,2023-09,Politics and current affairs,2395,289,150,0,True,False,pilot_incomplete,37314
+substack,2023-09,"Society, history and ideas",10349,782,150,0,True,False,pilot_incomplete,37314
+substack,2023-09,"Business, finance and economics",1584,239,150,0,True,False,pilot_incomplete,37314
+substack,2023-09,"Technology, science, education and environment",1742,249,150,0,True,False,pilot_incomplete,37314
+substack,2023-09,Literature and creative writing,2382,288,150,0,True,False,pilot_incomplete,37314
+substack,2023-09,"Arts, culture, media and design",1974,263,150,0,True,False,pilot_incomplete,37314
+substack,2023-09,"Health, family and personal life",825,192,150,0,True,False,pilot_incomplete,37314
+substack,2023-09,"Lifestyle, food, travel, home and leisure",924,198,150,0,True,False,pilot_incomplete,37314
+substack,2023-10,Politics and current affairs,2494,289,150,0,True,False,pilot_incomplete,37314
+substack,2023-10,"Society, history and ideas",10957,790,150,0,True,False,pilot_incomplete,37314
+substack,2023-10,"Business, finance and economics",1614,236,150,0,True,False,pilot_incomplete,37314
+substack,2023-10,"Technology, science, education and environment",1791,247,150,0,True,False,pilot_incomplete,37314
+substack,2023-10,Literature and creative writing,2454,286,150,0,True,False,pilot_incomplete,37314
+substack,2023-10,"Arts, culture, media and design",2006,260,150,0,True,False,pilot_incomplete,37314
+substack,2023-10,"Health, family and personal life",855,192,150,0,True,False,pilot_incomplete,37314
+substack,2023-10,"Lifestyle, food, travel, home and leisure",989,200,150,0,True,False,pilot_incomplete,37314
+substack,2023-11,Politics and current affairs,2582,291,150,0,True,False,pilot_incomplete,37314
+substack,2023-11,"Society, history and ideas",11044,782,150,0,True,False,pilot_incomplete,37314
+substack,2023-11,"Business, finance and economics",1640,236,150,0,True,False,pilot_incomplete,37314
+substack,2023-11,"Technology, science, education and environment",1826,247,150,0,True,False,pilot_incomplete,37314
+substack,2023-11,Literature and creative writing,2509,287,150,0,True,False,pilot_incomplete,37314
+substack,2023-11,"Arts, culture, media and design",2090,263,150,0,True,False,pilot_incomplete,37314
+substack,2023-11,"Health, family and personal life",880,192,150,0,True,False,pilot_incomplete,37314
+substack,2023-11,"Lifestyle, food, travel, home and leisure",1046,202,150,0,True,False,pilot_incomplete,37314
+substack,2023-12,Politics and current affairs,2596,286,150,0,True,False,pilot_incomplete,37314
+substack,2023-12,"Society, history and ideas",11506,783,150,0,True,False,pilot_incomplete,37314
+substack,2023-12,"Business, finance and economics",1665,234,150,0,True,False,pilot_incomplete,37314
+substack,2023-12,"Technology, science, education and environment",1829,244,150,0,True,False,pilot_incomplete,37314
+substack,2023-12,Literature and creative writing,2771,296,150,0,True,False,pilot_incomplete,37314
+substack,2023-12,"Arts, culture, media and design",2182,263,150,0,True,False,pilot_incomplete,37314
+substack,2023-12,"Health, family and personal life",921,193,150,0,True,False,pilot_incomplete,37314
+substack,2023-12,"Lifestyle, food, travel, home and leisure",1057,201,150,0,True,False,pilot_incomplete,37314
+substack,2024-01,Politics and current affairs,2820,286,150,0,True,False,pilot_incomplete,37314
+substack,2024-01,"Society, history and ideas",12546,779,150,0,True,False,pilot_incomplete,37314
+substack,2024-01,"Business, finance and economics",1878,238,150,0,True,False,pilot_incomplete,37314
+substack,2024-01,"Technology, science, education and environment",1993,244,150,0,True,False,pilot_incomplete,37314
+substack,2024-01,Literature and creative writing,2945,292,150,0,True,False,pilot_incomplete,37314
+substack,2024-01,"Arts, culture, media and design",2406,264,150,0,True,False,pilot_incomplete,37314
+substack,2024-01,"Health, family and personal life",1039,195,150,0,True,False,pilot_incomplete,37314
+substack,2024-01,"Lifestyle, food, travel, home and leisure",1168,202,150,0,True,False,pilot_incomplete,37314
+substack,2024-02,Politics and current affairs,2902,287,150,0,True,False,pilot_incomplete,37314
+substack,2024-02,"Society, history and ideas",12664,775,150,0,True,False,pilot_incomplete,37314
+substack,2024-02,"Business, finance and economics",1891,237,150,0,True,False,pilot_incomplete,37314
+substack,2024-02,"Technology, science, education and environment",2017,243,150,0,True,False,pilot_incomplete,37314
+substack,2024-02,Literature and creative writing,3031,294,150,0,True,False,pilot_incomplete,37314
+substack,2024-02,"Arts, culture, media and design",2438,264,150,0,True,False,pilot_incomplete,37314
+substack,2024-02,"Health, family and personal life",1085,197,150,0,True,False,pilot_incomplete,37314
+substack,2024-02,"Lifestyle, food, travel, home and leisure",1212,203,150,0,True,False,pilot_incomplete,37314
+substack,2024-03,Politics and current affairs,3014,287,150,0,True,False,pilot_incomplete,37314
+substack,2024-03,"Society, history and ideas",13173,775,150,0,True,False,pilot_incomplete,37314
+substack,2024-03,"Business, finance and economics",1898,234,150,0,True,False,pilot_incomplete,37314
+substack,2024-03,"Technology, science, education and environment",2109,244,150,0,True,False,pilot_incomplete,37314
+substack,2024-03,Literature and creative writing,3190,296,150,0,True,False,pilot_incomplete,37314
+substack,2024-03,"Arts, culture, media and design",2533,264,150,0,True,False,pilot_incomplete,37314
+substack,2024-03,"Health, family and personal life",1103,196,150,0,True,False,pilot_incomplete,37314
+substack,2024-03,"Lifestyle, food, travel, home and leisure",1281,204,150,0,True,False,pilot_incomplete,37314
+substack,2024-04,Politics and current affairs,3035,286,150,0,True,False,pilot_incomplete,37314
+substack,2024-04,"Society, history and ideas",13383,774,150,0,True,False,pilot_incomplete,37314
+substack,2024-04,"Business, finance and economics",1929,234,150,0,True,False,pilot_incomplete,37314
+substack,2024-04,"Technology, science, education and environment",2163,245,150,0,True,False,pilot_incomplete,37314
+substack,2024-04,Literature and creative writing,3275,297,150,0,True,False,pilot_incomplete,37314
+substack,2024-04,"Arts, culture, media and design",2569,264,150,0,True,False,pilot_incomplete,37314
+substack,2024-04,"Health, family and personal life",1115,195,150,0,True,False,pilot_incomplete,37314
+substack,2024-04,"Lifestyle, food, travel, home and leisure",1307,205,150,0,True,False,pilot_incomplete,37314
+substack,2024-05,Politics and current affairs,3079,284,150,0,True,False,pilot_incomplete,37314
+substack,2024-05,"Society, history and ideas",13829,775,150,0,True,False,pilot_incomplete,37314
+substack,2024-05,"Business, finance and economics",1937,232,150,0,True,False,pilot_incomplete,37314
+substack,2024-05,"Technology, science, education and environment",2173,243,150,0,True,False,pilot_incomplete,37314
+substack,2024-05,Literature and creative writing,3397,298,150,0,True,False,pilot_incomplete,37314
+substack,2024-05,"Arts, culture, media and design",2695,266,150,0,True,False,pilot_incomplete,37314
+substack,2024-05,"Health, family and personal life",1178,197,150,0,True,False,pilot_incomplete,37314
+substack,2024-05,"Lifestyle, food, travel, home and leisure",1359,205,150,0,True,False,pilot_incomplete,37314
+substack,2024-06,Politics and current affairs,3050,282,150,0,True,False,pilot_incomplete,37314
+substack,2024-06,"Society, history and ideas",13953,779,150,0,True,False,pilot_incomplete,37314
+substack,2024-06,"Business, finance and economics",1913,230,150,0,True,False,pilot_incomplete,37314
+substack,2024-06,"Technology, science, education and environment",2196,243,150,0,True,False,pilot_incomplete,37314
+substack,2024-06,Literature and creative writing,3455,301,150,0,True,False,pilot_incomplete,37314
+substack,2024-06,"Arts, culture, media and design",2675,265,150,0,True,False,pilot_incomplete,37314
+substack,2024-06,"Health, family and personal life",1178,197,150,0,True,False,pilot_incomplete,37314
+substack,2024-06,"Lifestyle, food, travel, home and leisure",1324,203,150,0,True,False,pilot_incomplete,37314
+substack,2024-07,Politics and current affairs,3290,287,150,0,True,False,pilot_incomplete,37314
+substack,2024-07,"Society, history and ideas",14538,777,150,0,True,False,pilot_incomplete,37314
+substack,2024-07,"Business, finance and economics",2028,232,150,0,True,False,pilot_incomplete,37314
+substack,2024-07,"Technology, science, education and environment",2211,240,150,0,True,False,pilot_incomplete,37314
+substack,2024-07,Literature and creative writing,3581,300,150,0,True,False,pilot_incomplete,37314
+substack,2024-07,"Arts, culture, media and design",2798,265,150,0,True,False,pilot_incomplete,37314
+substack,2024-07,"Health, family and personal life",1191,195,150,0,True,False,pilot_incomplete,37314
+substack,2024-07,"Lifestyle, food, travel, home and leisure",1387,204,150,0,True,False,pilot_incomplete,37314
+substack,2024-08,Politics and current affairs,3235,283,150,0,True,False,pilot_incomplete,37314
+substack,2024-08,"Society, history and ideas",14715,776,150,0,True,False,pilot_incomplete,37314
+substack,2024-08,"Business, finance and economics",2026,231,150,0,True,False,pilot_incomplete,37314
+substack,2024-08,"Technology, science, education and environment",2218,239,150,0,True,False,pilot_incomplete,37314
+substack,2024-08,Literature and creative writing,3766,305,150,0,True,False,pilot_incomplete,37314
+substack,2024-08,"Arts, culture, media and design",2810,264,150,0,True,False,pilot_incomplete,37314
+substack,2024-08,"Health, family and personal life",1244,197,150,0,True,False,pilot_incomplete,37314
+substack,2024-08,"Lifestyle, food, travel, home and leisure",1435,205,150,0,True,False,pilot_incomplete,37314
+substack,2024-09,Politics and current affairs,3393,281,150,0,True,False,pilot_incomplete,37314
+substack,2024-09,"Society, history and ideas",15716,779,150,0,True,False,pilot_incomplete,37314
+substack,2024-09,"Business, finance and economics",2179,232,150,0,True,False,pilot_incomplete,37314
+substack,2024-09,"Technology, science, education and environment",2374,240,150,0,True,False,pilot_incomplete,37314
+substack,2024-09,Literature and creative writing,3981,305,150,0,True,False,pilot_incomplete,37314
+substack,2024-09,"Arts, culture, media and design",2952,263,150,0,True,False,pilot_incomplete,37314
+substack,2024-09,"Health, family and personal life",1281,195,150,0,True,False,pilot_incomplete,37314
+substack,2024-09,"Lifestyle, food, travel, home and leisure",1506,205,150,0,True,False,pilot_incomplete,37314
+substack,2024-10,Politics and current affairs,3666,285,150,0,True,False,pilot_incomplete,37314
+substack,2024-10,"Society, history and ideas",16468,775,150,0,True,False,pilot_incomplete,37314
+substack,2024-10,"Business, finance and economics",2275,231,150,0,True,False,pilot_incomplete,37314
+substack,2024-10,"Technology, science, education and environment",2462,239,150,0,True,False,pilot_incomplete,37314
+substack,2024-10,Literature and creative writing,4196,305,150,0,True,False,pilot_incomplete,37314
+substack,2024-10,"Arts, culture, media and design",3118,264,150,0,True,False,pilot_incomplete,37314
+substack,2024-10,"Health, family and personal life",1363,196,150,0,True,False,pilot_incomplete,37314
+substack,2024-10,"Lifestyle, food, travel, home and leisure",1597,205,150,0,True,False,pilot_incomplete,37314
+substack,2024-11,Politics and current affairs,3955,289,150,0,True,False,pilot_incomplete,37314
+substack,2024-11,"Society, history and ideas",17193,774,150,0,True,False,pilot_incomplete,37314
+substack,2024-11,"Business, finance and economics",2335,230,150,0,True,False,pilot_incomplete,37314
+substack,2024-11,"Technology, science, education and environment",2493,236,150,0,True,False,pilot_incomplete,37314
+substack,2024-11,Literature and creative writing,4325,303,150,0,True,False,pilot_incomplete,37314
+substack,2024-11,"Arts, culture, media and design",3269,264,150,0,True,False,pilot_incomplete,37314
+substack,2024-11,"Health, family and personal life",1453,198,150,0,True,False,pilot_incomplete,37314
+substack,2024-11,"Lifestyle, food, travel, home and leisure",1670,206,150,0,True,False,pilot_incomplete,37314
+substack,2024-12,Politics and current affairs,3736,278,150,0,True,False,pilot_incomplete,37314
+substack,2024-12,"Society, history and ideas",17695,777,150,0,True,False,pilot_incomplete,37314
+substack,2024-12,"Business, finance and economics",2417,231,150,0,True,False,pilot_incomplete,37314
+substack,2024-12,"Technology, science, education and environment",2691,241,150,0,True,False,pilot_incomplete,37314
+substack,2024-12,Literature and creative writing,4468,305,150,0,True,False,pilot_incomplete,37314
+substack,2024-12,"Arts, culture, media and design",3419,267,150,0,True,False,pilot_incomplete,37314
+substack,2024-12,"Health, family and personal life",1471,197,150,0,True,False,pilot_incomplete,37314
+substack,2024-12,"Lifestyle, food, travel, home and leisure",1666,204,150,0,True,False,pilot_incomplete,37314
+substack,2025-01,Politics and current affairs,4241,276,150,0,True,False,pilot_incomplete,37314
+substack,2025-01,"Society, history and ideas",20640,782,150,0,True,False,pilot_incomplete,37314
+substack,2025-01,"Business, finance and economics",2687,228,150,0,True,False,pilot_incomplete,37314
+substack,2025-01,"Technology, science, education and environment",3086,241,150,0,True,False,pilot_incomplete,37314
+substack,2025-01,Literature and creative writing,5058,301,150,0,True,False,pilot_incomplete,37314
+substack,2025-01,"Arts, culture, media and design",3924,267,150,0,True,False,pilot_incomplete,37314
+substack,2025-01,"Health, family and personal life",1761,200,150,0,True,False,pilot_incomplete,37314
+substack,2025-01,"Lifestyle, food, travel, home and leisure",1937,205,150,0,True,False,pilot_incomplete,37314
+substack,2025-02,Politics and current affairs,4462,277,150,0,True,False,pilot_incomplete,37314
+substack,2025-02,"Society, history and ideas",21621,785,150,0,True,False,pilot_incomplete,37314
+substack,2025-02,"Business, finance and economics",2656,224,150,0,True,False,pilot_incomplete,37314
+substack,2025-02,"Technology, science, education and environment",3230,241,150,0,True,False,pilot_incomplete,37314
+substack,2025-02,Literature and creative writing,5276,302,150,0,True,False,pilot_incomplete,37314
+substack,2025-02,"Arts, culture, media and design",4065,266,150,0,True,False,pilot_incomplete,37314
+substack,2025-02,"Health, family and personal life",1765,198,150,0,True,False,pilot_incomplete,37314
+substack,2025-02,"Lifestyle, food, travel, home and leisure",2087,207,150,0,True,False,pilot_incomplete,37314
+substack,2025-03,Politics and current affairs,4766,278,150,0,True,False,pilot_incomplete,37314
+substack,2025-03,"Society, history and ideas",22912,783,150,0,True,False,pilot_incomplete,37314
+substack,2025-03,"Business, finance and economics",2897,226,150,0,True,False,pilot_incomplete,37314
+substack,2025-03,"Technology, science, education and environment",3407,241,150,0,True,False,pilot_incomplete,37314
+substack,2025-03,Literature and creative writing,5575,301,150,0,True,False,pilot_incomplete,37314
+substack,2025-03,"Arts, culture, media and design",4270,264,150,0,True,False,pilot_incomplete,37314
+substack,2025-03,"Health, family and personal life",1920,199,150,0,True,False,pilot_incomplete,37314
+substack,2025-03,"Lifestyle, food, travel, home and leisure",2222,208,150,0,True,False,pilot_incomplete,37314
+substack,2025-04,Politics and current affairs,4826,276,150,0,True,False,pilot_incomplete,37314
+substack,2025-04,"Society, history and ideas",23692,785,150,0,True,False,pilot_incomplete,37314
+substack,2025-04,"Business, finance and economics",3046,228,150,0,True,False,pilot_incomplete,37314
+substack,2025-04,"Technology, science, education and environment",3502,240,150,0,True,False,pilot_incomplete,37314
+substack,2025-04,Literature and creative writing,5739,301,150,0,True,False,pilot_incomplete,37314
+substack,2025-04,"Arts, culture, media and design",4337,263,150,0,True,False,pilot_incomplete,37314
+substack,2025-04,"Health, family and personal life",2014,200,150,0,True,False,pilot_incomplete,37314
+substack,2025-04,"Lifestyle, food, travel, home and leisure",2265,207,150,0,True,False,pilot_incomplete,37314
+substack,2025-05,Politics and current affairs,4841,273,150,0,True,False,pilot_incomplete,37314
+substack,2025-05,"Society, history and ideas",24328,785,150,0,True,False,pilot_incomplete,37314
+substack,2025-05,"Business, finance and economics",3083,227,150,0,True,False,pilot_incomplete,37314
+substack,2025-05,"Technology, science, education and environment",3669,243,150,0,True,False,pilot_incomplete,37314
+substack,2025-05,Literature and creative writing,5898,301,150,0,True,False,pilot_incomplete,37314
+substack,2025-05,"Arts, culture, media and design",4458,263,150,0,True,False,pilot_incomplete,37314
+substack,2025-05,"Health, family and personal life",2057,200,150,0,True,False,pilot_incomplete,37314
+substack,2025-05,"Lifestyle, food, travel, home and leisure",2350,208,150,0,True,False,pilot_incomplete,37314
+substack,2025-06,Politics and current affairs,4967,274,150,0,True,False,pilot_incomplete,37314
+substack,2025-06,"Society, history and ideas",24879,788,150,0,True,False,pilot_incomplete,37314
+substack,2025-06,"Business, finance and economics",3122,227,150,0,True,False,pilot_incomplete,37314
+substack,2025-06,"Technology, science, education and environment",3773,244,150,0,True,False,pilot_incomplete,37314
+substack,2025-06,Literature and creative writing,5939,299,150,0,True,False,pilot_incomplete,37314
+substack,2025-06,"Arts, culture, media and design",4461,261,150,0,True,False,pilot_incomplete,37314
+substack,2025-06,"Health, family and personal life",2116,201,150,0,True,False,pilot_incomplete,37314
+substack,2025-06,"Lifestyle, food, travel, home and leisure",2332,206,150,0,True,False,pilot_incomplete,37314
+substack,2025-07,Politics and current affairs,5062,273,150,0,True,False,pilot_incomplete,37314
+substack,2025-07,"Society, history and ideas",25546,787,150,0,True,False,pilot_incomplete,37314
+substack,2025-07,"Business, finance and economics",3252,228,150,0,True,False,pilot_incomplete,37314
+substack,2025-07,"Technology, science, education and environment",3908,244,150,0,True,False,pilot_incomplete,37314
+substack,2025-07,Literature and creative writing,6151,301,150,0,True,False,pilot_incomplete,37314
+substack,2025-07,"Arts, culture, media and design",4519,260,150,0,True,False,pilot_incomplete,37314
+substack,2025-07,"Health, family and personal life",2163,200,150,0,True,False,pilot_incomplete,37314
+substack,2025-07,"Lifestyle, food, travel, home and leisure",2421,207,150,0,True,False,pilot_incomplete,37314
+substack,2025-08,Politics and current affairs,5106,273,150,0,True,False,pilot_incomplete,37314
+substack,2025-08,"Society, history and ideas",25792,788,150,0,True,False,pilot_incomplete,37314
+substack,2025-08,"Business, finance and economics",3270,228,150,0,True,False,pilot_incomplete,37314
+substack,2025-08,"Technology, science, education and environment",3865,243,150,0,True,False,pilot_incomplete,37314
+substack,2025-08,Literature and creative writing,6291,303,150,0,True,False,pilot_incomplete,37314
+substack,2025-08,"Arts, culture, media and design",4443,257,150,0,True,False,pilot_incomplete,37314
+substack,2025-08,"Health, family and personal life",2207,201,150,0,True,False,pilot_incomplete,37314
+substack,2025-08,"Lifestyle, food, travel, home and leisure",2440,207,150,0,True,False,pilot_incomplete,37314
+substack,2025-09,Politics and current affairs,5408,275,150,0,True,False,pilot_incomplete,37314
+substack,2025-09,"Society, history and ideas",26939,789,150,0,True,False,pilot_incomplete,37314
+substack,2025-09,"Business, finance and economics",3409,228,150,0,True,False,pilot_incomplete,37314
+substack,2025-09,"Technology, science, education and environment",4054,243,150,0,True,False,pilot_incomplete,37314
+substack,2025-09,Literature and creative writing,6441,300,150,0,True,False,pilot_incomplete,37314
+substack,2025-09,"Arts, culture, media and design",4687,258,150,0,True,False,pilot_incomplete,37314
+substack,2025-09,"Health, family and personal life",2290,201,150,0,True,False,pilot_incomplete,37314
+substack,2025-09,"Lifestyle, food, travel, home and leisure",2497,206,150,0,True,False,pilot_incomplete,37314
+substack,2025-10,Politics and current affairs,5589,275,150,0,True,False,pilot_incomplete,37314
+substack,2025-10,"Society, history and ideas",27771,787,150,0,True,False,pilot_incomplete,37314
+substack,2025-10,"Business, finance and economics",3574,229,150,0,True,False,pilot_incomplete,37314
+substack,2025-10,"Technology, science, education and environment",4247,245,150,0,True,False,pilot_incomplete,37314
+substack,2025-10,Literature and creative writing,6573,298,150,0,True,False,pilot_incomplete,37314
+substack,2025-10,"Arts, culture, media and design",4840,258,150,0,True,False,pilot_incomplete,37314
+substack,2025-10,"Health, family and personal life",2367,201,150,0,True,False,pilot_incomplete,37314
+substack,2025-10,"Lifestyle, food, travel, home and leisure",2621,207,150,0,True,False,pilot_incomplete,37314
+substack,2025-11,Politics and current affairs,5522,274,150,0,True,False,pilot_incomplete,37314
+substack,2025-11,"Society, history and ideas",27630,786,150,0,True,False,pilot_incomplete,37314
+substack,2025-11,"Business, finance and economics",3559,229,150,0,True,False,pilot_incomplete,37314
+substack,2025-11,"Technology, science, education and environment",4260,245,150,0,True,False,pilot_incomplete,37314
+substack,2025-11,Literature and creative writing,6533,298,150,0,True,False,pilot_incomplete,37314
+substack,2025-11,"Arts, culture, media and design",4861,259,150,0,True,False,pilot_incomplete,37314
+substack,2025-11,"Health, family and personal life",2373,201,150,0,True,False,pilot_incomplete,37314
+substack,2025-11,"Lifestyle, food, travel, home and leisure",2644,208,150,0,True,False,pilot_incomplete,37314
+substack,2025-12,Politics and current affairs,5645,272,150,0,True,False,pilot_incomplete,37314
+substack,2025-12,"Society, history and ideas",29054,791,150,0,True,False,pilot_incomplete,37314
+substack,2025-12,"Business, finance and economics",3734,230,150,0,True,False,pilot_incomplete,37314
+substack,2025-12,"Technology, science, education and environment",4354,243,150,0,True,False,pilot_incomplete,37314
+substack,2025-12,Literature and creative writing,6953,301,150,0,True,False,pilot_incomplete,37314
+substack,2025-12,"Arts, culture, media and design",4995,257,150,0,True,False,pilot_incomplete,37314
+substack,2025-12,"Health, family and personal life",2415,200,150,0,True,False,pilot_incomplete,37314
+substack,2025-12,"Lifestyle, food, travel, home and leisure",2691,206,150,0,True,False,pilot_incomplete,37314
+substack,2026-01,Politics and current affairs,6172,274,150,0,True,False,pilot_incomplete,37314
+substack,2026-01,"Society, history and ideas",31076,786,150,0,True,False,pilot_incomplete,37314
+substack,2026-01,"Business, finance and economics",4089,231,150,0,True,False,pilot_incomplete,37314
+substack,2026-01,"Technology, science, education and environment",4663,243,150,0,True,False,pilot_incomplete,37314
+substack,2026-01,Literature and creative writing,7488,301,150,0,True,False,pilot_incomplete,37314
+substack,2026-01,"Arts, culture, media and design",5253,255,150,0,True,False,pilot_incomplete,37314
+substack,2026-01,"Health, family and personal life",2726,203,150,0,True,False,pilot_incomplete,37314
+substack,2026-01,"Lifestyle, food, travel, home and leisure",2948,207,150,0,True,False,pilot_incomplete,37314
+substack,2026-02,Politics and current affairs,6121,273,150,0,True,False,pilot_incomplete,37314
+substack,2026-02,"Society, history and ideas",31171,787,150,0,True,False,pilot_incomplete,37314
+substack,2026-02,"Business, finance and economics",4101,231,150,0,True,False,pilot_incomplete,37314
+substack,2026-02,"Technology, science, education and environment",4777,245,150,0,True,False,pilot_incomplete,37314
+substack,2026-02,Literature and creative writing,7406,299,150,0,True,False,pilot_incomplete,37314
+substack,2026-02,"Arts, culture, media and design",5333,257,150,0,True,False,pilot_incomplete,37314
+substack,2026-02,"Health, family and personal life",2680,202,150,0,True,False,pilot_incomplete,37314
+substack,2026-02,"Lifestyle, food, travel, home and leisure",2889,206,150,0,True,False,pilot_incomplete,37314
+substack,2026-03,Politics and current affairs,6411,273,150,0,True,False,pilot_incomplete,37314
+substack,2026-03,"Society, history and ideas",32515,787,150,0,True,False,pilot_incomplete,37314
+substack,2026-03,"Business, finance and economics",4338,233,150,0,True,False,pilot_incomplete,37314
+substack,2026-03,"Technology, science, education and environment",5011,246,150,0,True,False,pilot_incomplete,37314
+substack,2026-03,Literature and creative writing,7631,297,150,0,True,False,pilot_incomplete,37314
+substack,2026-03,"Arts, culture, media and design",5528,256,150,0,True,False,pilot_incomplete,37314
+substack,2026-03,"Health, family and personal life",2777,202,150,0,True,False,pilot_incomplete,37314
+substack,2026-03,"Lifestyle, food, travel, home and leisure",3003,206,150,0,True,False,pilot_incomplete,37314
+substack,2026-04,Politics and current affairs,6201,270,150,0,True,False,pilot_incomplete,37314
+substack,2026-04,"Society, history and ideas",32413,790,150,0,True,False,pilot_incomplete,37314
+substack,2026-04,"Business, finance and economics",4315,233,150,0,True,False,pilot_incomplete,37314
+substack,2026-04,"Technology, science, education and environment",5005,246,150,0,True,False,pilot_incomplete,37314
+substack,2026-04,Literature and creative writing,7602,298,150,0,True,False,pilot_incomplete,37314
+substack,2026-04,"Arts, culture, media and design",5459,255,150,0,True,False,pilot_incomplete,37314
+substack,2026-04,"Health, family and personal life",2806,203,150,0,True,False,pilot_incomplete,37314
+substack,2026-04,"Lifestyle, food, travel, home and leisure",2942,205,150,0,True,False,pilot_incomplete,37314
+substack,2026-05,Politics and current affairs,6202,268,150,0,True,False,pilot_incomplete,37314
+substack,2026-05,"Society, history and ideas",32811,789,150,0,True,False,pilot_incomplete,37314
+substack,2026-05,"Business, finance and economics",4330,232,150,0,True,False,pilot_incomplete,37314
+substack,2026-05,"Technology, science, education and environment",5081,247,150,0,True,False,pilot_incomplete,37314
+substack,2026-05,Literature and creative writing,7853,301,150,0,True,False,pilot_incomplete,37314
+substack,2026-05,"Arts, culture, media and design",5438,254,150,0,True,False,pilot_incomplete,37314
+substack,2026-05,"Health, family and personal life",2869,203,150,0,True,False,pilot_incomplete,37314
+substack,2026-05,"Lifestyle, food, travel, home and leisure",3023,206,150,0,True,False,pilot_incomplete,37314
+substack,2026-06,Politics and current affairs,6198,268,150,0,True,False,pilot_incomplete,37314
+substack,2026-06,"Society, history and ideas",32926,790,150,0,True,False,pilot_incomplete,37314
+substack,2026-06,"Business, finance and economics",4369,232,150,0,True,False,pilot_incomplete,37314
+substack,2026-06,"Technology, science, education and environment",5023,245,150,0,True,False,pilot_incomplete,37314
+substack,2026-06,Literature and creative writing,7871,301,150,0,True,False,pilot_incomplete,37314
+substack,2026-06,"Arts, culture, media and design",5515,255,150,0,True,False,pilot_incomplete,37314
+substack,2026-06,"Health, family and personal life",2863,203,150,0,True,False,pilot_incomplete,37314
+substack,2026-06,"Lifestyle, food, travel, home and leisure",3051,206,150,0,True,False,pilot_incomplete,37314
+substack,2026-07,Politics and current affairs,6237,267,150,0,True,False,pilot_incomplete,37314
+substack,2026-07,"Society, history and ideas",33609,794,150,0,True,False,pilot_incomplete,37314
+substack,2026-07,"Business, finance and economics",4479,233,150,0,True,False,pilot_incomplete,37314
+substack,2026-07,"Technology, science, education and environment",5040,244,150,0,True,False,pilot_incomplete,37314
+substack,2026-07,Literature and creative writing,7914,299,150,0,True,False,pilot_incomplete,37314
+substack,2026-07,"Arts, culture, media and design",5542,254,150,0,True,False,pilot_incomplete,37314
+substack,2026-07,"Health, family and personal life",2899,203,150,0,True,False,pilot_incomplete,37314
+substack,2026-07,"Lifestyle, food, travel, home and leisure",3080,206,150,0,True,False,pilot_incomplete,37314
+substack,2026-08,Politics and current affairs,6027,265,150,0,True,False,pilot_incomplete,37314
+substack,2026-08,"Society, history and ideas",33279,796,150,0,True,False,pilot_incomplete,37314
+substack,2026-08,"Business, finance and economics",4385,232,150,0,True,False,pilot_incomplete,37314
+substack,2026-08,"Technology, science, education and environment",4923,243,150,0,True,False,pilot_incomplete,37314
+substack,2026-08,Literature and creative writing,7828,300,150,0,True,False,pilot_incomplete,37314
+substack,2026-08,"Arts, culture, media and design",5414,253,150,0,True,False,pilot_incomplete,37314
+substack,2026-08,"Health, family and personal life",2870,203,150,0,True,False,pilot_incomplete,37314
+substack,2026-08,"Lifestyle, food, travel, home and leisure",3114,208,150,0,True,False,pilot_incomplete,37314
+substack,2026-09,Politics and current affairs,5216,270,150,0,True,False,pilot_incomplete,37314
+substack,2026-09,"Society, history and ideas",27243,790,150,0,True,False,pilot_incomplete,37314
+substack,2026-09,"Business, finance and economics",3723,234,150,0,True,False,pilot_incomplete,37314
+substack,2026-09,"Technology, science, education and environment",4066,243,150,0,True,False,pilot_incomplete,37314
+substack,2026-09,Literature and creative writing,6528,301,150,0,True,False,pilot_incomplete,37314
+substack,2026-09,"Arts, culture, media and design",4518,253,150,0,True,False,pilot_incomplete,37314
+substack,2026-09,"Health, family and personal life",2402,203,150,0,True,False,pilot_incomplete,37314
+substack,2026-09,"Lifestyle, food, travel, home and leisure",2525,206,150,0,True,False,pilot_incomplete,37314
