@@ -1,0 +1,649 @@
+platform,year_month,topic_family,screened_candidate_creators,sampled_creators,topic_floor_target,topic_floor_shortfall,monthly_target,monthly_creator_shortfall,is_partial_month
+medium,2020-01,Politics and current affairs,104,104,150,46,2500,488,False
+medium,2020-01,"Society, history and ideas",1112,1112,150,0,2500,488,False
+medium,2020-01,"Business, finance and economics",225,225,150,0,2500,488,False
+medium,2020-01,"Technology, science, education and environment",265,265,150,0,2500,488,False
+medium,2020-01,Literature and creative writing,84,84,150,66,2500,488,False
+medium,2020-01,"Arts, culture, media and design",101,101,150,49,2500,488,False
+medium,2020-01,"Health, family and personal life",79,79,150,71,2500,488,False
+medium,2020-01,"Lifestyle, food, travel, home and leisure",42,42,150,108,2500,488,False
+medium,2020-02,Politics and current affairs,93,93,150,57,2500,471,False
+medium,2020-02,"Society, history and ideas",1166,1166,150,0,2500,471,False
+medium,2020-02,"Business, finance and economics",226,226,150,0,2500,471,False
+medium,2020-02,"Technology, science, education and environment",259,259,150,0,2500,471,False
+medium,2020-02,Literature and creative writing,59,59,150,91,2500,471,False
+medium,2020-02,"Arts, culture, media and design",112,112,150,38,2500,471,False
+medium,2020-02,"Health, family and personal life",74,74,150,76,2500,471,False
+medium,2020-02,"Lifestyle, food, travel, home and leisure",40,40,150,110,2500,471,False
+medium,2020-03,Politics and current affairs,129,129,150,21,2500,0,False
+medium,2020-03,"Society, history and ideas",1570,1383,150,0,2500,0,False
+medium,2020-03,"Business, finance and economics",291,272,150,0,2500,0,False
+medium,2020-03,"Technology, science, education and environment",319,297,150,0,2500,0,False
+medium,2020-03,Literature and creative writing,97,97,150,53,2500,0,False
+medium,2020-03,"Arts, culture, media and design",121,121,150,29,2500,0,False
+medium,2020-03,"Health, family and personal life",131,131,150,19,2500,0,False
+medium,2020-03,"Lifestyle, food, travel, home and leisure",70,70,150,80,2500,0,False
+medium,2020-04,Politics and current affairs,181,170,150,0,2500,0,False
+medium,2020-04,"Society, history and ideas",1899,1269,150,0,2500,0,False
+medium,2020-04,"Business, finance and economics",346,275,150,0,2500,0,False
+medium,2020-04,"Technology, science, education and environment",423,325,150,0,2500,0,False
+medium,2020-04,Literature and creative writing,78,78,150,72,2500,0,False
+medium,2020-04,"Arts, culture, media and design",138,138,150,12,2500,0,False
+medium,2020-04,"Health, family and personal life",182,170,150,0,2500,0,False
+medium,2020-04,"Lifestyle, food, travel, home and leisure",75,75,150,75,2500,0,False
+medium,2020-05,Politics and current affairs,192,174,150,0,2500,0,False
+medium,2020-05,"Society, history and ideas",2062,1232,150,0,2500,0,False
+medium,2020-05,"Business, finance and economics",345,260,150,0,2500,0,False
+medium,2020-05,"Technology, science, education and environment",429,308,150,0,2500,0,False
+medium,2020-05,Literature and creative writing,119,119,150,31,2500,0,False
+medium,2020-05,"Arts, culture, media and design",162,157,150,0,2500,0,False
+medium,2020-05,"Health, family and personal life",187,171,150,0,2500,0,False
+medium,2020-05,"Lifestyle, food, travel, home and leisure",79,79,150,71,2500,0,False
+medium,2020-06,Politics and current affairs,195,179,150,0,2500,0,False
+medium,2020-06,"Society, history and ideas",1901,1278,150,0,2500,0,False
+medium,2020-06,"Business, finance and economics",369,291,150,0,2500,0,False
+medium,2020-06,"Technology, science, education and environment",398,310,150,0,2500,0,False
+medium,2020-06,Literature and creative writing,85,85,150,65,2500,0,False
+medium,2020-06,"Arts, culture, media and design",128,128,150,22,2500,0,False
+medium,2020-06,"Health, family and personal life",184,172,150,0,2500,0,False
+medium,2020-06,"Lifestyle, food, travel, home and leisure",57,57,150,93,2500,0,False
+medium,2020-07,Politics and current affairs,153,152,150,0,2500,0,False
+medium,2020-07,"Society, history and ideas",1763,1333,150,0,2500,0,False
+medium,2020-07,"Business, finance and economics",340,289,150,0,2500,0,False
+medium,2020-07,"Technology, science, education and environment",373,314,150,0,2500,0,False
+medium,2020-07,Literature and creative writing,92,92,150,58,2500,0,False
+medium,2020-07,"Arts, culture, media and design",143,143,150,7,2500,0,False
+medium,2020-07,"Health, family and personal life",126,126,150,24,2500,0,False
+medium,2020-07,"Lifestyle, food, travel, home and leisure",51,51,150,99,2500,0,False
+medium,2020-08,Politics and current affairs,147,147,150,3,2500,0,False
+medium,2020-08,"Society, history and ideas",1648,1385,150,0,2500,0,False
+medium,2020-08,"Business, finance and economics",314,285,150,0,2500,0,False
+medium,2020-08,"Technology, science, education and environment",329,298,150,0,2500,0,False
+medium,2020-08,Literature and creative writing,77,77,150,73,2500,0,False
+medium,2020-08,"Arts, culture, media and design",124,124,150,26,2500,0,False
+medium,2020-08,"Health, family and personal life",131,131,150,19,2500,0,False
+medium,2020-08,"Lifestyle, food, travel, home and leisure",53,53,150,97,2500,0,False
+medium,2020-09,Politics and current affairs,161,159,150,0,2500,0,False
+medium,2020-09,"Society, history and ideas",1597,1372,150,0,2500,0,False
+medium,2020-09,"Business, finance and economics",301,278,150,0,2500,0,False
+medium,2020-09,"Technology, science, education and environment",346,315,150,0,2500,0,False
+medium,2020-09,Literature and creative writing,76,76,150,74,2500,0,False
+medium,2020-09,"Arts, culture, media and design",124,124,150,26,2500,0,False
+medium,2020-09,"Health, family and personal life",125,125,150,25,2500,0,False
+medium,2020-09,"Lifestyle, food, travel, home and leisure",51,51,150,99,2500,0,False
+medium,2020-10,Politics and current affairs,161,159,150,0,2500,0,False
+medium,2020-10,"Society, history and ideas",1716,1369,150,0,2500,0,False
+medium,2020-10,"Business, finance and economics",315,278,150,0,2500,0,False
+medium,2020-10,"Technology, science, education and environment",339,297,150,0,2500,0,False
+medium,2020-10,Literature and creative writing,89,89,150,61,2500,0,False
+medium,2020-10,"Arts, culture, media and design",133,133,150,17,2500,0,False
+medium,2020-10,"Health, family and personal life",126,126,150,24,2500,0,False
+medium,2020-10,"Lifestyle, food, travel, home and leisure",49,49,150,101,2500,0,False
+medium,2020-11,Politics and current affairs,308,268,150,0,2500,0,False
+medium,2020-11,"Society, history and ideas",1670,1288,150,0,2500,0,False
+medium,2020-11,"Business, finance and economics",279,247,150,0,2500,0,False
+medium,2020-11,"Technology, science, education and environment",332,286,150,0,2500,0,False
+medium,2020-11,Literature and creative writing,80,80,150,70,2500,0,False
+medium,2020-11,"Arts, culture, media and design",135,135,150,15,2500,0,False
+medium,2020-11,"Health, family and personal life",142,142,150,8,2500,0,False
+medium,2020-11,"Lifestyle, food, travel, home and leisure",54,54,150,96,2500,0,False
+medium,2020-12,Politics and current affairs,194,177,150,0,2500,0,False
+medium,2020-12,"Society, history and ideas",1982,1264,150,0,2500,0,False
+medium,2020-12,"Business, finance and economics",309,246,150,0,2500,0,False
+medium,2020-12,"Technology, science, education and environment",366,281,150,0,2500,0,False
+medium,2020-12,Literature and creative writing,139,139,150,11,2500,0,False
+medium,2020-12,"Arts, culture, media and design",161,157,150,0,2500,0,False
+medium,2020-12,"Health, family and personal life",171,163,150,0,2500,0,False
+medium,2020-12,"Lifestyle, food, travel, home and leisure",73,73,150,77,2500,0,False
+medium,2021-01,Politics and current affairs,185,171,150,0,2500,0,False
+medium,2021-01,"Society, history and ideas",2020,1261,150,0,2500,0,False
+medium,2021-01,"Business, finance and economics",337,261,150,0,2500,0,False
+medium,2021-01,"Technology, science, education and environment",378,285,150,0,2500,0,False
+medium,2021-01,Literature and creative writing,148,148,150,2,2500,0,False
+medium,2021-01,"Arts, culture, media and design",172,163,150,0,2500,0,False
+medium,2021-01,"Health, family and personal life",157,154,150,0,2500,0,False
+medium,2021-01,"Lifestyle, food, travel, home and leisure",57,57,150,93,2500,0,False
+medium,2021-02,Politics and current affairs,122,122,150,28,2500,0,False
+medium,2021-02,"Society, history and ideas",1672,1360,150,0,2500,0,False
+medium,2021-02,"Business, finance and economics",316,282,150,0,2500,0,False
+medium,2021-02,"Technology, science, education and environment",325,289,150,0,2500,0,False
+medium,2021-02,Literature and creative writing,100,100,150,50,2500,0,False
+medium,2021-02,"Arts, culture, media and design",149,149,150,1,2500,0,False
+medium,2021-02,"Health, family and personal life",151,151,150,0,2500,0,False
+medium,2021-02,"Lifestyle, food, travel, home and leisure",47,47,150,103,2500,0,False
+medium,2021-03,Politics and current affairs,136,136,150,14,2500,0,False
+medium,2021-03,"Society, history and ideas",1852,1349,150,0,2500,0,False
+medium,2021-03,"Business, finance and economics",335,280,150,0,2500,0,False
+medium,2021-03,"Technology, science, education and environment",364,301,150,0,2500,0,False
+medium,2021-03,Literature and creative writing,107,107,150,43,2500,0,False
+medium,2021-03,"Arts, culture, media and design",146,146,150,4,2500,0,False
+medium,2021-03,"Health, family and personal life",131,131,150,19,2500,0,False
+medium,2021-03,"Lifestyle, food, travel, home and leisure",50,50,150,100,2500,0,False
+medium,2021-04,Politics and current affairs,126,126,150,24,2500,0,False
+medium,2021-04,"Society, history and ideas",1805,1409,150,0,2500,0,False
+medium,2021-04,"Business, finance and economics",302,266,150,0,2500,0,False
+medium,2021-04,"Technology, science, education and environment",327,285,150,0,2500,0,False
+medium,2021-04,Literature and creative writing,101,101,150,49,2500,0,False
+medium,2021-04,"Arts, culture, media and design",131,131,150,19,2500,0,False
+medium,2021-04,"Health, family and personal life",125,125,150,25,2500,0,False
+medium,2021-04,"Lifestyle, food, travel, home and leisure",57,57,150,93,2500,0,False
+medium,2021-05,Politics and current affairs,110,110,150,40,2500,0,False
+medium,2021-05,"Society, history and ideas",1796,1417,150,0,2500,0,False
+medium,2021-05,"Business, finance and economics",324,284,150,0,2500,0,False
+medium,2021-05,"Technology, science, education and environment",331,289,150,0,2500,0,False
+medium,2021-05,Literature and creative writing,83,83,150,67,2500,0,False
+medium,2021-05,"Arts, culture, media and design",122,122,150,28,2500,0,False
+medium,2021-05,"Health, family and personal life",146,146,150,4,2500,0,False
+medium,2021-05,"Lifestyle, food, travel, home and leisure",49,49,150,101,2500,0,False
+medium,2021-06,Politics and current affairs,100,100,150,50,2500,0,False
+medium,2021-06,"Society, history and ideas",1659,1438,150,0,2500,0,False
+medium,2021-06,"Business, finance and economics",289,269,150,0,2500,0,False
+medium,2021-06,"Technology, science, education and environment",327,301,150,0,2500,0,False
+medium,2021-06,Literature and creative writing,100,100,150,50,2500,0,False
+medium,2021-06,"Arts, culture, media and design",118,118,150,32,2500,0,False
+medium,2021-06,"Health, family and personal life",122,122,150,28,2500,0,False
+medium,2021-06,"Lifestyle, food, travel, home and leisure",52,52,150,98,2500,0,False
+medium,2021-07,Politics and current affairs,108,108,150,42,2500,0,False
+medium,2021-07,"Society, history and ideas",1504,1432,150,0,2500,0,False
+medium,2021-07,"Business, finance and economics",302,294,150,0,2500,0,False
+medium,2021-07,"Technology, science, education and environment",300,292,150,0,2500,0,False
+medium,2021-07,Literature and creative writing,88,88,150,62,2500,0,False
+medium,2021-07,"Arts, culture, media and design",117,117,150,33,2500,0,False
+medium,2021-07,"Health, family and personal life",122,122,150,28,2500,0,False
+medium,2021-07,"Lifestyle, food, travel, home and leisure",47,47,150,103,2500,0,False
+medium,2021-08,Politics and current affairs,104,104,150,46,2500,0,False
+medium,2021-08,"Society, history and ideas",1680,1441,150,0,2500,0,False
+medium,2021-08,"Business, finance and economics",302,278,150,0,2500,0,False
+medium,2021-08,"Technology, science, education and environment",301,278,150,0,2500,0,False
+medium,2021-08,Literature and creative writing,96,96,150,54,2500,0,False
+medium,2021-08,"Arts, culture, media and design",113,113,150,37,2500,0,False
+medium,2021-08,"Health, family and personal life",138,138,150,12,2500,0,False
+medium,2021-08,"Lifestyle, food, travel, home and leisure",52,52,150,98,2500,0,False
+medium,2021-09,Politics and current affairs,105,105,150,45,2500,0,False
+medium,2021-09,"Society, history and ideas",1664,1443,150,0,2500,0,False
+medium,2021-09,"Business, finance and economics",350,321,150,0,2500,0,False
+medium,2021-09,"Technology, science, education and environment",277,258,150,0,2500,0,False
+medium,2021-09,Literature and creative writing,90,90,150,60,2500,0,False
+medium,2021-09,"Arts, culture, media and design",128,128,150,22,2500,0,False
+medium,2021-09,"Health, family and personal life",109,109,150,41,2500,0,False
+medium,2021-09,"Lifestyle, food, travel, home and leisure",46,46,150,104,2500,0,False
+medium,2021-10,Politics and current affairs,97,97,150,53,2500,0,False
+medium,2021-10,"Society, history and ideas",1660,1432,150,0,2500,0,False
+medium,2021-10,"Business, finance and economics",325,299,150,0,2500,0,False
+medium,2021-10,"Technology, science, education and environment",290,269,150,0,2500,0,False
+medium,2021-10,Literature and creative writing,88,88,150,62,2500,0,False
+medium,2021-10,"Arts, culture, media and design",135,135,150,15,2500,0,False
+medium,2021-10,"Health, family and personal life",139,139,150,11,2500,0,False
+medium,2021-10,"Lifestyle, food, travel, home and leisure",41,41,150,109,2500,0,False
+medium,2021-11,Politics and current affairs,96,96,150,54,2500,0,False
+medium,2021-11,"Society, history and ideas",1590,1457,150,0,2500,0,False
+medium,2021-11,"Business, finance and economics",319,304,150,0,2500,0,False
+medium,2021-11,"Technology, science, education and environment",279,267,150,0,2500,0,False
+medium,2021-11,Literature and creative writing,83,83,150,67,2500,0,False
+medium,2021-11,"Arts, culture, media and design",109,109,150,41,2500,0,False
+medium,2021-11,"Health, family and personal life",132,132,150,18,2500,0,False
+medium,2021-11,"Lifestyle, food, travel, home and leisure",52,52,150,98,2500,0,False
+medium,2021-12,Politics and current affairs,81,81,150,69,2500,0,False
+medium,2021-12,"Society, history and ideas",1685,1445,150,0,2500,0,False
+medium,2021-12,"Business, finance and economics",306,282,150,0,2500,0,False
+medium,2021-12,"Technology, science, education and environment",330,302,150,0,2500,0,False
+medium,2021-12,Literature and creative writing,91,91,150,59,2500,0,False
+medium,2021-12,"Arts, culture, media and design",132,132,150,18,2500,0,False
+medium,2021-12,"Health, family and personal life",129,129,150,21,2500,0,False
+medium,2021-12,"Lifestyle, food, travel, home and leisure",38,38,150,112,2500,0,False
+medium,2022-01,Politics and current affairs,113,113,150,37,2500,0,False
+medium,2022-01,"Society, history and ideas",1721,1282,150,0,2500,0,False
+medium,2022-01,"Business, finance and economics",377,314,150,0,2500,0,False
+medium,2022-01,"Technology, science, education and environment",371,309,150,0,2500,0,False
+medium,2022-01,Literature and creative writing,128,128,150,22,2500,0,False
+medium,2022-01,"Arts, culture, media and design",145,145,150,5,2500,0,False
+medium,2022-01,"Health, family and personal life",151,151,150,0,2500,0,False
+medium,2022-01,"Lifestyle, food, travel, home and leisure",58,58,150,92,2500,0,False
+medium,2022-02,Politics and current affairs,132,132,150,18,2500,0,False
+medium,2022-02,"Society, history and ideas",1715,1375,150,0,2500,0,False
+medium,2022-02,"Business, finance and economics",345,303,150,0,2500,0,False
+medium,2022-02,"Technology, science, education and environment",297,265,150,0,2500,0,False
+medium,2022-02,Literature and creative writing,94,94,150,56,2500,0,False
+medium,2022-02,"Arts, culture, media and design",133,133,150,17,2500,0,False
+medium,2022-02,"Health, family and personal life",133,133,150,17,2500,0,False
+medium,2022-02,"Lifestyle, food, travel, home and leisure",65,65,150,85,2500,0,False
+medium,2022-03,Politics and current affairs,148,148,150,2,2500,0,False
+medium,2022-03,"Society, history and ideas",1850,1379,150,0,2500,0,False
+medium,2022-03,"Business, finance and economics",340,287,150,0,2500,0,False
+medium,2022-03,"Technology, science, education and environment",311,267,150,0,2500,0,False
+medium,2022-03,Literature and creative writing,89,89,150,61,2500,0,False
+medium,2022-03,"Arts, culture, media and design",138,138,150,12,2500,0,False
+medium,2022-03,"Health, family and personal life",131,131,150,19,2500,0,False
+medium,2022-03,"Lifestyle, food, travel, home and leisure",61,61,150,89,2500,0,False
+medium,2022-04,Politics and current affairs,103,103,150,47,2500,0,False
+medium,2022-04,"Society, history and ideas",1768,1493,150,0,2500,0,False
+medium,2022-04,"Business, finance and economics",321,292,150,0,2500,0,False
+medium,2022-04,"Technology, science, education and environment",292,268,150,0,2500,0,False
+medium,2022-04,Literature and creative writing,72,72,150,78,2500,0,False
+medium,2022-04,"Arts, culture, media and design",122,122,150,28,2500,0,False
+medium,2022-04,"Health, family and personal life",108,108,150,42,2500,0,False
+medium,2022-04,"Lifestyle, food, travel, home and leisure",42,42,150,108,2500,0,False
+medium,2022-05,Politics and current affairs,110,110,150,40,2500,0,False
+medium,2022-05,"Society, history and ideas",1721,1445,150,0,2500,0,False
+medium,2022-05,"Business, finance and economics",313,284,150,0,2500,0,False
+medium,2022-05,"Technology, science, education and environment",322,292,150,0,2500,0,False
+medium,2022-05,Literature and creative writing,83,83,150,67,2500,0,False
+medium,2022-05,"Arts, culture, media and design",115,115,150,35,2500,0,False
+medium,2022-05,"Health, family and personal life",108,108,150,42,2500,0,False
+medium,2022-05,"Lifestyle, food, travel, home and leisure",63,63,150,87,2500,0,False
+medium,2022-06,Politics and current affairs,92,92,150,58,2500,0,False
+medium,2022-06,"Society, history and ideas",1629,1475,150,0,2500,0,False
+medium,2022-06,"Business, finance and economics",327,308,150,0,2500,0,False
+medium,2022-06,"Technology, science, education and environment",297,282,150,0,2500,0,False
+medium,2022-06,Literature and creative writing,90,90,150,60,2500,0,False
+medium,2022-06,"Arts, culture, media and design",110,110,150,40,2500,0,False
+medium,2022-06,"Health, family and personal life",99,99,150,51,2500,0,False
+medium,2022-06,"Lifestyle, food, travel, home and leisure",44,44,150,106,2500,0,False
+medium,2022-07,Politics and current affairs,78,78,150,72,2500,21,False
+medium,2022-07,"Society, history and ideas",1489,1489,150,0,2500,21,False
+medium,2022-07,"Business, finance and economics",307,307,150,0,2500,21,False
+medium,2022-07,"Technology, science, education and environment",305,305,150,0,2500,21,False
+medium,2022-07,Literature and creative writing,74,74,150,76,2500,21,False
+medium,2022-07,"Arts, culture, media and design",100,100,150,50,2500,21,False
+medium,2022-07,"Health, family and personal life",89,89,150,61,2500,21,False
+medium,2022-07,"Lifestyle, food, travel, home and leisure",37,37,150,113,2500,21,False
+medium,2022-08,Politics and current affairs,82,82,150,68,2500,0,False
+medium,2022-08,"Society, history and ideas",1604,1449,150,0,2500,0,False
+medium,2022-08,"Business, finance and economics",340,320,150,0,2500,0,False
+medium,2022-08,"Technology, science, education and environment",321,303,150,0,2500,0,False
+medium,2022-08,Literature and creative writing,73,73,150,77,2500,0,False
+medium,2022-08,"Arts, culture, media and design",116,116,150,34,2500,0,False
+medium,2022-08,"Health, family and personal life",113,113,150,37,2500,0,False
+medium,2022-08,"Lifestyle, food, travel, home and leisure",44,44,150,106,2500,0,False
+medium,2022-09,Politics and current affairs,102,102,150,48,2500,0,False
+medium,2022-09,"Society, history and ideas",1707,1433,150,0,2500,0,False
+medium,2022-09,"Business, finance and economics",351,316,150,0,2500,0,False
+medium,2022-09,"Technology, science, education and environment",313,284,150,0,2500,0,False
+medium,2022-09,Literature and creative writing,88,88,150,62,2500,0,False
+medium,2022-09,"Arts, culture, media and design",121,121,150,29,2500,0,False
+medium,2022-09,"Health, family and personal life",106,106,150,44,2500,0,False
+medium,2022-09,"Lifestyle, food, travel, home and leisure",50,50,150,100,2500,0,False
+medium,2022-10,Politics and current affairs,99,99,150,51,2500,0,False
+medium,2022-10,"Society, history and ideas",1805,1441,150,0,2500,0,False
+medium,2022-10,"Business, finance and economics",328,289,150,0,2500,0,False
+medium,2022-10,"Technology, science, education and environment",344,301,150,0,2500,0,False
+medium,2022-10,Literature and creative writing,84,84,150,66,2500,0,False
+medium,2022-10,"Arts, culture, media and design",136,136,150,14,2500,0,False
+medium,2022-10,"Health, family and personal life",112,112,150,38,2500,0,False
+medium,2022-10,"Lifestyle, food, travel, home and leisure",38,38,150,112,2500,0,False
+medium,2022-11,Politics and current affairs,115,115,150,35,2500,0,False
+medium,2022-11,"Society, history and ideas",1765,1435,150,0,2500,0,False
+medium,2022-11,"Business, finance and economics",320,285,150,0,2500,0,False
+medium,2022-11,"Technology, science, education and environment",349,308,150,0,2500,0,False
+medium,2022-11,Literature and creative writing,77,77,150,73,2500,0,False
+medium,2022-11,"Arts, culture, media and design",121,121,150,29,2500,0,False
+medium,2022-11,"Health, family and personal life",115,115,150,35,2500,0,False
+medium,2022-11,"Lifestyle, food, travel, home and leisure",44,44,150,106,2500,0,False
+medium,2022-12,Politics and current affairs,112,112,150,38,2500,0,False
+medium,2022-12,"Society, history and ideas",1938,1347,150,0,2500,0,False
+medium,2022-12,"Business, finance and economics",384,307,150,0,2500,0,False
+medium,2022-12,"Technology, science, education and environment",383,306,150,0,2500,0,False
+medium,2022-12,Literature and creative writing,98,98,150,52,2500,0,False
+medium,2022-12,"Arts, culture, media and design",148,148,150,2,2500,0,False
+medium,2022-12,"Health, family and personal life",130,130,150,20,2500,0,False
+medium,2022-12,"Lifestyle, food, travel, home and leisure",52,52,150,98,2500,0,False
+medium,2023-01,Politics and current affairs,114,114,150,36,2500,0,False
+medium,2023-01,"Society, history and ideas",2374,1208,150,0,2500,0,False
+medium,2023-01,"Business, finance and economics",482,308,150,0,2500,0,False
+medium,2023-01,"Technology, science, education and environment",545,338,150,0,2500,0,False
+medium,2023-01,Literature and creative writing,136,136,150,14,2500,0,False
+medium,2023-01,"Arts, culture, media and design",150,150,150,0,2500,0,False
+medium,2023-01,"Health, family and personal life",189,168,150,0,2500,0,False
+medium,2023-01,"Lifestyle, food, travel, home and leisure",78,78,150,72,2500,0,False
+medium,2023-02,Politics and current affairs,110,110,150,40,2500,0,False
+medium,2023-02,"Society, history and ideas",2266,1262,150,0,2500,0,False
+medium,2023-02,"Business, finance and economics",456,311,150,0,2500,0,False
+medium,2023-02,"Technology, science, education and environment",480,323,150,0,2500,0,False
+medium,2023-02,Literature and creative writing,136,136,150,14,2500,0,False
+medium,2023-02,"Arts, culture, media and design",149,149,150,1,2500,0,False
+medium,2023-02,"Health, family and personal life",175,163,150,0,2500,0,False
+medium,2023-02,"Lifestyle, food, travel, home and leisure",46,46,150,104,2500,0,False
+medium,2023-03,Politics and current affairs,160,155,150,0,2500,0,False
+medium,2023-03,"Society, history and ideas",2456,1179,150,0,2500,0,False
+medium,2023-03,"Business, finance and economics",493,303,150,0,2500,0,False
+medium,2023-03,"Technology, science, education and environment",545,326,150,0,2500,0,False
+medium,2023-03,Literature and creative writing,131,131,150,19,2500,0,False
+medium,2023-03,"Arts, culture, media and design",189,167,150,0,2500,0,False
+medium,2023-03,"Health, family and personal life",181,164,150,0,2500,0,False
+medium,2023-03,"Lifestyle, food, travel, home and leisure",75,75,150,75,2500,0,False
+medium,2023-04,Politics and current affairs,124,124,150,26,2500,0,False
+medium,2023-04,"Society, history and ideas",2455,1210,150,0,2500,0,False
+medium,2023-04,"Business, finance and economics",442,284,150,0,2500,0,False
+medium,2023-04,"Technology, science, education and environment",581,348,150,0,2500,0,False
+medium,2023-04,Literature and creative writing,155,152,150,0,2500,0,False
+medium,2023-04,"Arts, culture, media and design",171,160,150,0,2500,0,False
+medium,2023-04,"Health, family and personal life",162,156,150,0,2500,0,False
+medium,2023-04,"Lifestyle, food, travel, home and leisure",66,66,150,84,2500,0,False
+medium,2023-05,Politics and current affairs,117,117,150,33,2500,0,False
+medium,2023-05,"Society, history and ideas",2569,1190,150,0,2500,0,False
+medium,2023-05,"Business, finance and economics",502,301,150,0,2500,0,False
+medium,2023-05,"Technology, science, education and environment",592,340,150,0,2500,0,False
+medium,2023-05,Literature and creative writing,152,151,150,0,2500,0,False
+medium,2023-05,"Arts, culture, media and design",203,173,150,0,2500,0,False
+medium,2023-05,"Health, family and personal life",169,158,150,0,2500,0,False
+medium,2023-05,"Lifestyle, food, travel, home and leisure",70,70,150,80,2500,0,False
+medium,2023-06,Politics and current affairs,108,108,150,42,2500,0,False
+medium,2023-06,"Society, history and ideas",2247,1224,150,0,2500,0,False
+medium,2023-06,"Business, finance and economics",453,305,150,0,2500,0,False
+medium,2023-06,"Technology, science, education and environment",510,335,150,0,2500,0,False
+medium,2023-06,Literature and creative writing,143,143,150,7,2500,0,False
+medium,2023-06,"Arts, culture, media and design",151,151,150,0,2500,0,False
+medium,2023-06,"Health, family and personal life",182,166,150,0,2500,0,False
+medium,2023-06,"Lifestyle, food, travel, home and leisure",68,68,150,82,2500,0,False
+medium,2023-07,Politics and current affairs,119,119,150,31,2500,0,False
+medium,2023-07,"Society, history and ideas",2459,1176,150,0,2500,0,False
+medium,2023-07,"Business, finance and economics",489,300,150,0,2500,0,False
+medium,2023-07,"Technology, science, education and environment",557,331,150,0,2500,0,False
+medium,2023-07,Literature and creative writing,159,154,150,0,2500,0,False
+medium,2023-07,"Arts, culture, media and design",174,161,150,0,2500,0,False
+medium,2023-07,"Health, family and personal life",228,185,150,0,2500,0,False
+medium,2023-07,"Lifestyle, food, travel, home and leisure",74,74,150,76,2500,0,False
+medium,2023-08,Politics and current affairs,120,120,150,30,2500,0,False
+medium,2023-08,"Society, history and ideas",2531,1186,150,0,2500,0,False
+medium,2023-08,"Business, finance and economics",536,318,150,0,2500,0,False
+medium,2023-08,"Technology, science, education and environment",524,313,150,0,2500,0,False
+medium,2023-08,Literature and creative writing,137,137,150,13,2500,0,False
+medium,2023-08,"Arts, culture, media and design",184,165,150,0,2500,0,False
+medium,2023-08,"Health, family and personal life",221,181,150,0,2500,0,False
+medium,2023-08,"Lifestyle, food, travel, home and leisure",80,80,150,70,2500,0,False
+medium,2023-09,Politics and current affairs,127,127,150,23,2500,0,False
+medium,2023-09,"Society, history and ideas",2464,1215,150,0,2500,0,False
+medium,2023-09,"Business, finance and economics",477,300,150,0,2500,0,False
+medium,2023-09,"Technology, science, education and environment",493,308,150,0,2500,0,False
+medium,2023-09,Literature and creative writing,142,142,150,8,2500,0,False
+medium,2023-09,"Arts, culture, media and design",181,164,150,0,2500,0,False
+medium,2023-09,"Health, family and personal life",206,176,150,0,2500,0,False
+medium,2023-09,"Lifestyle, food, travel, home and leisure",68,68,150,82,2500,0,False
+medium,2023-10,Politics and current affairs,141,141,150,9,2500,0,False
+medium,2023-10,"Society, history and ideas",2544,1199,150,0,2500,0,False
+medium,2023-10,"Business, finance and economics",495,301,150,0,2500,0,False
+medium,2023-10,"Technology, science, education and environment",492,300,150,0,2500,0,False
+medium,2023-10,Literature and creative writing,146,146,150,4,2500,0,False
+medium,2023-10,"Arts, culture, media and design",192,168,150,0,2500,0,False
+medium,2023-10,"Health, family and personal life",213,178,150,0,2500,0,False
+medium,2023-10,"Lifestyle, food, travel, home and leisure",67,67,150,83,2500,0,False
+medium,2023-11,Politics and current affairs,115,115,150,35,2500,0,False
+medium,2023-11,"Society, history and ideas",2484,1232,150,0,2500,0,False
+medium,2023-11,"Business, finance and economics",498,311,150,0,2500,0,False
+medium,2023-11,"Technology, science, education and environment",473,300,150,0,2500,0,False
+medium,2023-11,Literature and creative writing,129,129,150,21,2500,0,False
+medium,2023-11,"Arts, culture, media and design",169,159,150,0,2500,0,False
+medium,2023-11,"Health, family and personal life",200,173,150,0,2500,0,False
+medium,2023-11,"Lifestyle, food, travel, home and leisure",81,81,150,69,2500,0,False
+medium,2023-12,Politics and current affairs,122,122,150,28,2500,0,False
+medium,2023-12,"Society, history and ideas",2701,1220,150,0,2500,0,False
+medium,2023-12,"Business, finance and economics",541,314,150,0,2500,0,False
+medium,2023-12,"Technology, science, education and environment",458,279,150,0,2500,0,False
+medium,2023-12,Literature and creative writing,145,145,150,5,2500,0,False
+medium,2023-12,"Arts, culture, media and design",192,168,150,0,2500,0,False
+medium,2023-12,"Health, family and personal life",210,175,150,0,2500,0,False
+medium,2023-12,"Lifestyle, food, travel, home and leisure",77,77,150,73,2500,0,False
+medium,2024-01,Politics and current affairs,168,157,150,0,2500,0,False
+medium,2024-01,"Society, history and ideas",2728,1175,150,0,2500,0,False
+medium,2024-01,"Business, finance and economics",501,290,150,0,2500,0,False
+medium,2024-01,"Technology, science, education and environment",533,302,150,0,2500,0,False
+medium,2024-01,Literature and creative writing,137,137,150,13,2500,0,False
+medium,2024-01,"Arts, culture, media and design",209,173,150,0,2500,0,False
+medium,2024-01,"Health, family and personal life",248,189,150,0,2500,0,False
+medium,2024-01,"Lifestyle, food, travel, home and leisure",77,77,150,73,2500,0,False
+medium,2024-02,Politics and current affairs,126,126,150,24,2500,0,False
+medium,2024-02,"Society, history and ideas",2751,1189,150,0,2500,0,False
+medium,2024-02,"Business, finance and economics",516,296,150,0,2500,0,False
+medium,2024-02,"Technology, science, education and environment",522,299,150,0,2500,0,False
+medium,2024-02,Literature and creative writing,141,141,150,9,2500,0,False
+medium,2024-02,"Arts, culture, media and design",216,176,150,0,2500,0,False
+medium,2024-02,"Health, family and personal life",242,187,150,0,2500,0,False
+medium,2024-02,"Lifestyle, food, travel, home and leisure",86,86,150,64,2500,0,False
+medium,2024-03,Politics and current affairs,116,116,150,34,2500,0,False
+medium,2024-03,"Society, history and ideas",2170,1288,150,0,2500,0,False
+medium,2024-03,"Business, finance and economics",337,256,150,0,2500,0,False
+medium,2024-03,"Technology, science, education and environment",447,317,150,0,2500,0,False
+medium,2024-03,Literature and creative writing,143,143,150,7,2500,0,False
+medium,2024-03,"Arts, culture, media and design",175,164,150,0,2500,0,False
+medium,2024-03,"Health, family and personal life",170,161,150,0,2500,0,False
+medium,2024-03,"Lifestyle, food, travel, home and leisure",55,55,150,95,2500,0,False
+medium,2024-04,Politics and current affairs,116,116,150,34,2500,0,False
+medium,2024-04,"Society, history and ideas",1913,1385,150,0,2500,0,False
+medium,2024-04,"Business, finance and economics",274,237,150,0,2500,0,False
+medium,2024-04,"Technology, science, education and environment",371,305,150,0,2500,0,False
+medium,2024-04,Literature and creative writing,109,109,150,41,2500,0,False
+medium,2024-04,"Arts, culture, media and design",139,139,150,11,2500,0,False
+medium,2024-04,"Health, family and personal life",165,160,150,0,2500,0,False
+medium,2024-04,"Lifestyle, food, travel, home and leisure",49,49,150,101,2500,0,False
+medium,2024-05,Politics and current affairs,119,119,150,31,2500,0,False
+medium,2024-05,"Society, history and ideas",1921,1303,150,0,2500,0,False
+medium,2024-05,"Business, finance and economics",270,228,150,0,2500,0,False
+medium,2024-05,"Technology, science, education and environment",434,335,150,0,2500,0,False
+medium,2024-05,Literature and creative writing,142,142,150,8,2500,0,False
+medium,2024-05,"Arts, culture, media and design",149,149,150,1,2500,0,False
+medium,2024-05,"Health, family and personal life",183,172,150,0,2500,0,False
+medium,2024-05,"Lifestyle, food, travel, home and leisure",52,52,150,98,2500,0,False
+medium,2024-06,Politics and current affairs,111,111,150,39,2500,0,False
+medium,2024-06,"Society, history and ideas",1851,1285,150,0,2500,0,False
+medium,2024-06,"Business, finance and economics",339,276,150,0,2500,0,False
+medium,2024-06,"Technology, science, education and environment",349,283,150,0,2500,0,False
+medium,2024-06,Literature and creative writing,197,181,150,0,2500,0,False
+medium,2024-06,"Arts, culture, media and design",134,134,150,16,2500,0,False
+medium,2024-06,"Health, family and personal life",214,193,150,0,2500,0,False
+medium,2024-06,"Lifestyle, food, travel, home and leisure",37,37,150,113,2500,0,False
+medium,2024-07,Politics and current affairs,108,108,150,42,2500,0,False
+medium,2024-07,"Society, history and ideas",1884,1319,150,0,2500,0,False
+medium,2024-07,"Business, finance and economics",268,230,150,0,2500,0,False
+medium,2024-07,"Technology, science, education and environment",371,299,150,0,2500,0,False
+medium,2024-07,Literature and creative writing,199,183,150,0,2500,0,False
+medium,2024-07,"Arts, culture, media and design",141,141,150,9,2500,0,False
+medium,2024-07,"Health, family and personal life",186,174,150,0,2500,0,False
+medium,2024-07,"Lifestyle, food, travel, home and leisure",46,46,150,104,2500,0,False
+medium,2024-08,Politics and current affairs,104,104,150,46,2500,0,False
+medium,2024-08,"Society, history and ideas",1957,1317,150,0,2500,0,False
+medium,2024-08,"Business, finance and economics",278,233,150,0,2500,0,False
+medium,2024-08,"Technology, science, education and environment",409,317,150,0,2500,0,False
+medium,2024-08,Literature and creative writing,180,170,150,0,2500,0,False
+medium,2024-08,"Arts, culture, media and design",124,124,150,26,2500,0,False
+medium,2024-08,"Health, family and personal life",217,193,150,0,2500,0,False
+medium,2024-08,"Lifestyle, food, travel, home and leisure",42,42,150,108,2500,0,False
+medium,2024-09,Politics and current affairs,119,119,150,31,2500,0,False
+medium,2024-09,"Society, history and ideas",2030,1279,150,0,2500,0,False
+medium,2024-09,"Business, finance and economics",262,217,150,0,2500,0,False
+medium,2024-09,"Technology, science, education and environment",444,326,150,0,2500,0,False
+medium,2024-09,Literature and creative writing,191,175,150,0,2500,0,False
+medium,2024-09,"Arts, culture, media and design",144,144,150,6,2500,0,False
+medium,2024-09,"Health, family and personal life",208,185,150,0,2500,0,False
+medium,2024-09,"Lifestyle, food, travel, home and leisure",55,55,150,95,2500,0,False
+medium,2024-10,Politics and current affairs,136,136,150,14,2500,0,False
+medium,2024-10,"Society, history and ideas",2181,1272,150,0,2500,0,False
+medium,2024-10,"Business, finance and economics",313,240,150,0,2500,0,False
+medium,2024-10,"Technology, science, education and environment",450,316,150,0,2500,0,False
+medium,2024-10,Literature and creative writing,177,165,150,0,2500,0,False
+medium,2024-10,"Arts, culture, media and design",141,141,150,9,2500,0,False
+medium,2024-10,"Health, family and personal life",204,180,150,0,2500,0,False
+medium,2024-10,"Lifestyle, food, travel, home and leisure",50,50,150,100,2500,0,False
+medium,2024-11,Politics and current affairs,152,151,150,0,2500,0,False
+medium,2024-11,"Society, history and ideas",2108,1262,150,0,2500,0,False
+medium,2024-11,"Business, finance and economics",310,241,150,0,2500,0,False
+medium,2024-11,"Technology, science, education and environment",423,305,150,0,2500,0,False
+medium,2024-11,Literature and creative writing,186,170,150,0,2500,0,False
+medium,2024-11,"Arts, culture, media and design",149,149,150,1,2500,0,False
+medium,2024-11,"Health, family and personal life",208,183,150,0,2500,0,False
+medium,2024-11,"Lifestyle, food, travel, home and leisure",39,39,150,111,2500,0,False
+medium,2024-12,Politics and current affairs,136,136,150,14,2500,0,False
+medium,2024-12,"Society, history and ideas",2106,1252,150,0,2500,0,False
+medium,2024-12,"Business, finance and economics",332,253,150,0,2500,0,False
+medium,2024-12,"Technology, science, education and environment",425,305,150,0,2500,0,False
+medium,2024-12,Literature and creative writing,177,165,150,0,2500,0,False
+medium,2024-12,"Arts, culture, media and design",153,152,150,0,2500,0,False
+medium,2024-12,"Health, family and personal life",207,182,150,0,2500,0,False
+medium,2024-12,"Lifestyle, food, travel, home and leisure",55,55,150,95,2500,0,False
+medium,2025-01,Politics and current affairs,134,134,150,16,2500,0,False
+medium,2025-01,"Society, history and ideas",2231,1244,150,0,2500,0,False
+medium,2025-01,"Business, finance and economics",267,211,150,0,2500,0,False
+medium,2025-01,"Technology, science, education and environment",527,348,150,0,2500,0,False
+medium,2025-01,Literature and creative writing,186,169,150,0,2500,0,False
+medium,2025-01,"Arts, culture, media and design",146,146,150,4,2500,0,False
+medium,2025-01,"Health, family and personal life",229,192,150,0,2500,0,False
+medium,2025-01,"Lifestyle, food, travel, home and leisure",56,56,150,94,2500,0,False
+medium,2025-02,Politics and current affairs,164,158,150,0,2500,0,False
+medium,2025-02,"Society, history and ideas",2167,1275,150,0,2500,0,False
+medium,2025-02,"Business, finance and economics",306,237,150,0,2500,0,False
+medium,2025-02,"Technology, science, education and environment",408,294,150,0,2500,0,False
+medium,2025-02,Literature and creative writing,185,169,150,0,2500,0,False
+medium,2025-02,"Arts, culture, media and design",139,139,150,11,2500,0,False
+medium,2025-02,"Health, family and personal life",204,180,150,0,2500,0,False
+medium,2025-02,"Lifestyle, food, travel, home and leisure",48,48,150,102,2500,0,False
+medium,2025-03,Politics and current affairs,162,156,150,0,2500,0,False
+medium,2025-03,"Society, history and ideas",2333,1229,150,0,2500,0,False
+medium,2025-03,"Business, finance and economics",322,235,150,0,2500,0,False
+medium,2025-03,"Technology, science, education and environment",485,316,150,0,2500,0,False
+medium,2025-03,Literature and creative writing,199,174,150,0,2500,0,False
+medium,2025-03,"Arts, culture, media and design",163,156,150,0,2500,0,False
+medium,2025-03,"Health, family and personal life",200,175,150,0,2500,0,False
+medium,2025-03,"Lifestyle, food, travel, home and leisure",59,59,150,91,2500,0,False
+medium,2025-04,Politics and current affairs,189,166,150,0,2500,0,False
+medium,2025-04,"Society, history and ideas",2612,1186,150,0,2500,0,False
+medium,2025-04,"Business, finance and economics",338,229,150,0,2500,0,False
+medium,2025-04,"Technology, science, education and environment",515,304,150,0,2500,0,False
+medium,2025-04,Literature and creative writing,228,183,150,0,2500,0,False
+medium,2025-04,"Arts, culture, media and design",183,164,150,0,2500,0,False
+medium,2025-04,"Health, family and personal life",273,202,150,0,2500,0,False
+medium,2025-04,"Lifestyle, food, travel, home and leisure",66,66,150,84,2500,0,False
+medium,2025-05,Politics and current affairs,177,160,150,0,2500,0,False
+medium,2025-05,"Society, history and ideas",2852,1186,150,0,2500,0,False
+medium,2025-05,"Business, finance and economics",340,223,150,0,2500,0,False
+medium,2025-05,"Technology, science, education and environment",558,307,150,0,2500,0,False
+medium,2025-05,Literature and creative writing,259,192,150,0,2500,0,False
+medium,2025-05,"Arts, culture, media and design",178,161,150,0,2500,0,False
+medium,2025-05,"Health, family and personal life",328,218,150,0,2500,0,False
+medium,2025-05,"Lifestyle, food, travel, home and leisure",53,53,150,97,2500,0,False
+medium,2025-06,Politics and current affairs,163,155,150,0,2500,0,False
+medium,2025-06,"Society, history and ideas",2846,1150,150,0,2500,0,False
+medium,2025-06,"Business, finance and economics",386,238,150,0,2500,0,False
+medium,2025-06,"Technology, science, education and environment",623,325,150,0,2500,0,False
+medium,2025-06,Literature and creative writing,262,192,150,0,2500,0,False
+medium,2025-06,"Arts, culture, media and design",170,157,150,0,2500,0,False
+medium,2025-06,"Health, family and personal life",344,222,150,0,2500,0,False
+medium,2025-06,"Lifestyle, food, travel, home and leisure",61,61,150,89,2500,0,False
+medium,2025-07,Politics and current affairs,185,162,150,0,2500,0,False
+medium,2025-07,"Society, history and ideas",3106,1139,150,0,2500,0,False
+medium,2025-07,"Business, finance and economics",459,253,150,0,2500,0,False
+medium,2025-07,"Technology, science, education and environment",638,313,150,0,2500,0,False
+medium,2025-07,Literature and creative writing,293,198,150,0,2500,0,False
+medium,2025-07,"Arts, culture, media and design",214,171,150,0,2500,0,False
+medium,2025-07,"Health, family and personal life",319,207,150,0,2500,0,False
+medium,2025-07,"Lifestyle, food, travel, home and leisure",57,57,150,93,2500,0,False
+medium,2025-08,Politics and current affairs,162,154,150,0,2500,0,False
+medium,2025-08,"Society, history and ideas",2884,1165,150,0,2500,0,False
+medium,2025-08,"Business, finance and economics",475,271,150,0,2500,0,False
+medium,2025-08,"Technology, science, education and environment",588,313,150,0,2500,0,False
+medium,2025-08,Literature and creative writing,274,196,150,0,2500,0,False
+medium,2025-08,"Arts, culture, media and design",157,153,150,0,2500,0,False
+medium,2025-08,"Health, family and personal life",291,202,150,0,2500,0,False
+medium,2025-08,"Lifestyle, food, travel, home and leisure",46,46,150,104,2500,0,False
+medium,2025-09,Politics and current affairs,179,161,150,0,2500,0,False
+medium,2025-09,"Society, history and ideas",3080,1209,150,0,2500,0,False
+medium,2025-09,"Business, finance and economics",424,249,150,0,2500,0,False
+medium,2025-09,"Technology, science, education and environment",572,303,150,0,2500,0,False
+medium,2025-09,Literature and creative writing,237,181,150,0,2500,0,False
+medium,2025-09,"Arts, culture, media and design",162,154,150,0,2500,0,False
+medium,2025-09,"Health, family and personal life",260,190,150,0,2500,0,False
+medium,2025-09,"Lifestyle, food, travel, home and leisure",53,53,150,97,2500,0,False
+medium,2025-10,Politics and current affairs,190,164,150,0,2500,0,False
+medium,2025-10,"Society, history and ideas",3031,1147,150,0,2500,0,False
+medium,2025-10,"Business, finance and economics",504,273,150,0,2500,0,False
+medium,2025-10,"Technology, science, education and environment",592,303,150,0,2500,0,False
+medium,2025-10,Literature and creative writing,255,186,150,0,2500,0,False
+medium,2025-10,"Arts, culture, media and design",174,158,150,0,2500,0,False
+medium,2025-10,"Health, family and personal life",299,202,150,0,2500,0,False
+medium,2025-10,"Lifestyle, food, travel, home and leisure",67,67,150,83,2500,0,False
+medium,2025-11,Politics and current affairs,185,161,150,0,2500,0,False
+medium,2025-11,"Society, history and ideas",3194,1154,150,0,2500,0,False
+medium,2025-11,"Business, finance and economics",619,305,150,0,2500,0,False
+medium,2025-11,"Technology, science, education and environment",548,281,150,0,2500,0,False
+medium,2025-11,Literature and creative writing,247,182,150,0,2500,0,False
+medium,2025-11,"Arts, culture, media and design",189,163,150,0,2500,0,False
+medium,2025-11,"Health, family and personal life",274,191,150,0,2500,0,False
+medium,2025-11,"Lifestyle, food, travel, home and leisure",63,63,150,87,2500,0,False
+medium,2025-12,Politics and current affairs,189,163,150,0,2500,0,False
+medium,2025-12,"Society, history and ideas",3194,1156,150,0,2500,0,False
+medium,2025-12,"Business, finance and economics",508,268,150,0,2500,0,False
+medium,2025-12,"Technology, science, education and environment",606,301,150,0,2500,0,False
+medium,2025-12,Literature and creative writing,281,193,150,0,2500,0,False
+medium,2025-12,"Arts, culture, media and design",197,165,150,0,2500,0,False
+medium,2025-12,"Health, family and personal life",306,202,150,0,2500,0,False
+medium,2025-12,"Lifestyle, food, travel, home and leisure",52,52,150,98,2500,0,False
+medium,2026-01,Politics and current affairs,216,171,150,0,2500,0,False
+medium,2026-01,"Society, history and ideas",3246,1147,150,0,2500,0,False
+medium,2026-01,"Business, finance and economics",400,230,150,0,2500,0,False
+medium,2026-01,"Technology, science, education and environment",728,336,150,0,2500,0,False
+medium,2026-01,Literature and creative writing,260,185,150,0,2500,0,False
+medium,2026-01,"Arts, culture, media and design",177,159,150,0,2500,0,False
+medium,2026-01,"Health, family and personal life",360,218,150,0,2500,0,False
+medium,2026-01,"Lifestyle, food, travel, home and leisure",54,54,150,96,2500,0,False
+medium,2026-02,Politics and current affairs,218,172,150,0,2500,0,False
+medium,2026-02,"Society, history and ideas",3214,1120,150,0,2500,0,False
+medium,2026-02,"Business, finance and economics",414,234,150,0,2500,0,False
+medium,2026-02,"Technology, science, education and environment",786,351,150,0,2500,0,False
+medium,2026-02,Literature and creative writing,242,179,150,0,2500,0,False
+medium,2026-02,"Arts, culture, media and design",187,162,150,0,2500,0,False
+medium,2026-02,"Health, family and personal life",365,218,150,0,2500,0,False
+medium,2026-02,"Lifestyle, food, travel, home and leisure",64,64,150,86,2500,0,False
+medium,2026-03,Politics and current affairs,249,179,150,0,2500,0,False
+medium,2026-03,"Society, history and ideas",3194,1048,150,0,2500,0,False
+medium,2026-03,"Business, finance and economics",482,248,150,0,2500,0,False
+medium,2026-03,"Technology, science, education and environment",923,378,150,0,2500,0,False
+medium,2026-03,Literature and creative writing,238,176,150,0,2500,0,False
+medium,2026-03,"Arts, culture, media and design",218,170,150,0,2500,0,False
+medium,2026-03,"Health, family and personal life",418,229,150,0,2500,0,False
+medium,2026-03,"Lifestyle, food, travel, home and leisure",72,72,150,78,2500,0,False
+medium,2026-04,Politics and current affairs,213,168,150,0,2500,0,False
+medium,2026-04,"Society, history and ideas",3575,1119,150,0,2500,0,False
+medium,2026-04,"Business, finance and economics",434,230,150,0,2500,0,False
+medium,2026-04,"Technology, science, education and environment",899,362,150,0,2500,0,False
+medium,2026-04,Literature and creative writing,242,176,150,0,2500,0,False
+medium,2026-04,"Arts, culture, media and design",196,163,150,0,2500,0,False
+medium,2026-04,"Health, family and personal life",384,216,150,0,2500,0,False
+medium,2026-04,"Lifestyle, food, travel, home and leisure",66,66,150,84,2500,0,False
+medium,2026-05,Politics and current affairs,192,163,150,0,2500,0,False
+medium,2026-05,"Society, history and ideas",3049,1056,150,0,2500,0,False
+medium,2026-05,"Business, finance and economics",476,252,150,0,2500,0,False
+medium,2026-05,"Technology, science, education and environment",842,366,150,0,2500,0,False
+medium,2026-05,Literature and creative writing,279,190,150,0,2500,0,False
+medium,2026-05,"Arts, culture, media and design",192,163,150,0,2500,0,False
+medium,2026-05,"Health, family and personal life",438,240,150,0,2500,0,False
+medium,2026-05,"Lifestyle, food, travel, home and leisure",70,70,150,80,2500,0,False
+medium,2026-06,Politics and current affairs,186,161,150,0,2500,0,False
+medium,2026-06,"Society, history and ideas",3145,1040,150,0,2500,0,False
+medium,2026-06,"Business, finance and economics",483,249,150,0,2500,0,False
+medium,2026-06,"Technology, science, education and environment",943,386,150,0,2500,0,False
+medium,2026-06,Literature and creative writing,311,198,150,0,2500,0,False
+medium,2026-06,"Arts, culture, media and design",191,162,150,0,2500,0,False
+medium,2026-06,"Health, family and personal life",438,235,150,0,2500,0,False
+medium,2026-06,"Lifestyle, food, travel, home and leisure",69,69,150,81,2500,0,False
+medium,2026-07,Politics and current affairs,201,166,150,0,2500,0,False
+medium,2026-07,"Society, history and ideas",3037,1022,150,0,2500,0,False
+medium,2026-07,"Business, finance and economics",535,266,150,0,2500,0,False
+medium,2026-07,"Technology, science, education and environment",980,401,150,0,2500,0,False
+medium,2026-07,Literature and creative writing,283,190,150,0,2500,0,False
+medium,2026-07,"Arts, culture, media and design",194,163,150,0,2500,0,False
+medium,2026-07,"Health, family and personal life",429,234,150,0,2500,0,False
+medium,2026-07,"Lifestyle, food, travel, home and leisure",58,58,150,92,2500,0,False
+medium,2026-08,Politics and current affairs,153,151,150,0,2500,0,False
+medium,2026-08,"Society, history and ideas",2940,1039,150,0,2500,0,False
+medium,2026-08,"Business, finance and economics",466,251,150,0,2500,0,False
+medium,2026-08,"Technology, science, education and environment",916,394,150,0,2500,0,False
+medium,2026-08,Literature and creative writing,280,191,150,0,2500,0,False
+medium,2026-08,"Arts, culture, media and design",206,168,150,0,2500,0,False
+medium,2026-08,"Health, family and personal life",398,229,150,0,2500,0,False
+medium,2026-08,"Lifestyle, food, travel, home and leisure",77,77,150,73,2500,0,False
+medium,2026-09,Politics and current affairs,123,123,150,27,2500,0,True
+medium,2026-09,"Society, history and ideas",2080,1180,150,0,2500,0,True
+medium,2026-09,"Business, finance and economics",332,247,150,0,2500,0,True
+medium,2026-09,"Technology, science, education and environment",620,401,150,0,2500,0,True
+medium,2026-09,Literature and creative writing,170,161,150,0,2500,0,True
+medium,2026-09,"Arts, culture, media and design",143,143,150,7,2500,0,True
+medium,2026-09,"Health, family and personal life",237,196,150,0,2500,0,True
+medium,2026-09,"Lifestyle, food, travel, home and leisure",49,49,150,101,2500,0,True
